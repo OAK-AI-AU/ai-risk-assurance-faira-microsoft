@@ -1,0 +1,476 @@
+# AI Risk Taxonomy
+# Standardized risk categories, severity scales, and classification
+
+metadata:
+  title: "AI Risk Taxonomy for Unified Framework"
+  version: "1.0.0"
+  lastUpdated: "2025-10-12"
+  description: "Comprehensive risk taxonomy integrating FAIRA, Microsoft, NIST, VAISS, and NFAAIG frameworks"
+
+# Risk Categories
+risk_categories:
+  technical:
+    id: "CAT-001"
+    name: "Technical"
+    description: "Risks related to AI system technical implementation and performance"
+    subcategories:
+      - "Model Performance Degradation"
+      - "Data Quality Issues"
+      - "System Availability"
+      - "Integration Failures"
+      - "Scalability Concerns"
+      - "Technical Debt"
+    example_risks:
+      - "Model drift over time"
+      - "Training data corruption"
+      - "API endpoint failures"
+
+  security:
+    id: "CAT-002"
+    name: "Security"
+    description: "Cybersecurity threats specific to AI systems"
+    subcategories:
+      - "Model Attacks"
+      - "Data Attacks"
+      - "Infrastructure Attacks"
+      - "Supply Chain Attacks"
+    microsoft_threat_types:
+      - "Model Inversion"
+      - "Data Poisoning"
+      - "Adversarial Input"
+      - "Model Theft/Extraction"
+      - "Evasion Attack"
+      - "Membership Inference"
+      - "Prompt Injection"
+    nist_competencies:
+      - "AI-K-005"  # AI model vulnerabilities
+      - "AI-K-013"  # Data poisoning
+      - "AI-K-007"  # AI common security risks
+      - "AI-S-002"  # Secure prompt engineering
+    example_risks:
+      - "Adversarial examples bypassing model"
+      - "Training data poisoned by malicious actor"
+      - "Model parameters extracted through API"
+
+  ethical:
+    id: "CAT-003"
+    name: "Ethical"
+    description: "Risks related to AI ethics principles and societal impact"
+    subcategories:
+      - "Bias and Discrimination"
+      - "Privacy Violations"
+      - "Lack of Transparency"
+      - "Autonomy Impacts"
+      - "Fairness Issues"
+    ai_ethics_principles:
+      - "Human, Social and Environmental Wellbeing"
+      - "Human-Centred Values"
+      - "Fairness"
+      - "Transparency and Explainability"
+    nist_competencies:
+      - "AI-K-003"  # AI bias types
+      - "AI-K-023"  # Misinformation/disinformation
+      - "AI-S-007"  # Non-explainable risk assessment
+    example_risks:
+      - "Model exhibits demographic bias"
+      - "Decisions lack explainability"
+      - "System undermines human autonomy"
+
+  operational:
+    id: "CAT-004"
+    name: "Operational"
+    description: "Risks affecting day-to-day operations and business processes"
+    subcategories:
+      - "Process Disruption"
+      - "Resource Constraints"
+      - "Change Management"
+      - "Skills Gaps"
+      - "Vendor Dependency"
+    example_risks:
+      - "AI system failure disrupts critical process"
+      - "Insufficient staff trained in AI operations"
+      - "Over-reliance on single AI vendor"
+
+  whs:
+    id: "CAT-005"
+    name: "Workplace Health and Safety (WHS)"
+    description: "Risks to worker safety, wellbeing, and employment under WHS Act 2011"
+    subcategories:
+      - "Physical Safety"
+      - "Psychological Harm"
+      - "Ergonomic Issues"
+      - "Workload Impacts"
+      - "Employment Security"
+      - "Role Redundancy"
+    legislation:
+      - "Work Health and Safety Act 2011 (Qld)"
+      - "Human Rights Act 2019 (Qld)"
+    example_risks:
+      - "AI automation causes worker stress"
+      - "Inadequate training leads to unsafe AI use"
+      - "AI decisions harm worker mental health"
+
+  privacy:
+    id: "CAT-006"
+    name: "Privacy"
+    description: "Risks to personal information and privacy rights"
+    subcategories:
+      - "Data Collection Overreach"
+      - "Unauthorized Disclosure"
+      - "Re-identification"
+      - "Consent Violations"
+    legislation:
+      - "Privacy Act 1988 (Cth)"
+      - "Information Privacy Act 2009 (Qld)"
+    vaiss_guardrails: [3]  # Data Governance and Protection
+    example_risks:
+      - "AI re-identifies de-identified data"
+      - "Model leaks training data"
+      - "Excessive personal data collection"
+
+  bias:
+    id: "CAT-007"
+    name: "Bias"
+    description: "Risks of unfair or discriminatory AI outcomes"
+    subcategories:
+      - "Training Data Bias"
+      - "Algorithmic Bias"
+      - "Selection Bias"
+      - "Measurement Bias"
+      - "Historical Bias"
+    nist_competencies:
+      - "AI-K-003"  # AI bias types taxonomy
+    ai_ethics_principles:
+      - "Fairness"
+    vaiss_guardrails: [4]  # Testing and Monitoring
+    example_risks:
+      - "Model trained on biased historical data"
+      - "Algorithm amplifies existing inequalities"
+      - "Proxy variables introduce discrimination"
+
+  safety:
+    id: "CAT-008"
+    name: "Safety"
+    description: "Risks of AI causing physical or significant harm"
+    subcategories:
+      - "Critical System Failure"
+      - "Safety-Critical Errors"
+      - "Automated Action Risks"
+      - "Environmental Harm"
+    vaiss_guardrails: [2, 4, 5]  # Risk Management, Testing, Human Oversight
+    example_risks:
+      - "AI medical diagnosis error causes patient harm"
+      - "Autonomous system malfunction causes accident"
+      - "AI-controlled process creates environmental damage"
+
+  transparency:
+    id: "CAT-009"
+    name: "Transparency"
+    description: "Risks from lack of AI system transparency and explainability"
+    subcategories:
+      - "Black Box Models"
+      - "Insufficient Documentation"
+      - "Unclear Decision Criteria"
+      - "Hidden Limitations"
+    ai_ethics_principles:
+      - "Transparency and Explainability"
+    vaiss_guardrails: [6]  # Transparency
+    nist_competencies:
+      - "AI-S-007"  # Non-explainable risk assessment
+    example_risks:
+      - "Users cannot understand AI decisions"
+      - "System limitations not disclosed"
+      - "Decision-making process opaque"
+
+  accountability:
+    id: "CAT-010"
+    name: "Accountability"
+    description: "Risks from unclear accountability and governance"
+    subcategories:
+      - "Unclear Responsibility"
+      - "Governance Gaps"
+      - "Audit Trail Deficiencies"
+      - "Compliance Failures"
+    ai_ethics_principles:
+      - "Accountability"
+    vaiss_guardrails: [1, 9]  # Accountability & Governance, Compliance
+    example_risks:
+      - "No clear owner for AI system decisions"
+      - "Inadequate governance oversight"
+      - "Cannot audit AI decision history"
+
+  legal_compliance:
+    id: "CAT-011"
+    name: "Legal/Compliance"
+    description: "Risks of legal non-compliance and regulatory violations"
+    subcategories:
+      - "Regulatory Violations"
+      - "Contractual Breaches"
+      - "Intellectual Property"
+      - "Export Control"
+    vaiss_guardrails: [9]  # Compliance
+    example_risks:
+      - "AI violates data protection regulations"
+      - "System breaches third-party agreements"
+      - "Model infringes on copyrights"
+
+  reputational:
+    id: "CAT-012"
+    name: "Reputational"
+    description: "Risks to organisational reputation and public trust"
+    subcategories:
+      - "Public Trust Loss"
+      - "Media Scrutiny"
+      - "Stakeholder Confidence"
+      - "Brand Damage"
+    example_risks:
+      - "AI mistake generates negative publicity"
+      - "Ethical controversy damages reputation"
+      - "Public loses trust in organisation's AI use"
+
+# Severity Scale
+severity_scale:
+  level_1:
+    rating: 1
+    name: "Very Low"
+    description: "Minimal impact; easily managed within normal operations"
+    impact_examples:
+      - "Minor inconvenience to small number of users"
+      - "Negligible financial impact (<$1,000)"
+      - "No safety or privacy concerns"
+    color_code: "#90EE90"  # Light green
+
+  level_2:
+    rating: 2
+    name: "Low"
+    description: "Limited impact; manageable with existing resources"
+    impact_examples:
+      - "Temporary service degradation"
+      - "Low financial impact ($1,000-$10,000)"
+      - "Minor privacy concern for limited users"
+    color_code: "#FFFF00"  # Yellow
+
+  level_3:
+    rating: 3
+    name: "Medium"
+    description: "Moderate impact; requires specific management attention"
+    impact_examples:
+      - "Service disruption affecting multiple users"
+      - "Moderate financial impact ($10,000-$100,000)"
+      - "Privacy breach for limited number of individuals"
+      - "Potential for minor physical harm"
+    color_code: "#FFA500"  # Orange
+
+  level_4:
+    rating: 4
+    name: "High"
+    description: "Significant impact; requires urgent management intervention"
+    impact_examples:
+      - "Major service outage"
+      - "Significant financial impact ($100,000-$1M)"
+      - "Privacy breach affecting many individuals"
+      - "Potential for serious physical harm"
+      - "Significant reputational damage"
+    color_code: "#FF6347"  # Tomato red
+
+  level_5:
+    rating: 5
+    name: "Critical"
+    description: "Severe impact; potential for catastrophic consequences"
+    impact_examples:
+      - "System-wide failure"
+      - "Major financial impact (>$1M)"
+      - "Widespread privacy breach"
+      - "Potential for loss of life"
+      - "Major regulatory violations"
+      - "Severe reputational crisis"
+    color_code: "#8B0000"  # Dark red
+
+# Likelihood Scale
+likelihood_scale:
+  level_1:
+    rating: 1
+    name: "Rare"
+    description: "May occur only in exceptional circumstances"
+    probability: "<5%"
+    frequency: "Less than once every 5 years"
+
+  level_2:
+    rating: 2
+    name: "Unlikely"
+    description: "Could occur at some time"
+    probability: "5-25%"
+    frequency: "Once every 2-5 years"
+
+  level_3:
+    rating: 3
+    name: "Possible"
+    description: "Might occur at some time"
+    probability: "25-50%"
+    frequency: "Once every 1-2 years"
+
+  level_4:
+    rating: 4
+    name: "Likely"
+    description: "Will probably occur in most circumstances"
+    probability: "50-75%"
+    frequency: "Multiple times per year"
+
+  level_5:
+    rating: 5
+    name: "Almost Certain"
+    description: "Expected to occur in most circumstances"
+    probability: ">75%"
+    frequency: "Multiple times per month or more"
+
+# Risk Matrix (Severity × Likelihood)
+risk_matrix:
+  priority_levels:
+    extreme:
+      score_range: "20-25"
+      action: "Immediate action required; executive notification; may halt deployment"
+      color: "#8B0000"
+    very_high:
+      score_range: "15-19"
+      action: "Urgent mitigation required; senior management attention"
+      color: "#FF0000"
+    high:
+      score_range: "10-14"
+      action: "Mitigation planning required; management oversight"
+      color: "#FF6347"
+    medium:
+      score_range: "5-9"
+      action: "Mitigation recommended; regular monitoring"
+      color: "#FFA500"
+    low:
+      score_range: "1-4"
+      action: "Manage through routine procedures"
+      color: "#FFFF00"
+
+# Risk Type to Framework Mapping
+risk_framework_alignment:
+  - risk_category: "Technical"
+    faira_part: "Part A"
+    microsoft_phase: "Development & Operations"
+    vaiss_guardrails: [2, 4]  # Risk Management, Testing & Monitoring
+    nfaaig_cornerstone: "Risk-Based Approach"
+
+  - risk_category: "Security"
+    faira_part: "Part A, Part C"
+    microsoft_phase: "All Phases"
+    vaiss_guardrails: [2, 3, 4]  # Risk Management, Data Governance, Testing
+    nfaaig_cornerstone: "Risk-Based Approach"
+    nist_primary_focus: true
+
+  - risk_category: "Ethical"
+    faira_part: "Part B"
+    microsoft_phase: "Design"
+    vaiss_guardrails: [1, 6, 10]  # Accountability, Transparency, Stakeholder Engagement
+    nfaaig_cornerstone: "Governance"
+    ai_ethics_principles: "All 8 principles"
+
+  - risk_category: "WHS"
+    faira_part: "Part A (Tables 2.2, 2.3), Part B"
+    microsoft_phase: "Design & Operations"
+    vaiss_guardrails: [5, 10]  # Human Oversight, Stakeholder Engagement
+    nfaaig_cornerstone: "Governance"
+    australian_specific: true
+
+  - risk_category: "Privacy"
+    faira_part: "Part A (Table 5), Part B"
+    microsoft_phase: "All Phases"
+    vaiss_guardrails: [3, 9]  # Data Governance & Protection, Compliance
+    nfaaig_cornerstone: "Data Governance"
+
+  - risk_category: "Accountability"
+    faira_part: "Part B, Part C"
+    microsoft_phase: "All Phases"
+    vaiss_guardrails: [1, 9]  # Accountability & Governance, Compliance
+    nfaaig_cornerstone: "Governance"
+
+# Standard Risk Descriptions
+standard_risks:
+  - risk_id: "RISK-0001"
+    title: "Training Data Poisoning"
+    category: "Security"
+    microsoft_threat: "Data Poisoning"
+    nist_competency: "AI-K-013"
+    typical_severity: 5
+    typical_likelihood: 2
+    description: "Malicious actor introduces corrupted data into training dataset"
+
+  - risk_id: "RISK-0002"
+    title: "Model Bias Against Protected Groups"
+    category: "Bias"
+    nist_competency: "AI-K-003"
+    typical_severity: 4
+    typical_likelihood: 3
+    description: "AI model produces discriminatory outcomes for protected demographic groups"
+
+  - risk_id: "RISK-0003"
+    title: "Privacy Breach via Model Inversion"
+    category: "Privacy"
+    microsoft_threat: "Model Inversion"
+    nist_competency: "AI-K-005"
+    typical_severity: 5
+    typical_likelihood: 2
+    description: "Attacker reconstructs sensitive training data by querying model"
+
+  - risk_id: "RISK-0004"
+    title: "Lack of Decision Explainability"
+    category: "Transparency"
+    nist_competency: "AI-S-007"
+    typical_severity: 3
+    typical_likelihood: 4
+    description: "AI system cannot provide understandable explanations for decisions"
+
+  - risk_id: "RISK-0005"
+    title: "AI Hallucination in Critical Output"
+    category: "Safety"
+    microsoft_threat: "Hallucination"
+    nist_competency: "AI-S-006"
+    typical_severity: 4
+    typical_likelihood: 3
+    description: "AI generates false or fabricated information presented as fact"
+
+  - risk_id: "RISK-0006"
+    title: "Worker Role Redundancy"
+    category: "WHS"
+    typical_severity: 3
+    typical_likelihood: 3
+    description: "AI automation makes worker roles redundant, causing employment insecurity"
+    australian_legislation: "WHS Act 2011, Human Rights Act 2019"
+
+  - risk_id: "RISK-0007"
+    title: "Prompt Injection Attack"
+    category: "Security"
+    microsoft_threat: "Prompt Injection"
+    nist_competency: "AI-S-002"
+    typical_severity: 3
+    typical_likelihood: 4
+    description: "Malicious user manipulates AI through crafted prompts to bypass controls"
+
+  - risk_id: "RISK-0008"
+    title: "Misinformation Generation"
+    category: "Ethical"
+    microsoft_threat: "Misinformation Generation"
+    nist_competency: "AI-K-023"
+    typical_severity: 4
+    typical_likelihood: 3
+    description: "AI generates and spreads false or misleading information"
+
+  - risk_id: "RISK-0009"
+    title: "Inadequate Human Oversight"
+    category: "Accountability"
+    typical_severity: 3
+    typical_likelihood: 3
+    description: "Insufficient human review and intervention capabilities for AI decisions"
+    vaiss_guardrails: [5]  # Human Oversight
+
+  - risk_id: "RISK-0010"
+    title: "Supply Chain AI Component Vulnerability"
+    category: "Security"
+    typical_severity: 4
+    typical_likelihood: 2
+    description: "Third-party AI component contains security vulnerabilities or backdoors"
+    vaiss_guardrails: [8]  # Supply Chain Transparency

@@ -1,0 +1,15 @@
+# Python dependencies for AI Risk Assurance Framework tools
+#
+# Install with: pip install -r requirements.txt
+
+# JSON Schema validation
+jsonschema>=4.20.0
+
+# YAML processing (for framework mappings)
+PyYAML>=6.0.1
+
+# Command-line interface
+click>=8.1.7
+
+# Rich terminal output (optional, for enhanced CLI)
+rich>=13.7.0

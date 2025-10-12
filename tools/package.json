@@ -1,0 +1,35 @@
+{
+  "name": "ai-risk-assurance-tools",
+  "version": "2.0.0",
+  "description": "Validation and compliance tools for the AI Risk Assurance Framework",
+  "main": "validate-schemas.js",
+  "scripts": {
+    "validate": "node validate-schemas.js",
+    "validate:all": "node validate-schemas.js --all",
+    "test": "node validate-schemas.js --all"
+  },
+  "keywords": [
+    "ai",
+    "risk",
+    "assurance",
+    "faira",
+    "vaiss",
+    "nist",
+    "validation",
+    "schema"
+  ],
+  "author": "OAK AI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OAK-AI-Public/ai-risk-assurance-faira-microsoft.git"
+  },
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "ajv-formats": "^3.0.1"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

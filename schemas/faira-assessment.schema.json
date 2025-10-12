@@ -1,0 +1,531 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/OAK-AI-Public/ai-risk-assurance-faira-microsoft/schemas/faira-assessment.schema.json",
+  "title": "FAIRA Assessment",
+  "description": "Schema for Foundational Artificial Intelligence Risk Assessment (FAIRA v1.0.0)",
+  "type": "object",
+  "required": ["metadata", "partA", "partB", "partC"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["assessmentId", "version", "createdDate", "projectName", "organisation"],
+      "properties": {
+        "assessmentId": {
+          "type": "string",
+          "description": "Unique identifier for this FAIRA assessment"
+        },
+        "version": {
+          "type": "string",
+          "description": "FAIRA framework version",
+          "default": "1.0.0"
+        },
+        "createdDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "projectName": {
+          "type": "string",
+          "description": "Name of the AI solution being assessed"
+        },
+        "organisation": {
+          "type": "string",
+          "description": "Queensland Government agency or organisation"
+        },
+        "assessmentTeam": {
+          "type": "array",
+          "description": "Multi-disciplinary assessment team members",
+          "items": {
+            "type": "object",
+            "required": ["name", "role"],
+            "properties": {
+              "name": {"type": "string"},
+              "role": {"type": "string"},
+              "expertise": {"type": "string"},
+              "contactEmail": {"type": "string", "format": "email"}
+            }
+          }
+        },
+        "executiveSponsor": {
+          "type": "object",
+          "properties": {
+            "name": {"type": "string"},
+            "title": {"type": "string"},
+            "approvalDate": {"type": "string", "format": "date"}
+          }
+        }
+      }
+    },
+    "partA": {
+      "type": "object",
+      "description": "Part A: Components Analysis - Define the AI Solution",
+      "required": ["solutionOverview"],
+      "properties": {
+        "solutionOverview": {
+          "type": "object",
+          "description": "Table 1: Solution Overview",
+          "required": ["name", "description", "purpose", "expectedBenefits"],
+          "properties": {
+            "name": {"type": "string"},
+            "description": {"type": "string"},
+            "purpose": {"type": "string"},
+            "expectedBenefits": {"type": "array", "items": {"type": "string"}},
+            "targetUsers": {"type": "array", "items": {"type": "string"}},
+            "deploymentScope": {"type": "string"}
+          }
+        },
+        "componentArchitecture": {
+          "type": "object",
+          "description": "Table 2: Component Architecture",
+          "properties": {
+            "aiModels": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["modelName", "type", "purpose"],
+                "properties": {
+                  "modelName": {"type": "string"},
+                  "type": {"type": "string", "enum": ["Machine Learning", "Deep Learning", "NLP", "Computer Vision", "Generative AI", "Other"]},
+                  "purpose": {"type": "string"},
+                  "vendor": {"type": "string"},
+                  "version": {"type": "string"},
+                  "isThirdParty": {"type": "boolean"}
+                }
+              }
+            },
+            "algorithms": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {"type": "string"},
+                  "description": {"type": "string"},
+                  "purpose": {"type": "string"}
+                }
+              }
+            },
+            "thirdPartyComponents": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "component": {"type": "string"},
+                  "vendor": {"type": "string"},
+                  "purpose": {"type": "string"},
+                  "licenseType": {"type": "string"}
+                }
+              }
+            },
+            "systemIntegrations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "system": {"type": "string"},
+                  "integrationType": {"type": "string"},
+                  "dataExchanged": {"type": "string"}
+                }
+              }
+            }
+          }
+        },
+        "interfaces": {
+          "type": "object",
+          "description": "Table 3: Interfaces",
+          "properties": {
+            "userInterfaces": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {"type": "string", "enum": ["Web", "Mobile", "API", "Desktop", "Voice", "Other"]},
+                  "description": {"type": "string"},
+                  "accessControl": {"type": "string"}
+                }
+              }
+            },
+            "systemInterfaces": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "interfaceName": {"type": "string"},
+                  "protocol": {"type": "string"},
+                  "security": {"type": "string"}
+                }
+              }
+            },
+            "apiEndpoints": {
+              "type": "array",
+              "description": "API endpoints and attack surfaces",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "endpoint": {"type": "string"},
+                  "method": {"type": "string"},
+                  "authentication": {"type": "string"},
+                  "inputValidation": {"type": "string"}
+                }
+              }
+            }
+          }
+        },
+        "dataSources": {
+          "type": "object",
+          "description": "Table 4: Data Sources",
+          "properties": {
+            "internalSources": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "source": {"type": "string"},
+                  "dataType": {"type": "string"},
+                  "updateFrequency": {"type": "string"}
+                }
+              }
+            },
+            "externalSources": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "source": {"type": "string"},
+                  "provider": {"type": "string"},
+                  "dataType": {"type": "string"}
+                }
+              }
+            },
+            "trainingData": {
+              "type": "object",
+              "properties": {
+                "origin": {"type": "string"},
+                "size": {"type": "string"},
+                "lastUpdated": {"type": "string", "format": "date"},
+                "dataQuality": {"type": "string"},
+                "biasAssessment": {"type": "string"}
+              }
+            }
+          }
+        },
+        "dataTypes": {
+          "type": "object",
+          "description": "Table 5: Data Types",
+          "properties": {
+            "personalInformation": {
+              "type": "object",
+              "properties": {
+                "present": {"type": "boolean"},
+                "types": {"type": "array", "items": {"type": "string"}},
+                "sensitivityLevel": {"type": "string", "enum": ["None", "Low", "Medium", "High", "Critical"]}
+              }
+            },
+            "sensitiveData": {
+              "type": "object",
+              "properties": {
+                "present": {"type": "boolean"},
+                "classification": {"type": "string", "enum": ["PUBLIC", "OFFICIAL", "OFFICIAL:Sensitive", "PROTECTED", "SECRET", "TOP SECRET"]},
+                "types": {"type": "array", "items": {"type": "string"}}
+              }
+            },
+            "businessData": {
+              "type": "object",
+              "properties": {
+                "types": {"type": "array", "items": {"type": "string"}},
+                "confidentiality": {"type": "string"}
+              }
+            }
+          }
+        },
+        "outputs": {
+          "type": "object",
+          "description": "Table 6: Outputs",
+          "properties": {
+            "predictions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {"type": "string"},
+                  "description": {"type": "string"},
+                  "impactLevel": {"type": "string", "enum": ["Low", "Medium", "High", "Critical"]}
+                }
+              }
+            },
+            "recommendations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {"type": "string"},
+                  "description": {"type": "string"},
+                  "decisionSupport": {"type": "boolean"}
+                }
+              }
+            },
+            "automatedActions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "action": {"type": "string"},
+                  "trigger": {"type": "string"},
+                  "humanOversight": {"type": "boolean"}
+                }
+              }
+            }
+          }
+        },
+        "usersAndStakeholders": {
+          "type": "object",
+          "description": "Table 7: Users and Stakeholders",
+          "properties": {
+            "primaryUsers": {"type": "array", "items": {"type": "string"}},
+            "secondaryUsers": {"type": "array", "items": {"type": "string"}},
+            "affectedParties": {"type": "array", "items": {"type": "string"}},
+            "administrators": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "governance": {
+          "type": "object",
+          "description": "Table 8: Governance Structure",
+          "properties": {
+            "oversightCommittees": {"type": "array", "items": {"type": "string"}},
+            "approvalProcesses": {"type": "array", "items": {"type": "string"}},
+            "reviewCycles": {"type": "string"}
+          }
+        },
+        "relatedSystems": {
+          "type": "object",
+          "description": "Table 9: Related Systems",
+          "properties": {
+            "dependencies": {"type": "array", "items": {"type": "string"}},
+            "downstreamSystems": {"type": "array", "items": {"type": "string"}},
+            "integrationPoints": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "technicalSecurityControls": {
+          "type": "object",
+          "description": "Microsoft AI Security Controls",
+          "properties": {
+            "rbac": {"type": "string", "description": "Role-Based Access Control implementation"},
+            "modelVersioning": {"type": "string", "description": "Model versioning strategy"},
+            "inputSanitization": {"type": "string", "description": "Input sanitization approach"},
+            "dataIntegrityValidation": {"type": "string", "description": "Data integrity validation methods"}
+          }
+        },
+        "whsConsiderations": {
+          "type": "object",
+          "description": "Table 2.2 & 2.3: Workplace Health and Safety Impacts",
+          "properties": {
+            "workerAutonomy": {"type": "string"},
+            "taskLoadChanges": {"type": "string"},
+            "roleRedundancyRisks": {"type": "string"},
+            "potentialHarms": {"type": "string"},
+            "trainingRequirements": {"type": "string"},
+            "stressFatigue": {"type": "string"}
+          }
+        }
+      }
+    },
+    "partB": {
+      "type": "object",
+      "description": "Part B: Values Assessment - AI Ethics Principles",
+      "required": ["ethicsPrinciples"],
+      "properties": {
+        "ethicsPrinciples": {
+          "type": "array",
+          "description": "Assessment of 8 AI Ethics Principles",
+          "minItems": 8,
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "required": ["principle", "intendedBenefits", "identifiedRisks", "plannedMitigations"],
+            "properties": {
+              "principle": {
+                "type": "string",
+                "enum": [
+                  "Human, Social and Environmental Wellbeing",
+                  "Human-Centred Values",
+                  "Fairness",
+                  "Privacy Protection and Security",
+                  "Reliability and Safety",
+                  "Transparency and Explainability",
+                  "Contestability",
+                  "Accountability"
+                ]
+              },
+              "intendedBenefits": {
+                "type": "array",
+                "description": "Documented intended benefits for this principle",
+                "items": {"type": "string"}
+              },
+              "identifiedRisks": {
+                "type": "array",
+                "description": "Identified risks related to this principle",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "risk": {"type": "string"},
+                    "severity": {"type": "string", "enum": ["Low", "Medium", "High", "Critical"]},
+                    "nistCompetencies": {"type": "array", "items": {"type": "string"}}
+                  }
+                }
+              },
+              "plannedMitigations": {
+                "type": "array",
+                "description": "Planned mitigation measures",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "mitigation": {"type": "string"},
+                    "responsibility": {"type": "string"},
+                    "timeline": {"type": "string"}
+                  }
+                }
+              },
+              "legislativeReferences": {
+                "type": "array",
+                "description": "Relevant legislation",
+                "items": {"type": "string"}
+              }
+            }
+          }
+        },
+        "whsAlignment": {
+          "type": "object",
+          "description": "WHS Act 2011 Alignment",
+          "properties": {
+            "workplaceSafety": {"type": "string"},
+            "mentalWellbeing": {"type": "string"},
+            "ergonomicImpacts": {"type": "string"},
+            "socialWellbeing": {"type": "string"}
+          }
+        },
+        "legislativeCompliance": {
+          "type": "array",
+          "description": "Legislative compliance assessment",
+          "items": {
+            "type": "object",
+            "properties": {
+              "legislation": {"type": "string"},
+              "complianceStatus": {"type": "string", "enum": ["Compliant", "Partial", "Non-Compliant", "Not Applicable"]},
+              "notes": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "partC": {
+      "type": "object",
+      "description": "Part C: Controls for AI Risks",
+      "required": ["controlPlan"],
+      "properties": {
+        "controlPlan": {
+          "type": "array",
+          "description": "Comprehensive control suite",
+          "items": {
+            "type": "object",
+            "required": ["controlId", "controlType", "description", "linkedRisks"],
+            "properties": {
+              "controlId": {
+                "type": "string",
+                "pattern": "^CTRL-\\d{4}$"
+              },
+              "controlType": {
+                "type": "string",
+                "enum": ["Technical", "Policy", "Human-Centred", "Engagement", "Administrative"]
+              },
+              "description": {
+                "type": "string"
+              },
+              "linkedRisks": {
+                "type": "array",
+                "description": "Risk IDs this control addresses",
+                "items": {
+                  "type": "string",
+                  "pattern": "^RISK-\\d{4}$"
+                }
+              },
+              "owner": {
+                "type": "object",
+                "properties": {
+                  "name": {"type": "string"},
+                  "role": {"type": "string"},
+                  "contactEmail": {"type": "string", "format": "email"}
+                }
+              },
+              "implementationStatus": {
+                "type": "string",
+                "enum": ["Not Started", "In Progress", "Implemented", "Verified"]
+              },
+              "implementationDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "effectivenessRating": {
+                "type": "string",
+                "enum": ["Not Effective", "Partially Effective", "Largely Effective", "Fully Effective"]
+              },
+              "testingRequired": {
+                "type": "boolean"
+              },
+              "testingResults": {
+                "type": "string"
+              },
+              "microsoftControls": {
+                "type": "array",
+                "description": "Related Microsoft AI Security controls",
+                "items": {"type": "string"}
+              },
+              "vaissGuardrails": {
+                "type": "array",
+                "description": "VAISS guardrails addressed",
+                "items": {"type": "integer", "minimum": 1, "maximum": 10}
+              }
+            }
+          }
+        },
+        "controlCategories": {
+          "type": "object",
+          "description": "Controls grouped by category",
+          "properties": {
+            "technicalControls": {"type": "array", "items": {"type": "string"}},
+            "policyControls": {"type": "array", "items": {"type": "string"}},
+            "humanCentredControls": {"type": "array", "items": {"type": "string"}},
+            "engagementControls": {"type": "array", "items": {"type": "string"}}
+          }
+        }
+      }
+    },
+    "approvals": {
+      "type": "object",
+      "description": "Assessment approvals and sign-offs",
+      "properties": {
+        "assessmentCompleted": {
+          "type": "object",
+          "properties": {
+            "date": {"type": "string", "format": "date"},
+            "completedBy": {"type": "string"}
+          }
+        },
+        "executiveApproval": {
+          "type": "object",
+          "properties": {
+            "approved": {"type": "boolean"},
+            "approver": {"type": "string"},
+            "approvalDate": {"type": "string", "format": "date"},
+            "conditions": {"type": "string"}
+          }
+        },
+        "nextReviewDate": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    }
+  }
+}

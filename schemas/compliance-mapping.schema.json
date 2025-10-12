@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/OAK-AI-Public/ai-risk-assurance-faira-microsoft/schemas/compliance-mapping.schema.json",
+  "title": "Cross-Framework Compliance Mapping",
+  "description": "Schema for mapping compliance requirements across multiple AI governance frameworks",
+  "type": "object",
+  "required": ["metadata", "mappings"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["version", "lastUpdated"],
+      "properties": {
+        "version": {"type": "string"},
+        "lastUpdated": {"type": "string", "format": "date"},
+        "frameworksIncluded": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "purpose": {"type": "string"}
+      }
+    },
+    "mappings": {
+      "type": "array",
+      "description": "Cross-framework requirement mappings",
+      "items": {
+        "type": "object",
+        "required": ["mappingId", "primaryFramework"],
+        "properties": {
+          "mappingId": {
+            "type": "string",
+            "pattern": "^MAP-\\d{4}$"
+          },
+          "primaryFramework": {
+            "type": "string",
+            "enum": ["FAIRA", "Microsoft AI Security", "NIST", "VAISS", "NFAAIG", "ISO42001", "NAIC RAI Index"]
+          },
+          "requirementTitle": {
+            "type": "string"
+          },
+          "requirementDescription": {
+            "type": "string"
+          },
+          "frameworkReferences": {
+            "type": "object",
+            "properties": {
+              "faira": {
+                "type": "object",
+                "properties": {
+                  "part": {"type": "string"},
+                  "section": {"type": "string"},
+                  "table": {"type": "string"},
+                  "requirement": {"type": "string"}
+                }
+              },
+              "microsoftAI": {
+                "type": "object",
+                "properties": {
+                  "phase": {"type": "string"},
+                  "control": {"type": "string"},
+                  "requirementId": {"type": "string"}
+                }
+              },
+              "nistAICompetency": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "competencyId": {"type": "string", "pattern": "^AI-[KS]-\\d{3}$"},
+                    "competencyTitle": {"type": "string"}
+                  }
+                }
+              },
+              "vaiss": {
+                "type": "object",
+                "properties": {
+                  "guardrail": {"type": "integer", "minimum": 1, "maximum": 10},
+                  "guardrailName": {"type": "string"},
+                  "requirement": {"type": "string"}
+                }
+              },
+              "nfaaig": {
+                "type": "object",
+                "properties": {
+                  "cornerstone": {"type": "string"},
+                  "requirement": {"type": "string"}
+                }
+              },
+              "iso42001": {
+                "type": "object",
+                "properties": {
+                  "clause": {"type": "string"},
+                  "annexAControl": {"type": "string"},
+                  "requirement": {"type": "string"}
+                }
+              },
+              "naicRAI": {
+                "type": "object",
+                "properties": {
+                  "dimension": {"type": "string", "enum": [
+                    "Accountability & Oversight",
+                    "Safety & Resilience",
+                    "Fairness",
+                    "Transparency",
+                    "Explainability & Contestability"
+                  ]},
+                  "practice": {"type": "string"}
+                }
+              },
+              "aiEthicsPrinciples": {
+                "type": "array",
+                "items": {"type": "string"}
+              }
+            }
+          },
+          "implementationGuidance": {
+            "type": "string",
+            "description": "Unified implementation guidance across frameworks"
+          },
+          "controls": {
+            "type": "array",
+            "description": "Controls that address this requirement",
+            "items": {
+              "type": "string",
+              "pattern": "^CTRL-\\d{4}$"
+            }
+          },
+          "riskTypes": {
+            "type": "array",
+            "description": "Risk types this requirement addresses",
+            "items": {"type": "string"}
+          },
+          "maturityLevel": {
+            "type": "string",
+            "enum": ["Basic", "Intermediate", "Advanced", "Leading Practice"]
+          },
+          "priority": {
+            "type": "string",
+            "enum": ["Low", "Medium", "High", "Critical"]
+          }
+        }
+      }
+    },
+    "frameworkAlignmentMatrix": {
+      "type": "object",
+      "description": "Matrix showing alignment between frameworks",
+      "additionalProperties": {
+        "type": "object",
+        "description": "Framework-to-framework alignment",
+        "additionalProperties": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "sourceRequirement": {"type": "string"},
+              "targetRequirement": {"type": "string"},
+              "alignmentStrength": {"type": "string", "enum": ["Full", "Partial", "Related", "None"]}
+            }
+          }
+        }
+      }
+    },
+    "gapAnalysis": {
+      "type": "object",
+      "description": "Gaps between frameworks",
+      "properties": {
+        "uniqueToFAIRA": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "uniqueToVAISS": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "uniqueToNFAAIG": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "commonRequirements": {
+          "type": "array",
+          "description": "Requirements common across all frameworks",
+          "items": {"type": "string"}
+        }
+      }
+    }
+  }
+}

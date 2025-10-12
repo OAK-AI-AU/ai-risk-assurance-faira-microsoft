@@ -1,0 +1,170 @@
+name: Validate Schemas
+
+on:
+  workflow_dispatch:
+
+jobs:
+  validate-python:
+    name: Validate with Python
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: 'tools/requirements.txt'
+
+      - name: Install Python dependencies
+        run: |
+          cd tools
+          pip install -r requirements.txt
+
+      - name: Validate all example files
+        run: |
+          cd tools
+          python validate_schemas.py --all --verbose
+
+      - name: Validate sample risk register
+        run: |
+          cd tools
+          python validate_schemas.py ../examples/sample-risk-register.json --verbose
+
+  validate-nodejs:
+    name: Validate with Node.js
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'tools/package-lock.json'
+
+      - name: Install Node.js dependencies
+        run: |
+          cd tools
+          npm ci
+
+      - name: Validate all example files
+        run: |
+          cd tools
+          npm test
+
+      - name: Validate sample risk register
+        run: |
+          cd tools
+          node validate-schemas.js ../examples/sample-risk-register.json --verbose
+
+  schema-checks:
+    name: Schema Quality Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check JSON schema syntax
+        uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          version: "latest"
+          file: "check-jsonschema"
+          target: "/usr/local/bin/check-jsonschema"
+        continue-on-error: true
+
+      - name: Validate JSON Schema files
+        run: |
+          # Validate that schemas themselves are valid JSON Schema Draft 2020-12
+          for schema in schemas/*.json; do
+            echo "Checking $schema..."
+            if ! jq empty "$schema" 2>/dev/null; then
+              echo "❌ Invalid JSON syntax: $schema"
+              exit 1
+            fi
+            echo "✅ Valid JSON: $schema"
+          done
+
+      - name: Check for required schema properties
+        run: |
+          # Ensure all schemas have required metadata
+          for schema in schemas/*.json; do
+            echo "Checking metadata in $schema..."
+
+            # Check for $schema property
+            if ! jq -e '."$schema"' "$schema" > /dev/null; then
+              echo "⚠️  Missing \$schema property in: $schema"
+            fi
+
+            # Check for $id property
+            if ! jq -e '."$id"' "$schema" > /dev/null; then
+              echo "⚠️  Missing \$id property in: $schema"
+            fi
+
+            # Check for title
+            if ! jq -e '.title' "$schema" > /dev/null; then
+              echo "⚠️  Missing title in: $schema"
+            fi
+
+            # Check for description
+            if ! jq -e '.description' "$schema" > /dev/null; then
+              echo "⚠️  Missing description in: $schema"
+            fi
+
+            echo "✅ Metadata checked: $schema"
+          done
+
+  matrix-validation:
+    name: Cross-platform Validation
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ['3.9', '3.10', '3.11', '3.12']
+      fail-fast: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+          cache-dependency-path: 'tools/requirements.txt'
+
+      - name: Install dependencies
+        run: |
+          cd tools
+          pip install -r requirements.txt
+
+      - name: Run validation
+        run: |
+          cd tools
+          python validate_schemas.py --all
+
+  report:
+    name: Generate Validation Report
+    runs-on: ubuntu-latest
+    needs: [validate-python, validate-nodejs, schema-checks]
+    if: always()
+
+    steps:
+      - name: Generate summary
+        run: |
+          echo "## Validation Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Results" >> $GITHUB_STEP_SUMMARY
+          echo "- Python Validation: ${{ needs.validate-python.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Node.js Validation: ${{ needs.validate-nodejs.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Schema Quality Checks: ${{ needs.schema-checks.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ All schema validations completed" >> $GITHUB_STEP_SUMMARY

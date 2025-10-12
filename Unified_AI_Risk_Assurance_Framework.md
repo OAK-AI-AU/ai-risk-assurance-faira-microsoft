@@ -12,7 +12,10 @@ It consolidates:
 
 - Robust public sector governance and ethics expectations
 - Technical security controls across the AI pipeline
-- Alignment with national standards like the NFAAIG (2024), NIST AI Security Competency Area, and ACSC AI Security Guidance
+- Alignment with national standards including:
+  - **National Framework for the Assurance of AI in Government (NFAAIG)** - June 2024 framework with 2025 technical standards (updated July 30, 2025)
+  - **NIST AI Security Competency Area (NF-COM-002)** - NICE Framework v2.0.0
+  - **ACSC AI Security Guidance** - Australian Cyber Security Centre guidance
 - Workplace Health and Safety (WHS) duties under the _Work Health and Safety Act 2011 (Qld)_
 - AI-specific security competencies from NIST's 46 competency statements (39 knowledge + 7 skills)
 
@@ -181,28 +184,38 @@ Use this to ensure Queensland’s public-facing and internal AI systems are:
 
 ## Appendix: NIST AI Security Competencies Integration
 
-To strengthen AI security capabilities, teams should develop competencies aligned with NIST's AI Security Competency Area:
+To strengthen AI security capabilities, teams should develop competencies aligned with NIST's AI Security Competency Area **(NF-COM-002)**, which describes capabilities to secure Artificial Intelligence (AI) against cyberattacks, ensure it is adequately contained where used, and mitigate threats AI presents where used with malicious intent.
+
+### Framework Status & Updates
+
+- **Source**: NICE Workforce Framework for Cybersecurity (NIST SP 800-181 Rev 1)
+- **Competency Area**: NF-COM-002 (AI Security)
+- **Current Version**: NICE Framework Components v2.0.0 (March 2025)
+- **Proposed Updates**: June 2025 - Additional Knowledge and Skill statements proposed (public comment closed July 17, 2025)
+
+The framework currently references **46 AI-specific competencies** (39 knowledge areas + 7 skills) based on the March 2024 release, with enhancements proposed in June 2025 pending finalization.
 
 ### Essential Knowledge Areas
 
 - **AI Model Vulnerabilities (AI-K005)**: Understanding attack vectors specific to ML models
 - **Data Poisoning (AI-K013)**: Recognizing and preventing training data manipulation
 - **AI Bias Types (AI-K003)**: Comprehensive taxonomy of bias in AI systems
+- **AI Common Security Risks (AI-K007)**: Understanding general security risks in AI systems
 - **Misinformation Risks (AI-K023)**: AI-generated content risks and detection
 - **NIST AI RMF (AI-K024)**: Framework for systematic AI risk management
 
 ### Critical Skills
 
-- **Prompt Engineering Security (AI-S002)**: Secure interaction with generative AI
-- **Hallucination Detection (AI-S006)**: Identifying AI-generated errors
-- **Non-explainable Risk Assessment (AI-S007)**: Measuring opacity risks
+- **Prompt Engineering Security (AI-S002)**: Secure interaction with generative AI systems
+- **Hallucination Detection (AI-S006)**: Identifying AI-generated errors and false outputs
+- **Non-explainable Risk Assessment (AI-S007)**: Measuring opacity risks in AI decision-making
 
 ### Security Paradigms
 
-- **Security OF AI**: Protecting AI systems from adversarial attacks, data poisoning, model theft
-- **Security THROUGH AI**: Leveraging AI for threat detection, anomaly identification, automated response
+- **Security OF AI**: Protecting AI systems from adversarial attacks, data poisoning, model theft, and other targeted threats
+- **Security THROUGH AI**: Leveraging AI for threat detection, anomaly identification, automated response, and enhanced cybersecurity operations
 
-This competency framework ensures teams have the necessary skills to implement secure AI systems throughout their lifecycle.
+This competency framework ensures teams have the necessary knowledge and skills to implement secure AI systems throughout their lifecycle. For the latest updates and complete competency listings, consult the [NICE Framework Resource Center](https://www.nist.gov/itl/applied-cybersecurity/nice/nice-framework-resource-center) and [NICCS NICE Framework Tools](https://niccs.cisa.gov/tools/nice-framework).
 
 ---
 
@@ -210,8 +223,26 @@ This competency framework ensures teams have the necessary skills to implement s
 
 This unified framework integrates well with complementary assessment and benchmarking tools:
 
+### Australian Government Frameworks
+
+- **[National Framework for the Assurance of AI in Government (NFAAIG)](https://www.finance.gov.au/government/public-data/data-and-digital-ministers-meeting/national-framework-assurance-artificial-intelligence-government)** - Agreed June 2024, updated 2025
+  - **Five Cornerstones**: Governance, data governance, risk-based approach, standards, and procurement
+  - **Technical Standard**: Updated July 30, 2025
+  - **Pilot Programs**: Completed 2024-2025 with agency feedback
+  - **Policy Requirements**: Accountable officials designated by Nov 30, 2024; AI transparency statements by Feb 28, 2025
+  - Based on Australia's 8 AI Ethics Principles for nationally consistent AI assurance
+
 - **[Australian Responsible AI Index 2025](./frameworks/naic-rai-index-2025.md)** (NAIC/Fifth Quadrant) - Use for organisational maturity benchmarking and peer comparison aligned with VAISS guardrails
-- **NIST AI Risk Management Framework** - Provides structured risk governance approach
+
+- **[Voluntary AI Safety Standard (VAISS)](https://www.industry.gov.au/publications/voluntary-ai-safety-standard)** - Released September 2024, v2 planned for 2025
+  - **10 Guardrails**: Accountability, risk management, data governance, testing, human oversight, transparency, contestability, supply chain transparency, compliance, stakeholder engagement
+  - Aligned with ISO/IEC 42001:2023 and NIST AI RMF 1.0
+  - Applies to both AI deployers and developers
+
+### International Frameworks
+
+- **NIST AI Risk Management Framework (AI RMF)** - Provides structured risk governance approach
+- **ISO/IEC 42001:2023** - International standard for AI management systems
 - **OECD AI Principles** - International best practice alignment
 - **EU AI Act** - Regulatory compliance considerations
 

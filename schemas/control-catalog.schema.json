@@ -1,0 +1,247 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/OAK-AI-Public/ai-risk-assurance-faira-microsoft/schemas/control-catalog.schema.json",
+  "title": "AI Control Catalog",
+  "description": "Comprehensive catalog of AI security and governance controls from multiple frameworks",
+  "type": "object",
+  "required": ["metadata", "controls"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["version", "lastUpdated"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date"
+        },
+        "frameworksIncluded": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "controls": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["controlId", "title", "category", "frameworks"],
+        "properties": {
+          "controlId": {
+            "type": "string",
+            "description": "Unique control identifier",
+            "pattern": "^CTRL-\\d{4}$"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 200
+          },
+          "description": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["Technical", "Policy", "Human-Centred", "Engagement", "Administrative"]
+          },
+          "subcategory": {
+            "type": "string"
+          },
+          "frameworks": {
+            "type": "object",
+            "description": "Framework mappings for this control",
+            "properties": {
+              "faira": {
+                "type": "object",
+                "properties": {
+                  "part": {
+                    "type": "string",
+                    "enum": ["Part A", "Part B", "Part C"]
+                  },
+                  "section": {
+                    "type": "string"
+                  }
+                }
+              },
+              "microsoftAI": {
+                "type": "object",
+                "properties": {
+                  "phase": {
+                    "type": "string",
+                    "enum": ["Design", "Development", "Deployment", "Operations", "Monitoring"]
+                  },
+                  "controlReference": {
+                    "type": "string"
+                  }
+                }
+              },
+              "nistCompetencies": {
+                "type": "array",
+                "description": "Related NIST AI Security Competencies",
+                "items": {
+                  "type": "string",
+                  "pattern": "^AI-[KS]-\\d{3}$"
+                }
+              },
+              "vaissGuardrails": {
+                "type": "array",
+                "description": "VAISS guardrails this control addresses",
+                "items": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10
+                }
+              },
+              "nfaaig": {
+                "type": "object",
+                "properties": {
+                  "cornerstone": {
+                    "type": "string",
+                    "enum": ["Governance", "Data Governance", "Risk-Based Approach", "Standards", "Procurement"]
+                  }
+                }
+              },
+              "iso42001": {
+                "type": "object",
+                "properties": {
+                  "clause": {
+                    "type": "string"
+                  },
+                  "annexAControl": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "aiEthicsPrinciples": {
+            "type": "array",
+            "description": "Australian AI Ethics Principles addressed",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Human, Social and Environmental Wellbeing",
+                "Human-Centred Values",
+                "Fairness",
+                "Privacy Protection and Security",
+                "Reliability and Safety",
+                "Transparency and Explainability",
+                "Contestability",
+                "Accountability"
+              ]
+            }
+          },
+          "applicableRiskTypes": {
+            "type": "array",
+            "description": "Risk types this control mitigates",
+            "items": {
+              "type": "string"
+            }
+          },
+          "implementationGuidance": {
+            "type": "object",
+            "properties": {
+              "overview": {
+                "type": "string",
+                "description": "High-level implementation guidance"
+              },
+              "steps": {
+                "type": "array",
+                "description": "Step-by-step implementation instructions",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "stepNumber": {"type": "integer"},
+                    "description": {"type": "string"},
+                    "estimatedEffort": {"type": "string"}
+                  }
+                }
+              },
+              "prerequisites": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "tools": {
+                "type": "array",
+                "description": "Tools required for implementation",
+                "items": {"type": "string"}
+              }
+            }
+          },
+          "testingGuidance": {
+            "type": "object",
+            "properties": {
+              "testMethod": {"type": "string"},
+              "acceptanceCriteria": {"type": "string"},
+              "testFrequency": {"type": "string"}
+            }
+          },
+          "relatedControls": {
+            "type": "array",
+            "description": "Other controls that complement this one",
+            "items": {
+              "type": "string",
+              "pattern": "^CTRL-\\d{4}$"
+            }
+          },
+          "estimatedCost": {
+            "type": "string",
+            "enum": ["Low", "Medium", "High", "Very High"]
+          },
+          "estimatedEffectiveness": {
+            "type": "string",
+            "enum": ["Low", "Medium", "High", "Very High"]
+          },
+          "maturityLevel": {
+            "type": "string",
+            "enum": ["Basic", "Intermediate", "Advanced", "Leading Practice"],
+            "description": "Organizational maturity needed to implement"
+          },
+          "examples": {
+            "type": "array",
+            "description": "Real-world implementation examples",
+            "items": {
+              "type": "object",
+              "properties": {
+                "context": {"type": "string"},
+                "implementation": {"type": "string"},
+                "outcome": {"type": "string"}
+              }
+            }
+          },
+          "references": {
+            "type": "array",
+            "description": "Reference documentation and standards",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {"type": "string"},
+                "url": {"type": "string", "format": "uri"},
+                "type": {"type": "string", "enum": ["Standard", "Guidance", "Research", "Best Practice"]}
+              }
+            }
+          }
+        }
+      }
+    },
+    "controlSummary": {
+      "type": "object",
+      "properties": {
+        "totalControls": {"type": "integer"},
+        "byCategory": {
+          "type": "object",
+          "additionalProperties": {"type": "integer"}
+        },
+        "byFramework": {
+          "type": "object",
+          "additionalProperties": {"type": "integer"}
+        }
+      }
+    }
+  }
+}

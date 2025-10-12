@@ -1,0 +1,274 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/OAK-AI-Public/ai-risk-assurance-faira-microsoft/schemas/nist-ai-competencies.schema.json",
+  "title": "NIST AI Security Competencies",
+  "description": "Schema for NIST AI Security Competency Area (NF-COM-002) from NICE Framework",
+  "type": "object",
+  "required": ["metadata", "competencyArea", "competencies"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["version", "frameworkVersion"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Schema version"
+        },
+        "frameworkVersion": {
+          "type": "string",
+          "description": "NICE Framework version",
+          "default": "2.0.0"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date"
+        },
+        "source": {
+          "type": "string",
+          "default": "NICE Workforce Framework for Cybersecurity (NIST SP 800-181 Rev 1)"
+        }
+      }
+    },
+    "competencyArea": {
+      "type": "object",
+      "required": ["id", "name", "description"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "const": "NF-COM-002"
+        },
+        "name": {
+          "type": "string",
+          "const": "Artificial Intelligence (AI) Security"
+        },
+        "description": {
+          "type": "string",
+          "default": "Describes a learner's capabilities to secure Artificial Intelligence (AI) against cyberattacks, to ensure it is adequately contained where it is used, and to mitigate the threat AI presents where it or its users have malicious intent"
+        },
+        "paradigms": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "enum": ["Security OF AI", "Security THROUGH AI"]
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "competencies": {
+      "type": "object",
+      "properties": {
+        "knowledge": {
+          "type": "array",
+          "description": "Knowledge areas (AI-K-###)",
+          "items": {
+            "type": "object",
+            "required": ["id", "title", "description"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^AI-K-\\d{3}$",
+                "description": "Knowledge area identifier"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "AI Vulnerabilities",
+                  "Attack Vectors",
+                  "Bias and Fairness",
+                  "Data Security",
+                  "Model Security",
+                  "Risk Management",
+                  "Governance",
+                  "Threats",
+                  "Defense Mechanisms",
+                  "Other"
+                ]
+              },
+              "paradigm": {
+                "type": "string",
+                "enum": ["Security OF AI", "Security THROUGH AI", "Both"]
+              },
+              "relatedSkills": {
+                "type": "array",
+                "description": "Related skill identifiers",
+                "items": {
+                  "type": "string",
+                  "pattern": "^AI-S-\\d{3}$"
+                }
+              },
+              "proficiencyLevels": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "level": {
+                      "type": "string",
+                      "enum": ["Basic", "Intermediate", "Advanced", "Expert"]
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "learningResources": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": {"type": "string"},
+                    "url": {"type": "string", "format": "uri"},
+                    "type": {"type": "string", "enum": ["Course", "Documentation", "Research Paper", "Tutorial", "Certification"]}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "skills": {
+          "type": "array",
+          "description": "Skills (AI-S-###)",
+          "items": {
+            "type": "object",
+            "required": ["id", "title", "description"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^AI-S-\\d{3}$",
+                "description": "Skill identifier"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "Security Testing",
+                  "Risk Assessment",
+                  "Threat Detection",
+                  "Prompt Engineering",
+                  "Model Evaluation",
+                  "Incident Response",
+                  "Defense Implementation",
+                  "Other"
+                ]
+              },
+              "paradigm": {
+                "type": "string",
+                "enum": ["Security OF AI", "Security THROUGH AI", "Both"]
+              },
+              "relatedKnowledge": {
+                "type": "array",
+                "description": "Related knowledge area identifiers",
+                "items": {
+                  "type": "string",
+                  "pattern": "^AI-K-\\d{3}$"
+                }
+              },
+              "prerequisiteSkills": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^AI-S-\\d{3}$"
+                }
+              },
+              "proficiencyLevels": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "level": {
+                      "type": "string",
+                      "enum": ["Basic", "Intermediate", "Advanced", "Expert"]
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "practicalExercises": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": {"type": "string"},
+                    "description": {"type": "string"},
+                    "difficulty": {"type": "string", "enum": ["Beginner", "Intermediate", "Advanced"]}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "teamAssessment": {
+      "type": "object",
+      "description": "Template for assessing team competencies",
+      "properties": {
+        "teamMembers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "role": {"type": "string"},
+              "knowledgeAreas": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "competencyId": {"type": "string", "pattern": "^AI-K-\\d{3}$"},
+                    "proficiencyLevel": {"type": "string", "enum": ["None", "Basic", "Intermediate", "Advanced", "Expert"]},
+                    "assessedDate": {"type": "string", "format": "date"}
+                  }
+                }
+              },
+              "skills": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "competencyId": {"type": "string", "pattern": "^AI-S-\\d{3}$"},
+                    "proficiencyLevel": {"type": "string", "enum": ["None", "Basic", "Intermediate", "Advanced", "Expert"]},
+                    "assessedDate": {"type": "string", "format": "date"}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "teamGaps": {
+          "type": "array",
+          "description": "Identified competency gaps",
+          "items": {
+            "type": "object",
+            "properties": {
+              "competencyId": {"type": "string"},
+              "gapSeverity": {"type": "string", "enum": ["Low", "Medium", "High", "Critical"]},
+              "trainingPlan": {"type": "string"}
+            }
+          }
+        }
+      }
+    }
+  }
+}

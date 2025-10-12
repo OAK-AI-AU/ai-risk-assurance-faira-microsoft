@@ -1,0 +1,273 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "createdDate": "2025-10-12",
+    "lastUpdated": "2025-10-12T10:30:00Z",
+    "assessmentId": "ASSESS-2025-001",
+    "projectName": "AI-Powered Customer Service Chatbot",
+    "assessor": {
+      "name": "Jane Smith",
+      "role": "AI Risk Manager",
+      "organisation": "Queensland Government Department",
+      "email": "jane.smith@example.qld.gov.au"
+    },
+    "frameworksApplied": [
+      "FAIRA v1.0.0",
+      "Microsoft AI Security Risk Assessment v4.1.4",
+      "NIST AI Security Competency (NF-COM-002)",
+      "VAISS v1.0"
+    ]
+  },
+  "risks": [
+    {
+      "riskId": "RISK-0001",
+      "title": "Prompt Injection Vulnerability",
+      "description": "Malicious users may craft prompts to bypass chatbot safety controls and extract sensitive information or generate inappropriate responses",
+      "category": "Security",
+      "threatType": "Prompt Injection",
+      "nistCompetency": ["AI-S-002"],
+      "severity": 4,
+      "likelihood": 3,
+      "riskScore": 12,
+      "impact": {
+        "safety": "Medium",
+        "privacy": "High",
+        "financial": "Low",
+        "reputational": "High",
+        "operational": "Medium",
+        "whs": "None"
+      },
+      "affectedStakeholders": [
+        "Customers",
+        "Service Staff",
+        "IT Security Team"
+      ],
+      "aiEthicsPrinciples": [
+        "Privacy Protection and Security",
+        "Reliability and Safety"
+      ],
+      "vaissGuardrails": [2, 4, 5],
+      "owner": {
+        "name": "John Doe",
+        "role": "Security Lead",
+        "contactEmail": "john.doe@example.qld.gov.au"
+      },
+      "currentControls": [
+        {
+          "controlId": "CTRL-0001",
+          "description": "Input filtering for known malicious patterns",
+          "controlType": "Technical",
+          "effectiveness": "Partially Effective"
+        }
+      ],
+      "proposedControls": [
+        {
+          "description": "Implement advanced prompt engineering security (AI-S-002)",
+          "controlType": "Technical",
+          "priority": "High",
+          "implementationCost": "Medium",
+          "estimatedEffectiveness": "High",
+          "timeline": "Q1 2026",
+          "assignedTo": "AI Engineering Team"
+        },
+        {
+          "description": "Deploy prompt injection detection system",
+          "controlType": "Technical",
+          "priority": "High",
+          "implementationCost": "High",
+          "estimatedEffectiveness": "Very High",
+          "timeline": "Q2 2026",
+          "assignedTo": "Security Team"
+        }
+      ],
+      "residualRisk": {
+        "severity": 3,
+        "likelihood": 2,
+        "riskScore": 6,
+        "acceptanceStatus": "Requires Further Mitigation"
+      },
+      "status": "Mitigation Planned",
+      "identifiedDate": "2025-09-15",
+      "lastReviewed": "2025-10-12",
+      "reviewFrequency": "Quarterly",
+      "notes": [
+        {
+          "date": "2025-10-12T10:30:00Z",
+          "author": "Jane Smith",
+          "note": "Raised priority after industry incident report"
+        }
+      ]
+    },
+    {
+      "riskId": "RISK-0002",
+      "title": "AI Hallucination in Service Responses",
+      "description": "Chatbot may generate false or fabricated information presented as factual service guidance",
+      "category": "Technical",
+      "threatType": "Hallucination",
+      "nistCompetency": ["AI-S-006"],
+      "severity": 4,
+      "likelihood": 4,
+      "riskScore": 16,
+      "impact": {
+        "safety": "High",
+        "privacy": "None",
+        "financial": "Medium",
+        "reputational": "High",
+        "operational": "High",
+        "whs": "Low"
+      },
+      "affectedStakeholders": [
+        "Customers",
+        "Service Staff",
+        "Management"
+      ],
+      "aiEthicsPrinciples": [
+        "Reliability and Safety",
+        "Transparency and Explainability"
+      ],
+      "vaissGuardrails": [4, 5, 6],
+      "owner": {
+        "name": "Sarah Johnson",
+        "role": "AI Product Owner",
+        "contactEmail": "sarah.johnson@example.qld.gov.au"
+      },
+      "currentControls": [
+        {
+          "controlId": "CTRL-0005",
+          "description": "Human review of chatbot responses",
+          "controlType": "Human-Centred",
+          "effectiveness": "Largely Effective"
+        }
+      ],
+      "proposedControls": [
+        {
+          "description": "Implement automated hallucination detection (AI-S-006)",
+          "controlType": "Technical",
+          "priority": "Critical",
+          "implementationCost": "High",
+          "estimatedEffectiveness": "High",
+          "timeline": "Q1 2026",
+          "assignedTo": "AI Engineering Team"
+        },
+        {
+          "description": "Add confidence scoring and fact-checking layer",
+          "controlType": "Technical",
+          "priority": "High",
+          "implementationCost": "Medium",
+          "estimatedEffectiveness": "Medium",
+          "timeline": "Q2 2026",
+          "assignedTo": "Data Science Team"
+        }
+      ],
+      "residualRisk": {
+        "severity": 3,
+        "likelihood": 2,
+        "riskScore": 6,
+        "acceptanceStatus": "Requires Further Mitigation"
+      },
+      "status": "Mitigation Planned",
+      "identifiedDate": "2025-08-20",
+      "lastReviewed": "2025-10-12",
+      "reviewFrequency": "Monthly"
+    },
+    {
+      "riskId": "RISK-0003",
+      "title": "Demographic Bias in Response Quality",
+      "description": "Chatbot may provide lower quality or less helpful responses to certain demographic groups due to training data bias",
+      "category": "Bias",
+      "nistCompetency": ["AI-K-003"],
+      "severity": 4,
+      "likelihood": 3,
+      "riskScore": 12,
+      "impact": {
+        "safety": "Low",
+        "privacy": "None",
+        "financial": "Low",
+        "reputational": "High",
+        "operational": "Medium",
+        "whs": "None"
+      },
+      "affectedStakeholders": [
+        "Diverse Customer Groups",
+        "Community Representatives"
+      ],
+      "aiEthicsPrinciples": [
+        "Fairness",
+        "Human-Centred Values"
+      ],
+      "vaissGuardrails": [4, 10],
+      "owner": {
+        "name": "Michael Chen",
+        "role": "Ethics Officer",
+        "contactEmail": "michael.chen@example.qld.gov.au"
+      },
+      "currentControls": [
+        {
+          "controlId": "CTRL-0010",
+          "description": "Bias testing during development",
+          "controlType": "Technical",
+          "effectiveness": "Partially Effective"
+        }
+      ],
+      "proposedControls": [
+        {
+          "description": "Implement comprehensive bias taxonomy assessment (AI-K-003)",
+          "controlType": "Technical",
+          "priority": "High",
+          "implementationCost": "Medium",
+          "estimatedEffectiveness": "High",
+          "timeline": "Q1 2026",
+          "assignedTo": "Data Science Team"
+        },
+        {
+          "description": "Establish diverse stakeholder testing panel",
+          "controlType": "Engagement",
+          "priority": "Medium",
+          "implementationCost": "Low",
+          "estimatedEffectiveness": "Medium",
+          "timeline": "Q4 2025",
+          "assignedTo": "Community Engagement Team"
+        }
+      ],
+      "residualRisk": {
+        "severity": 2,
+        "likelihood": 2,
+        "riskScore": 4,
+        "acceptanceStatus": "Accepted",
+        "acceptedBy": "Chief Information Officer",
+        "acceptanceDate": "2025-10-12",
+        "acceptanceJustification": "Residual risk acceptable with ongoing monitoring and stakeholder engagement"
+      },
+      "status": "Mitigation In Progress",
+      "identifiedDate": "2025-07-10",
+      "lastReviewed": "2025-10-12",
+      "reviewFrequency": "Quarterly"
+    }
+  ],
+  "summary": {
+    "totalRisks": 3,
+    "risksByCategory": {
+      "Security": 1,
+      "Technical": 1,
+      "Bias": 1
+    },
+    "risksBySeverity": {
+      "critical": 0,
+      "high": 3,
+      "medium": 0,
+      "low": 0,
+      "veryLow": 0
+    },
+    "risksByStatus": {
+      "Identified": 0,
+      "Assessed": 0,
+      "Mitigation Planned": 2,
+      "Mitigation In Progress": 1,
+      "Mitigated": 0,
+      "Accepted": 0,
+      "Closed": 0
+    },
+    "averageRiskScore": 13.33,
+    "highestRiskScore": 16
+  }
+}

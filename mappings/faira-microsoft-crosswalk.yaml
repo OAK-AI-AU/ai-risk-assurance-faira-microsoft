@@ -1,0 +1,399 @@
+# FAIRA-Microsoft AI Security Cross-Framework Crosswalk
+# Maps FAIRA Framework components to Microsoft AI Security Risk Assessment controls
+
+metadata:
+  title: "FAIRA-Microsoft AI Security Crosswalk"
+  version: "1.0.0"
+  lastUpdated: "2025-10-12"
+  description: "Detailed mapping between Queensland FAIRA Framework and Microsoft AI Security Risk Assessment"
+  frameworks:
+    faira:
+      name: "Foundational Artificial Intelligence Risk Assessment"
+      version: "1.0.0"
+      jurisdiction: "Queensland Government, Australia"
+      source: "https://www.forgov.qld.gov.au"
+    microsoft:
+      name: "Microsoft AI Security Risk Assessment"
+      version: "4.1.4"
+      source: "https://learn.microsoft.com/en-us/security/ai-red-team/ai-risk-assessment"
+
+# Part A: Components Analysis Mappings
+part_a_mappings:
+  - faira_component: "Part A - Solution Overview"
+    faira_table: "Table 1"
+    microsoft_phase: "Design"
+    microsoft_controls:
+      - "Define AI solution scope and boundaries"
+      - "Document intended use cases"
+      - "Identify stakeholders and affected parties"
+    alignment_strength: "Full"
+
+  - faira_component: "Part A - Component Architecture"
+    faira_table: "Table 2"
+    microsoft_phase: "Design"
+    microsoft_controls:
+      - "Model selection and architecture documentation"
+      - "Third-party component risk assessment"
+      - "Supply chain transparency requirements"
+    alignment_strength: "Full"
+    notes: "Microsoft emphasizes supply chain security more explicitly"
+
+  - faira_component: "Part A - Interfaces"
+    faira_table: "Table 3"
+    microsoft_phase: "Development"
+    microsoft_controls:
+      - "API endpoint security"
+      - "Input validation and sanitization"
+      - "Authentication and authorization controls"
+      - "Attack surface mapping"
+    alignment_strength: "Full"
+    nist_competencies:
+      - "AI-K-007"  # AI common security risks
+      - "AI-S-002"  # Secure prompt engineering
+
+  - faira_component: "Part A - Data Sources"
+    faira_table: "Table 4"
+    microsoft_phase: "Development"
+    microsoft_controls:
+      - "Data provenance tracking"
+      - "Data poisoning prevention"
+      - "Training data integrity validation"
+      - "Data source security assessment"
+    alignment_strength: "Full"
+    nist_competencies:
+      - "AI-K-013"  # Data poisoning knowledge
+
+  - faira_component: "Part A - Data Types"
+    faira_table: "Table 5"
+    microsoft_phase: "Development"
+    microsoft_controls:
+      - "Data classification and handling"
+      - "Privacy protection controls"
+      - "Sensitive data encryption"
+      - "Data minimization principles"
+    alignment_strength: "Full"
+
+  - faira_component: "Part A - Outputs"
+    faira_table: "Table 6"
+    microsoft_phase: "Deployment"
+    microsoft_controls:
+      - "Output validation and filtering"
+      - "Hallucination detection and mitigation"
+      - "Automated action safety controls"
+      - "Decision support transparency"
+    alignment_strength: "Partial"
+    notes: "Microsoft provides more detailed output security controls"
+    nist_competencies:
+      - "AI-S-006"  # Hallucination identification
+
+  - faira_component: "Part A - Technical Security Controls"
+    faira_section: "RBAC, versioning, sanitization"
+    microsoft_phase: "Operations"
+    microsoft_controls:
+      - "Role-Based Access Control (RBAC)"
+      - "Model versioning and rollback"
+      - "Input sanitization at all interfaces"
+      - "Data integrity validation pipelines"
+      - "Security monitoring and logging"
+    alignment_strength: "Full"
+
+  - faira_component: "Part A - WHS Considerations"
+    faira_table: "Tables 2.2 & 2.3"
+    microsoft_phase: "Design"
+    microsoft_controls:
+      - "Human-AI interaction safety"
+      - "Worker impact assessment"
+      - "Automation safety controls"
+    alignment_strength: "Partial"
+    notes: "FAIRA has more comprehensive WHS focus; Microsoft focuses on technical safety"
+
+# Part B: Values Assessment Mappings
+part_b_mappings:
+  - ai_ethics_principle: "Human, Social and Environmental Wellbeing"
+    faira_approach: "Values-based risk identification"
+    microsoft_controls:
+      - "Impact assessment on communities"
+      - "Safety and harm prevention controls"
+      - "Environmental impact consideration"
+    alignment_strength: "Partial"
+    notes: "FAIRA more explicit on wellbeing; Microsoft focuses on harm prevention"
+
+  - ai_ethics_principle: "Human-Centred Values"
+    faira_approach: "Human dignity and rights assessment"
+    microsoft_controls:
+      - "Human oversight mechanisms"
+      - "Autonomy preservation controls"
+      - "Respect for human agency"
+    alignment_strength: "Partial"
+
+  - ai_ethics_principle: "Fairness"
+    faira_approach: "Bias risk assessment"
+    microsoft_controls:
+      - "Bias testing and mitigation"
+      - "Fairness metrics implementation"
+      - "Discrimination prevention controls"
+      - "Adversarial bias testing"
+    alignment_strength: "Full"
+    nist_competencies:
+      - "AI-K-003"  # AI bias types
+
+  - ai_ethics_principle: "Privacy Protection and Security"
+    faira_approach: "Privacy Impact Assessment linkage"
+    microsoft_controls:
+      - "Privacy-preserving techniques"
+      - "Data protection controls"
+      - "Membership inference prevention"
+      - "Model inversion attack mitigation"
+    alignment_strength: "Full"
+
+  - ai_ethics_principle: "Reliability and Safety"
+    faira_approach: "Safety requirements definition"
+    microsoft_controls:
+      - "Adversarial robustness testing"
+      - "Failure mode analysis"
+      - "Safety testing protocols"
+      - "Performance monitoring"
+    alignment_strength: "Full"
+    nist_competencies:
+      - "AI-K-005"  # AI model vulnerabilities
+
+  - ai_ethics_principle: "Transparency and Explainability"
+    faira_approach: "Transparency notice requirements"
+    microsoft_controls:
+      - "Model explainability techniques"
+      - "Decision audit trails"
+      - "Transparency reporting"
+    alignment_strength: "Full"
+    nist_competencies:
+      - "AI-S-007"  # Non-explainable risk assessment
+
+  - ai_ethics_principle: "Contestability"
+    faira_approach: "Appeal process design"
+    microsoft_controls:
+      - "Human review mechanisms"
+      - "Decision override capabilities"
+      - "Feedback loop implementation"
+    alignment_strength: "Partial"
+    notes: "FAIRA more detailed on contestability; Microsoft focuses on human oversight"
+
+  - ai_ethics_principle: "Accountability"
+    faira_approach: "Responsibility matrix"
+    microsoft_controls:
+      - "Audit logging"
+      - "Governance structures"
+      - "Compliance monitoring"
+      - "Incident response procedures"
+    alignment_strength: "Full"
+
+# Part C: Controls Mappings
+part_c_mappings:
+  - control_type: "Technical Controls"
+    faira_examples:
+      - "Encryption at rest and in transit"
+      - "Adversarial training"
+      - "Input validation"
+      - "Security testing"
+    microsoft_lifecycle_phase: "Development & Operations"
+    microsoft_controls:
+      - "Encryption controls (data & model)"
+      - "Adversarial robustness training"
+      - "Input sanitization and validation"
+      - "Red team testing"
+      - "Penetration testing"
+      - "Vulnerability scanning"
+    common_elements:
+      - "Encryption"
+      - "Input validation"
+      - "Security testing"
+    differences:
+      microsoft_additions:
+        - "Model signing and verification"
+        - "Secure enclaves for sensitive operations"
+        - "Runtime anomaly detection"
+
+  - control_type: "Policy Controls"
+    faira_examples:
+      - "Privacy Impact Assessment"
+      - "Records management"
+      - "WHS documentation"
+    microsoft_lifecycle_phase: "All Phases"
+    microsoft_controls:
+      - "AI governance policy"
+      - "Data governance framework"
+      - "Incident response policy"
+      - "Third-party management policy"
+    common_elements:
+      - "Privacy assessment"
+      - "Documentation requirements"
+      - "Governance frameworks"
+    differences:
+      faira_additions:
+        - "WHS-specific policies"
+        - "Queensland legislation compliance"
+
+  - control_type: "Human-Centred Controls"
+    faira_examples:
+      - "Consent mechanisms"
+      - "Clear interfaces"
+      - "Worker retraining support"
+    microsoft_lifecycle_phase: "Design & Deployment"
+    microsoft_controls:
+      - "Consent management"
+      - "User experience security"
+      - "Human-in-the-loop design"
+      - "Transparency disclosures"
+    common_elements:
+      - "Consent"
+      - "User-friendly interfaces"
+      - "Human oversight"
+    differences:
+      faira_additions:
+        - "Worker support programs"
+        - "Retraining initiatives"
+
+  - control_type: "Engagement Controls"
+    faira_examples:
+      - "Stakeholder feedback"
+      - "WHS committee engagement"
+      - "Transparency reporting"
+    microsoft_lifecycle_phase: "All Phases"
+    microsoft_controls:
+      - "Stakeholder communication"
+      - "External audit engagement"
+      - "Responsible disclosure"
+    common_elements:
+      - "Stakeholder engagement"
+      - "External review"
+    differences:
+      faira_additions:
+        - "WHS committee specific engagement"
+        - "Community consultation"
+
+# Microsoft Threat Types to FAIRA Risk Categories
+threat_mappings:
+  - microsoft_threat: "Model Inversion"
+    faira_category: "Security"
+    faira_principle: "Privacy Protection and Security"
+    nist_competency: "AI-K-005"
+    severity_typical: "High"
+
+  - microsoft_threat: "Data Poisoning"
+    faira_category: "Security"
+    faira_principle: "Reliability and Safety"
+    nist_competency: "AI-K-013"
+    severity_typical: "Critical"
+
+  - microsoft_threat: "Adversarial Input"
+    faira_category: "Security"
+    faira_principle: "Reliability and Safety"
+    nist_competency: "AI-K-005"
+    severity_typical: "Medium to High"
+
+  - microsoft_threat: "Model Theft/Extraction"
+    faira_category: "Security"
+    faira_principle: "Privacy Protection and Security"
+    nist_competency: "AI-K-005"
+    severity_typical: "High"
+
+  - microsoft_threat: "Privacy Breach"
+    faira_category: "Privacy"
+    faira_principle: "Privacy Protection and Security"
+    nist_competency: "AI-K-007"
+    severity_typical: "Critical"
+
+  - microsoft_threat: "Evasion Attack"
+    faira_category: "Security"
+    faira_principle: "Reliability and Safety"
+    nist_competency: "AI-K-005"
+    severity_typical: "Medium"
+
+  - microsoft_threat: "Hallucination"
+    faira_category: "Technical"
+    faira_principle: "Reliability and Safety"
+    nist_competency: "AI-S-006"
+    severity_typical: "Medium to High"
+
+  - microsoft_threat: "Misinformation Generation"
+    faira_category: "Ethical"
+    faira_principle: "Human, Social and Environmental Wellbeing"
+    nist_competency: "AI-K-023"
+    severity_typical: "High"
+
+  - microsoft_threat: "Prompt Injection"
+    faira_category: "Security"
+    faira_principle: "Reliability and Safety"
+    nist_competency: "AI-S-002"
+    severity_typical: "Medium to High"
+
+# Lifecycle Phase Mappings
+lifecycle_mappings:
+  - faira_phase: "Step 1: Team Formation and Planning"
+    microsoft_phase: "Pre-Design"
+    activities:
+      - "Team competency assessment (NIST)"
+      - "Security requirements definition"
+      - "Threat modeling initiation"
+
+  - faira_phase: "Step 2: Define AI Solution"
+    microsoft_phase: "Design"
+    activities:
+      - "Architecture security review"
+      - "Attack surface analysis"
+      - "Data flow security mapping"
+
+  - faira_phase: "Step 3: Values Assessment"
+    microsoft_phase: "Design & Development"
+    activities:
+      - "Ethics review"
+      - "Fairness testing plan"
+      - "Privacy controls design"
+
+  - faira_phase: "Step 4: Risk Assessment"
+    microsoft_phase: "Design & Development"
+    activities:
+      - "Threat assessment using Microsoft matrix"
+      - "Risk scoring"
+      - "Control prioritization"
+
+  - faira_phase: "Step 5: Controls Planning"
+    microsoft_phase: "Development"
+    activities:
+      - "Security control implementation"
+      - "Testing strategy definition"
+      - "Monitoring design"
+
+  - faira_phase: "Step 6: Documentation"
+    microsoft_phase: "All Phases"
+    activities:
+      - "Control documentation"
+      - "Compliance attestation"
+      - "Audit trail establishment"
+
+  - faira_phase: "Step 7: Lifecycle Maintenance"
+    microsoft_phase: "Operations & Monitoring"
+    activities:
+      - "Continuous monitoring"
+      - "Incident response"
+      - "Regular re-assessment"
+
+# Integration Notes
+integration_recommendations:
+  - recommendation: "Use FAIRA as primary governance framework for Queensland Government"
+    rationale: "FAIRA is mandated and contextually appropriate"
+    microsoft_role: "Provide detailed technical security controls"
+
+  - recommendation: "Apply Microsoft threat taxonomy to FAIRA risk categories"
+    rationale: "Microsoft provides comprehensive AI-specific threat coverage"
+    implementation: "Map each FAIRA-identified risk to Microsoft threat types"
+
+  - recommendation: "Integrate NIST competencies into FAIRA Step 1 team formation"
+    rationale: "Ensures team has required AI security knowledge and skills"
+    implementation: "Assess team against NF-COM-002 competency statements"
+
+  - recommendation: "Use Microsoft lifecycle controls to elaborate FAIRA Part C"
+    rationale: "Microsoft provides granular control guidance"
+    implementation: "Reference Microsoft controls when defining FAIRA control plans"
+
+  - recommendation: "Maintain FAIRA's WHS focus while adding Microsoft technical depth"
+    rationale: "WHS unique to Australian context; Microsoft complements with security detail"
+    implementation: "Preserve FAIRA WHS sections, enhance with Microsoft technical controls"

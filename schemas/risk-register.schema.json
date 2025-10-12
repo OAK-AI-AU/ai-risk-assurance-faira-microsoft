@@ -1,0 +1,443 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/OAK-AI-Public/ai-risk-assurance-faira-microsoft/schemas/risk-register.schema.json",
+  "title": "AI Risk Register",
+  "description": "Schema for AI risk assessment register combining FAIRA, Microsoft AI Security, and NIST competency frameworks",
+  "type": "object",
+  "required": ["metadata", "risks"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["version", "createdDate", "lastUpdated", "assessmentId"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Schema version",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "default": "1.0.0"
+        },
+        "createdDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Date the risk register was created"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp"
+        },
+        "assessmentId": {
+          "type": "string",
+          "description": "Unique identifier for this risk assessment"
+        },
+        "projectName": {
+          "type": "string",
+          "description": "Name of the AI project or system"
+        },
+        "assessor": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            },
+            "organisation": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string",
+              "format": "email"
+            }
+          }
+        },
+        "frameworksApplied": {
+          "type": "array",
+          "description": "Frameworks used in this assessment",
+          "items": {
+            "type": "string",
+            "enum": [
+              "FAIRA v1.0.0",
+              "Microsoft AI Security Risk Assessment v4.1.4",
+              "NIST AI Security Competency (NF-COM-002)",
+              "VAISS v1.0",
+              "NFAAIG 2024-2025",
+              "NAIC RAI Index 2025",
+              "ISO/IEC 42001:2023",
+              "NIST AI RMF 1.0"
+            ]
+          }
+        }
+      }
+    },
+    "risks": {
+      "type": "array",
+      "description": "Array of identified AI risks",
+      "items": {
+        "type": "object",
+        "required": ["riskId", "title", "category", "severity", "likelihood"],
+        "properties": {
+          "riskId": {
+            "type": "string",
+            "description": "Unique risk identifier",
+            "pattern": "^RISK-\\d{4}$"
+          },
+          "title": {
+            "type": "string",
+            "description": "Brief risk title",
+            "minLength": 5,
+            "maxLength": 200
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed risk description"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "Technical",
+              "Security",
+              "Ethical",
+              "Operational",
+              "WHS",
+              "Privacy",
+              "Bias",
+              "Safety",
+              "Transparency",
+              "Accountability",
+              "Legal/Compliance",
+              "Reputational"
+            ]
+          },
+          "subcategory": {
+            "type": "string",
+            "description": "More specific risk classification"
+          },
+          "threatType": {
+            "type": "string",
+            "description": "Microsoft AI Security threat classification",
+            "enum": [
+              "Model Inversion",
+              "Data Poisoning",
+              "Adversarial Input",
+              "Model Theft/Extraction",
+              "Privacy Breach",
+              "Evasion Attack",
+              "Membership Inference",
+              "Hallucination",
+              "Misinformation Generation",
+              "Prompt Injection",
+              "Other"
+            ]
+          },
+          "nistCompetency": {
+            "type": "array",
+            "description": "Related NIST AI Security Competencies",
+            "items": {
+              "type": "string",
+              "pattern": "^AI-[KS]-\\d{3}$"
+            }
+          },
+          "severity": {
+            "type": "integer",
+            "description": "Severity rating (1=Low, 5=Critical)",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "likelihood": {
+            "type": "integer",
+            "description": "Likelihood rating (1=Rare, 5=Almost Certain)",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "riskScore": {
+            "type": "integer",
+            "description": "Calculated risk score (severity × likelihood)",
+            "minimum": 1,
+            "maximum": 25
+          },
+          "impact": {
+            "type": "object",
+            "description": "Impact assessment across different domains",
+            "properties": {
+              "safety": {
+                "type": "string",
+                "enum": ["None", "Low", "Medium", "High", "Critical"]
+              },
+              "privacy": {
+                "type": "string",
+                "enum": ["None", "Low", "Medium", "High", "Critical"]
+              },
+              "financial": {
+                "type": "string",
+                "enum": ["None", "Low", "Medium", "High", "Critical"]
+              },
+              "reputational": {
+                "type": "string",
+                "enum": ["None", "Low", "Medium", "High", "Critical"]
+              },
+              "operational": {
+                "type": "string",
+                "enum": ["None", "Low", "Medium", "High", "Critical"]
+              },
+              "whs": {
+                "type": "string",
+                "enum": ["None", "Low", "Medium", "High", "Critical"]
+              }
+            }
+          },
+          "affectedStakeholders": {
+            "type": "array",
+            "description": "Stakeholders affected by this risk",
+            "items": {
+              "type": "string"
+            }
+          },
+          "aiEthicsPrinciples": {
+            "type": "array",
+            "description": "Australian AI Ethics Principles affected",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Human, Social and Environmental Wellbeing",
+                "Human-Centred Values",
+                "Fairness",
+                "Privacy Protection and Security",
+                "Reliability and Safety",
+                "Transparency and Explainability",
+                "Contestability",
+                "Accountability"
+              ]
+            }
+          },
+          "vaissGuardrails": {
+            "type": "array",
+            "description": "VAISS guardrails relevant to this risk",
+            "items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            }
+          },
+          "owner": {
+            "type": "object",
+            "description": "Risk owner information",
+            "required": ["name", "role"],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
+              "contactEmail": {
+                "type": "string",
+                "format": "email"
+              }
+            }
+          },
+          "currentControls": {
+            "type": "array",
+            "description": "Existing controls in place",
+            "items": {
+              "type": "object",
+              "required": ["controlId", "description", "effectiveness"],
+              "properties": {
+                "controlId": {
+                  "type": "string",
+                  "pattern": "^CTRL-\\d{4}$"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "controlType": {
+                  "type": "string",
+                  "enum": ["Technical", "Policy", "Human-Centred", "Engagement", "Administrative"]
+                },
+                "effectiveness": {
+                  "type": "string",
+                  "enum": ["Not Effective", "Partially Effective", "Largely Effective", "Fully Effective"]
+                }
+              }
+            }
+          },
+          "proposedControls": {
+            "type": "array",
+            "description": "Proposed mitigation controls",
+            "items": {
+              "type": "object",
+              "required": ["description", "priority"],
+              "properties": {
+                "description": {
+                  "type": "string"
+                },
+                "controlType": {
+                  "type": "string",
+                  "enum": ["Technical", "Policy", "Human-Centred", "Engagement", "Administrative"]
+                },
+                "priority": {
+                  "type": "string",
+                  "enum": ["Low", "Medium", "High", "Critical"]
+                },
+                "implementationCost": {
+                  "type": "string",
+                  "enum": ["Low", "Medium", "High", "Very High"]
+                },
+                "estimatedEffectiveness": {
+                  "type": "string",
+                  "enum": ["Low", "Medium", "High", "Very High"]
+                },
+                "timeline": {
+                  "type": "string",
+                  "description": "Expected implementation timeline"
+                },
+                "assignedTo": {
+                  "type": "string",
+                  "description": "Team or person responsible for implementation"
+                }
+              }
+            }
+          },
+          "residualRisk": {
+            "type": "object",
+            "description": "Risk level after proposed controls",
+            "required": ["severity", "likelihood"],
+            "properties": {
+              "severity": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              },
+              "likelihood": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              },
+              "riskScore": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 25
+              },
+              "acceptanceStatus": {
+                "type": "string",
+                "enum": ["Accepted", "Requires Further Mitigation", "Unacceptable"],
+                "description": "Whether residual risk is acceptable"
+              },
+              "acceptedBy": {
+                "type": "string",
+                "description": "Person who accepted the residual risk"
+              },
+              "acceptanceDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "acceptanceJustification": {
+                "type": "string",
+                "description": "Justification for accepting residual risk"
+              }
+            }
+          },
+          "status": {
+            "type": "string",
+            "enum": ["Identified", "Assessed", "Mitigation Planned", "Mitigation In Progress", "Mitigated", "Accepted", "Closed"],
+            "default": "Identified"
+          },
+          "identifiedDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "lastReviewed": {
+            "type": "string",
+            "format": "date"
+          },
+          "reviewFrequency": {
+            "type": "string",
+            "description": "How often this risk should be reviewed"
+          },
+          "references": {
+            "type": "array",
+            "description": "References to related documents, standards, or incidents",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": ["Standard", "Guidance", "Incident Report", "Research", "Policy", "Other"]
+                }
+              }
+            }
+          },
+          "notes": {
+            "type": "array",
+            "description": "Additional notes and comments",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "author": {
+                  "type": "string"
+                },
+                "note": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "description": "Risk register summary statistics",
+      "properties": {
+        "totalRisks": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "risksByCategory": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "risksBySeverity": {
+          "type": "object",
+          "properties": {
+            "critical": {"type": "integer"},
+            "high": {"type": "integer"},
+            "medium": {"type": "integer"},
+            "low": {"type": "integer"},
+            "veryLow": {"type": "integer"}
+          }
+        },
+        "risksByStatus": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "averageRiskScore": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 25
+        },
+        "highestRiskScore": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 25
+        }
+      }
+    }
+  }
+}

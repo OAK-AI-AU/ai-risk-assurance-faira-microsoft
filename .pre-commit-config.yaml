@@ -1,0 +1,224 @@
+# Pre-commit hooks for AI Risk Assurance Framework
+# Install: pip install pre-commit
+# Setup: pre-commit install
+# Run manually: pre-commit run --all-files
+
+repos:
+  # JSON validation and formatting
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-json
+        name: Check JSON syntax
+        description: Validates JSON file syntax
+        files: \.(json)$
+
+      - id: pretty-format-json
+        name: Format JSON files
+        description: Pretty-print JSON files with 2-space indentation
+        args: ['--autofix', '--indent=2', '--no-sort-keys']
+        files: \.(json)$
+
+      - id: check-yaml
+        name: Check YAML syntax
+        description: Validates YAML file syntax
+        files: \.(yaml|yml)$
+        exclude: '^\.github/workflows/.*\.yml$'  # GitHub Actions use specific YAML features
+
+      - id: check-merge-conflict
+        name: Check for merge conflicts
+        description: Checks for merge conflict markers
+
+      - id: check-case-conflict
+        name: Check case conflicts
+        description: Checks for files with names that differ only in case
+
+      - id: check-added-large-files
+        name: Check for large files
+        description: Prevents giant files from being committed
+        args: ['--maxkb=1000']
+
+      - id: trailing-whitespace
+        name: Trim trailing whitespace
+        description: Removes trailing whitespace
+        args: ['--markdown-linebreak-ext=md']
+
+      - id: end-of-file-fixer
+        name: Fix end of files
+        description: Ensures files end with a newline
+
+      - id: mixed-line-ending
+        name: Fix line endings
+        description: Ensures consistent line endings (LF)
+        args: ['--fix=lf']
+
+  # YAML linting
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.33.0
+    hooks:
+      - id: yamllint
+        name: Lint YAML files
+        description: Validates YAML style and syntax
+        args: ['-d', '{extends: default, rules: {line-length: {max: 120}, indentation: {spaces: 2}}}']
+        files: \.(yaml|yml)$
+
+  # Markdown linting
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.38.0
+    hooks:
+      - id: markdownlint
+        name: Lint Markdown files
+        description: Validates Markdown style
+        args: ['--config', '.markdownlint.json', '--fix']
+        files: \.md$
+
+  # Python code quality
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+        name: Format Python code
+        description: Auto-format Python code with Black
+        language_version: python3.11
+        files: \.py$
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.0.0
+    hooks:
+      - id: flake8
+        name: Lint Python code
+        description: Check Python code style with flake8
+        args: ['--max-line-length=120', '--ignore=E203,W503']
+        files: \.py$
+
+  # Custom local hooks
+  - repo: local
+    hooks:
+      # Validate JSON schemas against examples
+      - id: validate-risk-registers
+        name: Validate risk registers
+        description: Validates risk register JSON files against schema
+        entry: python tools/validate_schemas.py
+        language: python
+        files: '^examples/.*-risk.*\.json$'
+        args: ['--schema', 'risk-register']
+        additional_dependencies: ['jsonschema>=4.20.0']
+
+      - id: validate-all-examples
+        name: Validate all example files
+        description: Validates all example JSON files
+        entry: python tools/validate_schemas.py --all
+        language: python
+        pass_filenames: false
+        always_run: false
+        files: '^examples/.*\.json$'
+        additional_dependencies: ['jsonschema>=4.20.0']
+
+      # Check Australian English spelling in key files
+      - id: check-australian-english
+        name: Check Australian English spelling
+        description: Ensures Australian English (en-AU) in documentation
+        entry: python
+        language: python
+        files: '^(README\.md|CHANGELOG\.md|frameworks/.*\.md|docs/.*\.md)$'
+        args:
+          - -c
+          - |
+            import re
+            import sys
+
+            american_words = [
+                (r'\borganization\b', 'organisation'),
+                (r'\borganizational\b', 'organisational'),
+                (r'\brecognize\b', 'recognise'),
+                (r'\banalyze\b', 'analyse'),
+            ]
+
+            issues = []
+            for filename in sys.argv[1:]:
+                with open(filename, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                    for pattern, australian in american_words:
+                        if re.search(pattern, content, re.IGNORECASE):
+                            # Skip if it's in a code block
+                            if not re.search(f'```[^`]*{pattern}[^`]*```', content, re.IGNORECASE | re.DOTALL):
+                                issues.append(f"{filename}: Found '{pattern.strip('\\\\b')}', should be '{australian}'")
+
+            if issues:
+                print("⚠️  American English spellings found:")
+                for issue in issues:
+                    print(f"  {issue}")
+                print("\nPlease use Australian English (en-AU) in documentation.")
+                sys.exit(1)
+
+      # Validate OpenAPI specification
+      - id: validate-openapi
+        name: Validate OpenAPI spec
+        description: Validates OpenAPI specification syntax
+        entry: python
+        language: python
+        files: '^api/openapi\.yaml$'
+        args:
+          - -c
+          - |
+            import yaml
+            import sys
+
+            try:
+                with open('api/openapi.yaml', 'r') as f:
+                    spec = yaml.safe_load(f)
+
+                # Check required OpenAPI fields
+                required_fields = ['openapi', 'info', 'paths']
+                for field in required_fields:
+                    if field not in spec:
+                        print(f"❌ Missing required field: {field}")
+                        sys.exit(1)
+
+                # Validate version
+                if not spec.get('openapi', '').startswith('3.'):
+                    print("❌ OpenAPI specification must be version 3.x")
+                    sys.exit(1)
+
+                print("✅ OpenAPI specification is valid")
+            except Exception as e:
+                print(f"❌ OpenAPI validation failed: {e}")
+                sys.exit(1)
+
+      # Check for TODO/FIXME comments
+      - id: check-todos
+        name: Check for TODO/FIXME
+        description: Warns about TODO/FIXME comments in code
+        entry: python
+        language: python
+        files: \.(py|js|md)$
+        args:
+          - -c
+          - |
+            import sys
+            import re
+
+            todos = []
+            for filename in sys.argv[1:]:
+                with open(filename, 'r', encoding='utf-8') as f:
+                    for i, line in enumerate(f, 1):
+                        if re.search(r'\b(TODO|FIXME|XXX)\b', line):
+                            todos.append(f"{filename}:{i}: {line.strip()}")
+
+            if todos:
+                print("ℹ️  TODO/FIXME comments found (informational only):")
+                for todo in todos[:5]:  # Limit to first 5
+                    print(f"  {todo}")
+                if len(todos) > 5:
+                    print(f"  ... and {len(todos) - 5} more")
+                print()
+                # Don't fail, just inform
+                sys.exit(0)
+
+# Configuration
+default_language_version:
+  python: python3.11
+
+# Global settings
+fail_fast: false
+minimum_pre_commit_version: '2.20.0'

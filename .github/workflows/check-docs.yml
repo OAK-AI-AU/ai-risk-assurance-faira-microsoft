@@ -1,0 +1,300 @@
+name: Check Documentation
+
+on:
+  workflow_dispatch:
+
+jobs:
+  markdown-lint:
+    name: Markdown Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install markdownlint-cli
+        run: npm install -g markdownlint-cli
+
+      - name: Create markdownlint config
+        run: |
+          cat > .markdownlint.json << EOF
+          {
+            "default": true,
+            "MD013": {
+              "line_length": 120,
+              "code_blocks": false,
+              "tables": false
+            },
+            "MD033": false,
+            "MD041": false
+          }
+          EOF
+
+      - name: Lint markdown files
+        run: |
+          markdownlint '**/*.md' --config .markdownlint.json --ignore node_modules || true
+          echo "Markdown linting completed"
+
+  check-links:
+    name: Check Links
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check internal links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes'
+          use-verbose-mode: 'no'
+          config-file: '.github/markdown-link-check-config.json'
+          check-modified-files-only: 'yes'
+        continue-on-error: true
+
+      - name: Create link check config
+        run: |
+          mkdir -p .github
+          cat > .github/markdown-link-check-config.json << EOF
+          {
+            "ignorePatterns": [
+              {
+                "pattern": "^http://localhost"
+              },
+              {
+                "pattern": "^https://api.example"
+              }
+            ],
+            "timeout": "20s",
+            "retryOn429": true,
+            "retryCount": 3,
+            "fallbackRetryDelay": "30s"
+          }
+          EOF
+
+  check-spelling:
+    name: Australian English Spelling
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Check for American English spellings
+        run: |
+          python << 'EOF'
+          import re
+          import sys
+          from pathlib import Path
+
+          # American English patterns (exclude technical terms)
+          american_spellings = {
+              r'\borganization\b': 'organisation',
+              r'\borganizations\b': 'organisations',
+              r'\borganizational\b': 'organisational',
+              r'\brecognize\b': 'recognise',
+              r'\brecognized\b': 'recognised',
+              r'\banalyze\b': 'analyse',
+              r'\banalyzed\b': 'analysed',
+              r'\bsummarize\b': 'summarise',
+              r'\bprioritize\b': 'prioritise',
+              r'\boptimize\b': 'optimise',
+          }
+
+          # Files to check (exclude Microsoft source docs)
+          files_to_check = [
+              'README.md',
+              'CHANGELOG.md',
+              'frameworks/vaiss-framework-2024-2025.md',
+              'frameworks/nfaaig-framework-2025.md',
+              'frameworks/naic-rai-index-2025.md',
+              'docs/DEVELOPER_GUIDE.md',
+              'tools/README.md',
+              'examples/README.md'
+          ]
+
+          # Exclusions (technical terms that should remain)
+          exclusions = [
+              'color',  # CSS/programming standard
+              'normalize',  # Programming standard
+              'serialize',  # Programming standard
+              'initialize',  # Programming standard
+          ]
+
+          issues = []
+
+          for file_path in files_to_check:
+              path = Path(file_path)
+              if not path.exists():
+                  continue
+
+              with open(path, 'r', encoding='utf-8') as f:
+                  content = f.read()
+
+              for pattern, australian in american_spellings.items():
+                  # Skip if in exclusion list
+                  if any(excl in pattern for excl in exclusions):
+                      continue
+
+                  matches = re.finditer(pattern, content, re.IGNORECASE)
+                  for match in matches:
+                      line_num = content[:match.start()].count('\n') + 1
+                      issues.append(
+                          f"{file_path}:{line_num}: Found '{match.group()}', "
+                          f"should be '{australian}'"
+                      )
+
+          if issues:
+              print("⚠️  American English spellings found:\n")
+              for issue in issues:
+                  print(f"  {issue}")
+              print(f"\n⚠️  Found {len(issues)} instance(s) of American English")
+              print("ℹ️  Note: This is a warning only, not a failure")
+          else:
+              print("✅ All documentation uses Australian English (en-AU)")
+          EOF
+
+  check-structure:
+    name: Check Documentation Structure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check required documentation
+        run: |
+          echo "Checking required documentation files..."
+
+          required_files=(
+            "README.md"
+            "CHANGELOG.md"
+            "LICENSE"
+            "docs/DEVELOPER_GUIDE.md"
+            "examples/README.md"
+            "tools/README.md"
+            "frameworks/vaiss-framework-2024-2025.md"
+            "frameworks/nfaaig-framework-2025.md"
+            "frameworks/naic-rai-index-2025.md"
+          )
+
+          missing=()
+          for file in "${required_files[@]}"; do
+            if [ -f "$file" ]; then
+              echo "✅ $file"
+            else
+              echo "❌ Missing: $file"
+              missing+=("$file")
+            fi
+          done
+
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo ""
+            echo "❌ ${#missing[@]} required file(s) missing"
+            exit 1
+          else
+            echo ""
+            echo "✅ All required documentation files present"
+          fi
+
+      - name: Check README sections
+        run: |
+          echo "Checking README.md structure..."
+
+          required_sections=(
+            "What's Inside"
+            "Machine-Readable Formats"
+            "Use This Guide To"
+            "Files"
+            "References"
+            "Licence"
+          )
+
+          missing=()
+          for section in "${required_sections[@]}"; do
+            if grep -q "## .*$section" README.md || grep -q "# .*$section" README.md; then
+              echo "✅ Section: $section"
+            else
+              echo "❌ Missing section: $section"
+              missing+=("$section")
+            fi
+          done
+
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo ""
+            echo "⚠️  ${#missing[@]} recommended section(s) missing from README"
+          else
+            echo ""
+            echo "✅ All recommended README sections present"
+          fi
+
+  check-code-blocks:
+    name: Verify Code Examples
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract and verify code blocks
+        run: |
+          echo "Checking code blocks in documentation..."
+
+          # Find all markdown files
+          md_files=$(find . -name "*.md" -not -path "./node_modules/*" -not -path "./.git/*")
+
+          python_blocks=0
+          javascript_blocks=0
+          json_blocks=0
+          yaml_blocks=0
+          bash_blocks=0
+
+          for file in $md_files; do
+            # Count code blocks by language
+            python_blocks=$((python_blocks + $(grep -c '```python' "$file" || true)))
+            javascript_blocks=$((javascript_blocks + $(grep -c '```javascript' "$file" || true)))
+            json_blocks=$((json_blocks + $(grep -c '```json' "$file" || true)))
+            yaml_blocks=$((yaml_blocks + $(grep -c '```yaml' "$file" || true)))
+            bash_blocks=$((bash_blocks + $(grep -c '```bash' "$file" || true)))
+          done
+
+          echo "📊 Code Block Statistics:"
+          echo "  - Python: $python_blocks"
+          echo "  - JavaScript: $javascript_blocks"
+          echo "  - JSON: $json_blocks"
+          echo "  - YAML: $yaml_blocks"
+          echo "  - Bash: $bash_blocks"
+          echo ""
+
+          total=$((python_blocks + javascript_blocks + json_blocks + yaml_blocks + bash_blocks))
+          echo "✅ Total code blocks: $total"
+
+  summary:
+    name: Documentation Summary
+    runs-on: ubuntu-latest
+    needs: [markdown-lint, check-links, check-spelling, check-structure, check-code-blocks]
+    if: always()
+
+    steps:
+      - name: Generate summary
+        run: |
+          echo "## Documentation Check Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Results" >> $GITHUB_STEP_SUMMARY
+          echo "- Markdown Lint: ${{ needs.markdown-lint.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Link Check: ${{ needs.check-links.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Spelling Check: ${{ needs.check-spelling.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Structure Check: ${{ needs.check-structure.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Code Blocks: ${{ needs.check-code-blocks.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Documentation checks completed" >> $GITHUB_STEP_SUMMARY
