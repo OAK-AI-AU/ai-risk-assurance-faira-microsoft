@@ -1,6 +1,6 @@
 # Developer Guide: Machine-Readable AI Risk Assurance
 
-**Using Schemas, APIs, and Automation for AI Governance**
+> Using Schemas, APIs, and Automation for AI Governance
 
 ## Overview
 
@@ -10,22 +10,28 @@ This guide explains how to use the machine-readable formats in this repository t
 
 ### 📋 JSON Schemas (`/schemas/`)
 
-Six comprehensive JSON Schema files define the structure for AI governance data:
+Eight comprehensive JSON Schema files define the structure for AI governance data:
 
-1. **`risk-register.schema.json`** - AI risk assessment register
+1. **`risk-register.schema.json`** - AI risk assessment register (GenAI threats, AI6/EU AI Act)
 2. **`faira-assessment.schema.json`** - Queensland FAIRA framework assessment
-3. **`control-catalog.schema.json`** - Cross-framework control library
+3. **`control-catalog.schema.json`** - Cross-framework control library (AI6, EU AI Act, NIST GenAI)
 4. **`nist-ai-competencies.schema.json`** - NIST AI Security competency tracking
-5. **`vaiss-guardrails.schema.json`** - VAISS 10 guardrails assessment
-6. **`compliance-mapping.schema.json`** - Cross-framework compliance mapping
+5. **`vaiss-guardrails.schema.json`** - VAISS 10 guardrails assessment (v2 enhancements)
+6. **`compliance-mapping.schema.json`** - Cross-framework compliance mapping (12 frameworks)
+7. **`ai6-framework.schema.json`** - AI6 Framework 6 Essential Practices assessment
+8. **`eu-ai-act.schema.json`** - EU AI Act compliance assessment
 
 ### 🗺️ YAML Mappings (`/mappings/`)
 
-Three cross-framework mapping files:
+Seven cross-framework mapping files:
 
-1. **`naic-rai-index-2025.yaml`** - Australian RAI Index taxonomy
+1. **`naic-rai-index-2025.yaml`** - Australian RAI Index taxonomy (OECD 2024, GenAI additions)
 2. **`faira-microsoft-crosswalk.yaml`** - FAIRA ↔ Microsoft AI Security mapping
-3. **`risk-taxonomy.yaml`** - Standardized risk categories and scales
+3. **`risk-taxonomy.yaml`** - Risk categories, severity scales, GenAI-specific risks
+4. **`ai6-naic-crosswalk.yaml`** - AI6 Framework to VAISS, FAIRA, NIST, ISO 42001, EU AI Act
+5. **`eu-ai-act-crosswalk.yaml`** - EU AI Act to Australian frameworks
+6. **`nist-genai-profile-crosswalk.yaml`** - NIST GenAI Profile GOVERN/MAP/MEASURE/MANAGE
+7. **`mas-ai-guidelines-crosswalk.yaml`** - MAS FEAT principles to Australian frameworks
 
 ## Quick Start
 
@@ -411,7 +417,7 @@ git push
 
 ### 2. Separate Sensitive and Public Data
 
-```
+```text
 assessments/
 ├── public/
 │   ├── risk-categories.json      # Safe to share
@@ -485,18 +491,21 @@ def check_review_due(risk_register):
 
 ### Common Validation Errors
 
-**Error: Missing required property**
-```
+#### Error: Missing required property
+
+```text
 Solution: Check the schema's "required" array and ensure all fields are present.
 ```
 
-**Error: Additional property not allowed**
-```
+#### Error: Additional property not allowed
+
+```text
 Solution: The schema uses "additionalProperties": false. Only use defined properties.
 ```
 
-**Error: Pattern mismatch**
-```
+#### Error: Pattern mismatch
+
+```text
 Solution: IDs must match patterns like "RISK-0001" or "CTRL-0001" (4 digits).
 ```
 
@@ -508,10 +517,10 @@ Solution: IDs must match patterns like "RISK-0001" or "CTRL-0001" (4 digits).
 
 ## Resources
 
-- **JSON Schema Documentation**: https://json-schema.org/
-- **YAML Specification**: https://yaml.org/spec/
-- **Python jsonschema**: https://python-jsonschema.readthedocs.io/
-- **AJV (Node.js)**: https://ajv.js.org/
+- **JSON Schema Documentation**: <https://json-schema.org/>
+- **YAML Specification**: <https://yaml.org/spec/>
+- **Python jsonschema**: <https://python-jsonschema.readthedocs.io/>
+- **AJV (Node.js)**: <https://ajv.js.org/>
 
 ## Next Steps
 
@@ -523,7 +532,7 @@ Solution: IDs must match patterns like "RISK-0001" or "CTRL-0001" (4 digits).
 
 ## Support
 
-- Open an issue: https://github.com/OAK-AI-Public/ai-risk-assurance-faira-microsoft/issues
+- Open an issue: <https://github.com/OAK-AI-Public/ai-risk-assurance-faira-microsoft/issues>
 - Read the full framework: [`Unified_AI_Risk_Assurance_Framework.md`](../Unified_AI_Risk_Assurance_Framework.md)
 - Review checklists: [`AI_Risk_Assurance_Checklists.md`](../AI_Risk_Assurance_Checklists.md)
 

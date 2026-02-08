@@ -195,11 +195,55 @@ VAISS integrates seamlessly with other Australian AI governance frameworks:
 ✅ **Best Practice** - Establishes organisational AI governance capabilities
 ✅ **Stakeholder Confidence** - Provides assurance to customers, partners, and regulators
 
-## Version 2 Planning (2025)
+## Version 2 (2025-2026)
 
-### Expected Enhancements
+### Confirmed v2 Enhancements
 
-Based on consultation announcements, Version 2 may include:
+VAISS v2 introduces significant new capabilities beyond v1:
+
+#### Content Provenance (C2PA Compliance)
+
+- Coalition for Content Provenance and Authenticity (C2PA) alignment
+- Provenance tracking for AI-generated content
+- Content authentication mechanisms
+- Machine-readable provenance metadata
+
+#### Watermarking Capabilities
+
+- Visible watermarking for AI-generated content
+- Invisible/steganographic watermarking
+- Robustness to modification attempts
+- Detection tools and APIs
+
+#### Developer Guardrails
+
+Enhanced guidance for AI developers:
+
+- **Secure by Design**: Security integrated into development lifecycle
+- **Privacy by Design**: Privacy considerations from inception
+- **Red Teaming**: Adversarial testing requirements
+- **Model Cards**: Standardised model documentation
+- **Datasheets**: Training data documentation
+- **Safety Evaluation**: Pre-deployment safety testing
+- **Harm Mitigation**: Content safety controls
+
+#### National AI Capability Plan Alignment
+
+- Alignment with Australia's sovereign AI initiatives
+- Support for national AI capabilities
+- Integration with government AI strategy
+
+#### Generative AI Specific Requirements
+
+New requirements for GenAI systems:
+
+- **Output Disclosure**: Clear identification of AI-generated content
+- **Hallucination Mitigation**: Controls for confabulation
+- **Copyright Compliance**: Training data and output copyright
+- **Harmful Content Filtering**: Moderation and filtering
+- **Prompt Injection Protection**: Security against adversarial prompts
+
+### Expected Additional Enhancements
 
 1. **Enhanced Developer Guidance**
    - More detailed technical requirements
@@ -266,15 +310,28 @@ Based on consultation announcements, Version 2 may include:
 
 ---
 
+## Relationship to AI6 Framework
+
+| Aspect | VAISS | AI6 |
+|--------|-------|-----|
+| **Focus** | Detailed guardrails and technical requirements | Essential practices for all organisations |
+| **Complexity** | Comprehensive, detailed | Entry-level, accessible |
+| **Use Case** | Deep implementation guidance | First step in AI governance |
+| **Guardrails/Practices** | 10 guardrails | 6 practices |
+
+**Recommendation**: Use AI6 for foundational governance, then VAISS for detailed implementation.
+
+---
+
 ## Document Information
 
 **Framework**: Voluntary AI Safety Standard (VAISS)
 **Current Version**: 1.0 (September 2024)
-**Next Version**: 2.0 (Expected 2025)
+**Next Version**: 2.0 (Expected 2025-2026)
 **Publisher**: Department of Industry, Science and Resources / National AI Centre
 **Status**: Active (v1), Consultation (v2)
 **Last Updated**: September 2024 (v1)
-**Document Updated**: October 2025
+**Document Updated**: February 2026
 
 ---
 

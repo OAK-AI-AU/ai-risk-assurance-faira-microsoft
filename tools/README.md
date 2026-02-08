@@ -13,9 +13,32 @@ Validate JSON files against framework schemas:
 
 Both tools provide identical functionality with platform-specific implementations.
 
-### 2. Compliance Checker (Coming Soon)
+### 2. Compliance Checker
 
-CLI tool for cross-framework compliance checking and gap analysis.
+**`faira-check.py`** - Multi-framework compliance checking and gap analysis tool.
+
+Supports:
+- FAIRA v1.0.0
+- VAISS v1.0/v2.0
+- NIST AI Security Competencies
+- Microsoft AI Security
+- AI6 Framework 2025
+- EU AI Act 2024
+- NIST AI RMF GenAI Profile
+
+```bash
+# Check against all frameworks
+python faira-check.py my-risk-register.json
+
+# Check specific frameworks
+python faira-check.py my-risk-register.json --frameworks FAIRA,VAISS,AI6
+
+# Verbose output
+python faira-check.py my-assessment.json --verbose
+
+# Export JSON report
+python faira-check.py my-assessment.json --json report.json
+```
 
 ---
 
@@ -77,12 +100,14 @@ node validate-schemas.js my-assessment.json --schema faira
 
 #### Available Schema Types
 
-- `risk-register` - AI risk assessment register
+- `risk-register` - AI risk assessment register (GenAI threats, AI6/EU AI Act)
 - `faira` - FAIRA framework assessment
-- `vaiss` - VAISS guardrail assessment
+- `vaiss` - VAISS guardrail assessment (v2 enhancements)
 - `nist-competencies` - NIST AI Security competencies
-- `control-catalog` - Control catalog
-- `compliance-mapping` - Cross-framework mappings
+- `control-catalog` - Control catalog (AI6, EU AI Act, NIST GenAI)
+- `compliance-mapping` - Cross-framework mappings (12 frameworks)
+- `ai6-framework` - AI6 Framework 6 Essential Practices assessment
+- `eu-ai-act` - EU AI Act compliance assessment
 
 #### Validate All Examples
 

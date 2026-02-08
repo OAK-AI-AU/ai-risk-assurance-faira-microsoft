@@ -38,6 +38,8 @@ SCHEMA_TYPES = {
     "nist-competencies": "nist-ai-competencies.schema.json",
     "vaiss": "vaiss-guardrails.schema.json",
     "compliance-mapping": "compliance-mapping.schema.json",
+    "ai6-framework": "ai6-framework.schema.json",
+    "eu-ai-act": "eu-ai-act.schema.json",
 }
 
 class Colors:
@@ -105,6 +107,14 @@ def detect_schema_type(data: Dict) -> Optional[str]:
     # Check for compliance mapping
     if "mappings" in data and "sourceFramework" in data:
         return "compliance-mapping"
+
+    # Check for AI6 Framework assessment
+    if "practiceAssessments" in data:
+        return "ai6-framework"
+
+    # Check for EU AI Act assessment
+    if "riskClassification" in data and "category" in data.get("riskClassification", {}):
+        return "eu-ai-act"
 
     return None
 
@@ -268,6 +278,8 @@ Available schema types:
   - nist-competencies  NIST AI Security competencies
   - control-catalog    Control catalog
   - compliance-mapping Cross-framework compliance mapping
+  - ai6-framework      AI6 Framework (6 Essential Practices) assessment
+  - eu-ai-act          EU AI Act compliance assessment
         """
     )
 

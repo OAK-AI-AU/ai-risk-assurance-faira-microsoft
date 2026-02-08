@@ -143,6 +143,81 @@ cross_framework_alignment:
     - "Compliance"
     - "Stakeholder Engagement"
 
+# OECD AI Principles 2024 Alignment
+oecd_2024_alignment:
+  description: "Alignment with revised OECD AI Principles (May 2024)"
+  source: "https://oecd.ai/en/ai-principles"
+  adoption: "47 jurisdictions globally"
+  principles:
+    - oecd_principle: "Inclusive growth, sustainable development and wellbeing"
+      rai_dimension: "Accountability & Oversight"
+      alignment_notes: "Both emphasise societal benefit and responsible deployment"
+    - oecd_principle: "Human-centred values and fairness"
+      rai_dimension: "Fairness"
+      alignment_notes: "Direct alignment on non-discrimination and rights protection"
+    - oecd_principle: "Transparency and explainability"
+      rai_dimension: "Transparency"
+      alignment_notes: "Full alignment on disclosure and understanding"
+    - oecd_principle: "Robustness, security and safety"
+      rai_dimension: "Safety & Resilience"
+      alignment_notes: "Direct alignment on risk management and reliability"
+    - oecd_principle: "Accountability"
+      rai_dimension: "Accountability & Oversight"
+      alignment_notes: "Full alignment on governance and responsibility"
+  genai_2024_additions:
+    - "Additional focus on generative AI risks"
+    - "Content authenticity and provenance"
+    - "Misinformation and disinformation mitigation"
+    - "Environmental sustainability considerations"
+
+# GenAI-Specific Additions per Dimension
+genai_additions:
+  accountability_oversight:
+    new_practices:
+      - "GenAI-specific governance policies"
+      - "AI-generated content labelling requirements"
+      - "Foundation model provider due diligence"
+    genai_risks:
+      - "Content authenticity verification"
+      - "Misinformation governance"
+      - "Third-party model accountability"
+  safety_resilience:
+    new_practices:
+      - "Hallucination/confabulation mitigation"
+      - "Prompt injection defence"
+      - "Content filtering and moderation"
+    genai_risks:
+      - "Factual accuracy degradation"
+      - "Adversarial manipulation"
+      - "Harmful content generation"
+  fairness:
+    new_practices:
+      - "Training data bias assessment"
+      - "Output bias monitoring"
+      - "Representation testing"
+    genai_risks:
+      - "Bias amplification"
+      - "Stereotyping in generated content"
+      - "Unequal performance across demographics"
+  transparency:
+    new_practices:
+      - "AI-generated content disclosure"
+      - "Model card documentation"
+      - "Training data transparency"
+    genai_risks:
+      - "Synthetic media identification"
+      - "Attribution and provenance"
+      - "Capability limitations disclosure"
+  explainability_contestability:
+    new_practices:
+      - "Output explanation mechanisms"
+      - "Human review for high-stakes decisions"
+      - "Appeal processes for AI decisions"
+    genai_risks:
+      - "Black-box decision making"
+      - "Lack of reasoning transparency"
+      - "Difficulty contesting AI outputs"
+
 # Survey methodology
 survey_details:
   year: 2025

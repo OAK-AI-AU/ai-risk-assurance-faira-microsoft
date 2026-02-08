@@ -34,6 +34,13 @@ risk_categories:
       - "Data Attacks"
       - "Infrastructure Attacks"
       - "Supply Chain Attacks"
+      - "GenAI-Specific Attacks"
+    genai_subcategories:
+      - "Prompt Injection"
+      - "Jailbreaking"
+      - "Training Data Extraction"
+      - "Model Manipulation"
+      - "Agent Exploitation"
     microsoft_threat_types:
       - "Model Inversion"
       - "Data Poisoning"
@@ -62,6 +69,12 @@ risk_categories:
       - "Lack of Transparency"
       - "Autonomy Impacts"
       - "Fairness Issues"
+    genai_subcategories:
+      - "Bias Amplification"
+      - "Stereotyping in Generated Content"
+      - "Sycophancy and Manipulation"
+      - "Consent for Likeness Use"
+      - "Deepfake Ethics"
     ai_ethics_principles:
       - "Human, Social and Environmental Wellbeing"
       - "Human-Centred Values"
@@ -208,11 +221,19 @@ risk_categories:
       - "Contractual Breaches"
       - "Intellectual Property"
       - "Export Control"
+    genai_subcategories:
+      - "Copyright Infringement in Training Data"
+      - "AI-Generated Content Copyright"
+      - "EU AI Act Non-Compliance"
+      - "GPAI Model Obligations"
+      - "Content Labelling Requirements"
     vaiss_guardrails: [9]  # Compliance
     example_risks:
       - "AI violates data protection regulations"
       - "System breaches third-party agreements"
       - "Model infringes on copyrights"
+      - "GenAI training data contains copyrighted material"
+      - "AI-generated content violates EU AI Act labelling requirements"
 
   reputational:
     id: "CAT-012"
@@ -474,3 +495,119 @@ standard_risks:
     typical_likelihood: 2
     description: "Third-party AI component contains security vulnerabilities or backdoors"
     vaiss_guardrails: [8]  # Supply Chain Transparency
+
+# GenAI-Specific Standard Risks
+genai_standard_risks:
+  - risk_id: "RISK-G001"
+    title: "Confabulation/Hallucination"
+    category: "Safety"
+    microsoft_threat: "Confabulation"
+    nist_competency: "AI-S-006"
+    nist_genai_risk: "Confabulation"
+    typical_severity: 4
+    typical_likelihood: 4
+    description: "GenAI generates false or fabricated information presented as fact"
+    ai6_practices: [4, 5]
+    vaiss_guardrails: [4, 6]
+
+  - risk_id: "RISK-G002"
+    title: "Harmful Content Generation"
+    category: "Safety"
+    microsoft_threat: "Harmful Content Generation"
+    nist_genai_risk: "ObsceneContent"
+    typical_severity: 4
+    typical_likelihood: 3
+    description: "GenAI generates offensive, dangerous, or harmful content"
+    ai6_practices: [2, 4]
+    vaiss_guardrails: [2, 4]
+
+  - risk_id: "RISK-G003"
+    title: "Copyright Infringement in AI Output"
+    category: "Legal/Compliance"
+    microsoft_threat: "Copyright Infringement"
+    nist_genai_risk: "IP"
+    typical_severity: 4
+    typical_likelihood: 3
+    description: "GenAI produces content that infringes on copyrighted material"
+    ai6_practices: [1, 3]
+    vaiss_guardrails: [9]
+
+  - risk_id: "RISK-G004"
+    title: "Deepfake Generation for Malicious Use"
+    category: "Ethical"
+    microsoft_threat: "Deepfake Generation"
+    nist_genai_risk: "InfoIntegrity"
+    typical_severity: 5
+    typical_likelihood: 3
+    description: "GenAI used to create deceptive synthetic media"
+    ai6_practices: [5, 6]
+    vaiss_guardrails: [4, 6]
+    eu_ai_act_article: "Article 50"
+
+  - risk_id: "RISK-G005"
+    title: "Training Data Leakage"
+    category: "Privacy"
+    microsoft_threat: "Training Data Leakage"
+    nist_genai_risk: "DataPrivacy"
+    typical_severity: 5
+    typical_likelihood: 2
+    description: "GenAI inadvertently reveals sensitive training data"
+    ai6_practices: [3]
+    vaiss_guardrails: [3]
+
+  - risk_id: "RISK-G006"
+    title: "Jailbreaking Attack"
+    category: "Security"
+    microsoft_threat: "Jailbreaking"
+    nist_genai_risk: "InfoSecurity"
+    typical_severity: 3
+    typical_likelihood: 4
+    description: "User bypasses GenAI safety controls through crafted prompts"
+    ai6_practices: [2, 4]
+    vaiss_guardrails: [2, 4]
+
+  - risk_id: "RISK-G007"
+    title: "Bias Amplification in Generated Content"
+    category: "Bias"
+    microsoft_threat: "Bias Amplification"
+    nist_genai_risk: "HarmfulBias"
+    nist_competency: "AI-K-003"
+    typical_severity: 4
+    typical_likelihood: 3
+    description: "GenAI amplifies or reinforces societal biases in outputs"
+    ai6_practices: [3, 4]
+    vaiss_guardrails: [4]
+
+  - risk_id: "RISK-G008"
+    title: "Sycophancy and Over-Agreement"
+    category: "Ethical"
+    microsoft_threat: "Sycophancy"
+    nist_genai_risk: "HumanAI"
+    typical_severity: 3
+    typical_likelihood: 4
+    description: "GenAI excessively agrees with users, providing unreliable validation"
+    ai6_practices: [4, 6]
+    vaiss_guardrails: [4, 5]
+
+  - risk_id: "RISK-G009"
+    title: "Misinformation at Scale"
+    category: "Ethical"
+    microsoft_threat: "Misinformation Generation"
+    nist_genai_risk: "InfoIntegrity"
+    nist_competency: "AI-K-023"
+    typical_severity: 5
+    typical_likelihood: 3
+    description: "GenAI used to generate and spread misinformation at scale"
+    ai6_practices: [2, 5]
+    vaiss_guardrails: [2, 6]
+
+  - risk_id: "RISK-G010"
+    title: "Environmental Impact of Large Models"
+    category: "Ethical"
+    nist_genai_risk: "EnvironmentalImpact"
+    typical_severity: 3
+    typical_likelihood: 4
+    description: "High energy consumption and carbon footprint of GenAI training and inference"
+    ai6_practices: [1, 2]
+    vaiss_guardrails: [2]
+    eu_ai_act_article: "Article 55(1)(e)"

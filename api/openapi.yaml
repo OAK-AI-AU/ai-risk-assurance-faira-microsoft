@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: AI Risk Assurance API
-  version: 2.0.0
+  version: 3.0.0
   description: |
     REST API for managing AI risk assessments using the Unified AI Risk Assurance Framework.
 
@@ -9,9 +9,15 @@ info:
     - Queensland Government FAIRA Framework (v1.0.0)
     - Microsoft AI Security Risk Assessment (v4.1.4)
     - NIST AI Security Competency Area (NF-COM-002)
-    - Voluntary AI Safety Standard (VAISS v1.0)
+    - Voluntary AI Safety Standard (VAISS v1.0/v2.0)
     - National Framework for AI Assurance in Government (NFAAIG 2024-2025)
     - Australian Responsible AI Index 2025
+    - AI6 Framework 2025 (6 Essential Practices)
+    - EU AI Act 2024 (Regulation 2024/1689)
+    - NIST AI RMF GenAI Profile (NIST-AI-600-1)
+    - MAS AI Guidelines 2025
+    - OECD AI Principles 2024
+    - UK DSIT AI Framework
 
     **Authentication**: API key or OAuth 2.0 bearer token required for all endpoints.
 
@@ -39,6 +45,10 @@ tags:
     description: FAIRA framework assessments
   - name: VAISS Assessments
     description: VAISS guardrail assessments
+  - name: AI6 Assessments
+    description: AI6 Framework (6 Essential Practices) assessments
+  - name: EU AI Act Assessments
+    description: EU AI Act compliance assessments
   - name: Compliance
     description: Compliance checking and gap analysis
   - name: Validation
@@ -415,7 +425,7 @@ paths:
                   type: array
                   items:
                     type: string
-                    enum: [FAIRA, Microsoft, NIST, VAISS, NFAAIG, ISO42001]
+                    enum: [FAIRA, Microsoft, NIST, VAISS, NFAAIG, ISO42001, AI6, EUAIAct, NISTGenAI, MAS, OECD, UKDSIT]
                   description: Frameworks to check compliance against
       responses:
         '200':
@@ -445,7 +455,7 @@ paths:
                   type: string
                 targetFramework:
                   type: string
-                  enum: [FAIRA, Microsoft, NIST, VAISS, NFAAIG, ISO42001]
+                  enum: [FAIRA, Microsoft, NIST, VAISS, NFAAIG, ISO42001, AI6, EUAIAct, NISTGenAI, MAS, OECD, UKDSIT]
       responses:
         '200':
           description: Gap analysis completed
@@ -494,6 +504,162 @@ paths:
               schema:
                 $ref: '#/components/schemas/ValidationResult'
 
+  /ai6-assessments:
+    get:
+      tags: [AI6 Assessments]
+      summary: List AI6 assessments
+      description: Retrieve a paginated list of AI6 Framework assessments
+      operationId: listAi6Assessments
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AI6AssessmentSummary'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+
+    post:
+      tags: [AI6 Assessments]
+      summary: Create AI6 assessment
+      description: Create a new AI6 Framework assessment
+      operationId: createAi6Assessment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AI6Assessment'
+      responses:
+        '201':
+          description: Assessment created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AI6Assessment'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+
+  /eu-ai-act-assessments:
+    get:
+      tags: [EU AI Act Assessments]
+      summary: List EU AI Act assessments
+      description: Retrieve a paginated list of EU AI Act compliance assessments
+      operationId: listEuAiActAssessments
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: riskCategory
+          in: query
+          description: Filter by EU AI Act risk category
+          schema:
+            type: string
+            enum: [Unacceptable, High-Risk, Limited Risk, Minimal Risk]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EUAIActAssessmentSummary'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+
+    post:
+      tags: [EU AI Act Assessments]
+      summary: Create EU AI Act assessment
+      description: Create a new EU AI Act compliance assessment
+      operationId: createEuAiActAssessment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EUAIActAssessment'
+      responses:
+        '201':
+          description: Assessment created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EUAIActAssessment'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+
+  /validate/ai6-assessment:
+    post:
+      tags: [Validation]
+      summary: Validate AI6 assessment
+      description: Validate an AI6 Framework assessment against the JSON schema
+      operationId: validateAi6Assessment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AI6Assessment'
+      responses:
+        '200':
+          description: Validation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResult'
+
+  /validate/eu-ai-act-assessment:
+    post:
+      tags: [Validation]
+      summary: Validate EU AI Act assessment
+      description: Validate an EU AI Act assessment against the JSON schema
+      operationId: validateEuAiActAssessment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EUAIActAssessment'
+      responses:
+        '200':
+          description: Validation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResult'
+
   /frameworks:
     get:
       tags: [Frameworks]
@@ -522,13 +688,13 @@ paths:
           required: true
           schema:
             type: string
-            enum: [faira, microsoft, nist, vaiss, nfaaig, iso42001]
+            enum: [faira, microsoft, nist, vaiss, nfaaig, iso42001, ai6, euaiact, nistgenai, mas, oecd, ukdsit]
         - name: targetFramework
           in: query
           description: Target framework for mapping
           schema:
             type: string
-            enum: [faira, microsoft, nist, vaiss, nfaaig, iso42001]
+            enum: [faira, microsoft, nist, vaiss, nfaaig, iso42001, ai6, euaiact, nistgenai, mas, oecd, ukdsit]
       responses:
         '200':
           description: Successful response
@@ -678,6 +844,79 @@ components:
           type: string
           format: date
         maturityScore:
+          type: number
+
+    AI6Assessment:
+      type: object
+      description: AI6 Framework assessment (references ai6-framework.schema.json)
+      properties:
+        metadata:
+          type: object
+        practiceAssessments:
+          type: array
+          items:
+            type: object
+        overallAssessment:
+          type: object
+        actionPlan:
+          type: array
+          items:
+            type: object
+
+    AI6AssessmentSummary:
+      type: object
+      properties:
+        organisation:
+          type: string
+        aiSystemName:
+          type: string
+        assessmentDate:
+          type: string
+          format: date
+        overallMaturityScore:
+          type: number
+        implementationLevel:
+          type: string
+          enum: [Emerging, Developing, Implementing, Leading]
+
+    EUAIActAssessment:
+      type: object
+      description: EU AI Act assessment (references eu-ai-act.schema.json)
+      properties:
+        metadata:
+          type: object
+        riskClassification:
+          type: object
+          properties:
+            category:
+              type: string
+              enum: [Unacceptable, High-Risk, Limited Risk, Minimal Risk]
+        highRiskRequirements:
+          type: object
+        conformityAssessment:
+          type: object
+        transparencyObligations:
+          type: object
+        overallAssessment:
+          type: object
+
+    EUAIActAssessmentSummary:
+      type: object
+      properties:
+        organisation:
+          type: string
+        aiSystemName:
+          type: string
+        assessmentDate:
+          type: string
+          format: date
+        riskCategory:
+          type: string
+          enum: [Unacceptable, High-Risk, Limited Risk, Minimal Risk]
+        complianceStatus:
+          type: string
+          enum: [Fully Compliant, Largely Compliant, Partially Compliant, Non-Compliant, Assessment Pending]
+        complianceScore:
           type: number
 
     ComplianceReport:

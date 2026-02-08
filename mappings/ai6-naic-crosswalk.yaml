@@ -1,0 +1,332 @@
+# AI6 Framework Cross-Framework Mapping
+# Maps Australia's AI6 Framework (NAIC October 2025) to related frameworks
+
+metadata:
+  title: "AI6 Framework Cross-Framework Crosswalk"
+  version: "1.0.0"
+  lastUpdated: "2026-02-08"
+  description: "Maps AI6's 6 essential practices to VAISS, FAIRA, NFAAIG, ISO 42001, and NIST AI RMF"
+  source: "https://www.industry.gov.au/publications/guidance-for-ai-adoption"
+
+framework:
+  name: "AI6 Framework"
+  fullName: "Australia's 6 Essential AI Practices"
+  publisher: "National AI Centre (NAIC) / Department of Industry, Science and Resources"
+  version: "1.0"
+  releaseDate: "2025-10"
+  status: "Current"
+  scope: "All AI systems deployed in Australia"
+
+# The 6 Essential Practices
+practices:
+  - practice: 1
+    name: "Governance and Accountability"
+    description: "Establish clear ownership, decision-making frameworks, and accountability for AI systems"
+    subPractices:
+      - id: "P1.1"
+        description: "Designate accountable individuals and teams for AI systems"
+      - id: "P1.2"
+        description: "Establish AI governance structures with executive oversight"
+      - id: "P1.3"
+        description: "Define clear roles and responsibilities"
+      - id: "P1.4"
+        description: "Implement AI policy and procedures"
+      - id: "P1.5"
+        description: "Maintain governance documentation and records"
+    vaissAlignment:
+      - guardrail: 1
+        name: "Accountability and Governance"
+        strength: "Full"
+      - guardrail: 9
+        name: "Compliance"
+        strength: "Partial"
+    fairaAlignment:
+      - component: "Part C"
+        section: "Control Plan"
+        strength: "Full"
+      - component: "Part B"
+        section: "Accountability Principle"
+        strength: "Full"
+    nfaaigAlignment:
+      - cornerstone: "Governance"
+        strength: "Full"
+    iso42001Alignment:
+      - clause: "5.1"
+        description: "Leadership and commitment"
+      - clause: "5.2"
+        description: "AI policy"
+      - clause: "5.3"
+        description: "Organisational roles, responsibilities and authorities"
+    nistAIRMFAlignment:
+      - function: "GOVERN"
+        categories: ["GOVERN-1", "GOVERN-2", "GOVERN-3", "GOVERN-4"]
+        strength: "Full"
+
+  - practice: 2
+    name: "Risk Management"
+    description: "Systematically identify, assess, and mitigate AI-related risks"
+    subPractices:
+      - id: "P2.1"
+        description: "Establish AI risk management framework"
+      - id: "P2.2"
+        description: "Conduct risk assessments for AI systems"
+      - id: "P2.3"
+        description: "Implement risk mitigation controls"
+      - id: "P2.4"
+        description: "Monitor and review risks continuously"
+      - id: "P2.5"
+        description: "Document and report on risk status"
+    vaissAlignment:
+      - guardrail: 2
+        name: "Risk Management"
+        strength: "Full"
+    fairaAlignment:
+      - component: "Part A"
+        section: "Components Analysis"
+        strength: "Partial"
+      - component: "Part C"
+        section: "Controls for AI Risks"
+        strength: "Full"
+    nfaaigAlignment:
+      - cornerstone: "Risk-Based Approach"
+        strength: "Full"
+    iso42001Alignment:
+      - clause: "6.1"
+        description: "Actions to address risks and opportunities"
+      - clause: "8.4"
+        description: "AI risk management"
+    nistAIRMFAlignment:
+      - function: "MAP"
+        categories: ["MAP-1", "MAP-2", "MAP-3"]
+        strength: "Full"
+      - function: "MANAGE"
+        categories: ["MANAGE-1", "MANAGE-2", "MANAGE-3", "MANAGE-4"]
+        strength: "Full"
+
+  - practice: 3
+    name: "Data Quality and Privacy"
+    description: "Ensure data governance, quality assurance, and privacy protection"
+    subPractices:
+      - id: "P3.1"
+        description: "Establish data governance policies"
+      - id: "P3.2"
+        description: "Ensure training data quality and representativeness"
+      - id: "P3.3"
+        description: "Implement privacy protection measures"
+      - id: "P3.4"
+        description: "Apply data minimisation principles"
+      - id: "P3.5"
+        description: "Secure data handling and storage"
+    vaissAlignment:
+      - guardrail: 3
+        name: "Data Governance and Protection"
+        strength: "Full"
+    fairaAlignment:
+      - component: "Part A"
+        section: "Table 5 - Data Sources"
+        strength: "Full"
+      - component: "Part B"
+        section: "Privacy Protection Principle"
+        strength: "Full"
+    nfaaigAlignment:
+      - cornerstone: "Data Governance"
+        strength: "Full"
+    iso42001Alignment:
+      - clause: "A.6"
+        description: "Data for AI systems"
+    nistAIRMFAlignment:
+      - function: "MAP"
+        categories: ["MAP-1.5"]
+        strength: "Full"
+      - function: "MEASURE"
+        categories: ["MEASURE-2"]
+        strength: "Partial"
+
+  - practice: 4
+    name: "Testing and Validation"
+    description: "Continuous evaluation of AI system performance, safety, and reliability"
+    subPractices:
+      - id: "P4.1"
+        description: "Establish pre-deployment testing regimes"
+      - id: "P4.2"
+        description: "Conduct ongoing performance monitoring"
+      - id: "P4.3"
+        description: "Test for bias and fairness"
+      - id: "P4.4"
+        description: "Validate safety and reliability"
+      - id: "P4.5"
+        description: "Conduct regular system audits"
+    vaissAlignment:
+      - guardrail: 4
+        name: "Testing and Monitoring"
+        strength: "Full"
+    fairaAlignment:
+      - component: "Part C"
+        section: "Control Testing"
+        strength: "Full"
+      - component: "Part B"
+        section: "Reliability and Safety Principle"
+        strength: "Partial"
+    nfaaigAlignment:
+      - cornerstone: "Standards"
+        strength: "Partial"
+    iso42001Alignment:
+      - clause: "8.5"
+        description: "AI system impact assessment"
+      - clause: "9.1"
+        description: "Monitoring, measurement, analysis and evaluation"
+    nistAIRMFAlignment:
+      - function: "MEASURE"
+        categories: ["MEASURE-1", "MEASURE-2", "MEASURE-3", "MEASURE-4"]
+        strength: "Full"
+
+  - practice: 5
+    name: "Transparency and Explainability"
+    description: "Clear communication about AI system operations, capabilities, and limitations"
+    subPractices:
+      - id: "P5.1"
+        description: "Disclose AI use to affected parties"
+      - id: "P5.2"
+        description: "Explain AI capabilities and limitations"
+      - id: "P5.3"
+        description: "Provide accessible information to users"
+      - id: "P5.4"
+        description: "Document AI system design and operation"
+      - id: "P5.5"
+        description: "Enable interpretability where possible"
+    vaissAlignment:
+      - guardrail: 6
+        name: "Transparency"
+        strength: "Full"
+      - guardrail: 7
+        name: "Contestability"
+        strength: "Partial"
+      - guardrail: 8
+        name: "Supply Chain Transparency"
+        strength: "Partial"
+    fairaAlignment:
+      - component: "Part B"
+        section: "Transparency and Explainability Principle"
+        strength: "Full"
+    nfaaigAlignment:
+      - cornerstone: "Governance"
+        strength: "Partial"
+    iso42001Alignment:
+      - clause: "A.5"
+        description: "Transparency and provision of information"
+    nistAIRMFAlignment:
+      - function: "GOVERN"
+        categories: ["GOVERN-1.2", "GOVERN-1.7"]
+        strength: "Partial"
+      - function: "MAP"
+        categories: ["MAP-5"]
+        strength: "Full"
+
+  - practice: 6
+    name: "Human Oversight and Control"
+    description: "Meaningful human control and intervention capabilities"
+    subPractices:
+      - id: "P6.1"
+        description: "Implement human-in-the-loop mechanisms"
+      - id: "P6.2"
+        description: "Provide override capabilities"
+      - id: "P6.3"
+        description: "Establish clear escalation pathways"
+      - id: "P6.4"
+        description: "Enable human review for high-risk decisions"
+      - id: "P6.5"
+        description: "Support contestability and appeal"
+    vaissAlignment:
+      - guardrail: 5
+        name: "Human Oversight"
+        strength: "Full"
+      - guardrail: 7
+        name: "Contestability"
+        strength: "Full"
+    fairaAlignment:
+      - component: "Part B"
+        section: "Human-Centred Values Principle"
+        strength: "Full"
+      - component: "Part B"
+        section: "Contestability Principle"
+        strength: "Full"
+    nfaaigAlignment:
+      - cornerstone: "Governance"
+        strength: "Partial"
+    iso42001Alignment:
+      - clause: "A.9"
+        description: "Human oversight"
+    nistAIRMFAlignment:
+      - function: "GOVERN"
+        categories: ["GOVERN-1.3"]
+        strength: "Partial"
+      - function: "MANAGE"
+        categories: ["MANAGE-2"]
+        strength: "Full"
+
+# EU AI Act Alignment
+euAIActAlignment:
+  - practice: 1
+    articles: ["Article 9", "Article 17"]
+    requirement: "Quality management and governance"
+  - practice: 2
+    articles: ["Article 8", "Article 9"]
+    requirement: "Risk management system"
+  - practice: 3
+    articles: ["Article 10", "Article 11"]
+    requirement: "Data governance and record-keeping"
+  - practice: 4
+    articles: ["Article 9", "Article 15"]
+    requirement: "Testing and accuracy requirements"
+  - practice: 5
+    articles: ["Article 13", "Article 50"]
+    requirement: "Transparency and information provision"
+  - practice: 6
+    articles: ["Article 14"]
+    requirement: "Human oversight"
+
+# OECD AI Principles 2024 Alignment
+oecdAlignment:
+  - practice: 1
+    principle: "Accountability"
+    description: "Actors should be accountable for proper functioning of AI systems"
+  - practice: 2
+    principle: "Robustness, security and safety"
+    description: "AI systems should be robust, secure and safe throughout lifecycle"
+  - practice: 3
+    principle: "Human-centred values and fairness"
+    description: "AI should respect human rights, privacy and fairness"
+  - practice: 4
+    principle: "Robustness, security and safety"
+    description: "Ongoing monitoring and evaluation"
+  - practice: 5
+    principle: "Transparency and explainability"
+    description: "General understanding of AI system operation"
+  - practice: 6
+    principle: "Human-centred values and fairness"
+    description: "Human choice and oversight"
+
+# Implementation Resources
+naicResources:
+  screeningTool:
+    name: "AI Adoption Screening Tool"
+    url: "https://www.industry.gov.au/ai-screening-tool"
+    description: "Self-assessment tool to identify which practices are most relevant"
+  policyTemplates:
+    - name: "AI Governance Policy Template"
+      practice: 1
+    - name: "AI Risk Register Template"
+      practice: 2
+    - name: "Data Governance Checklist"
+      practice: 3
+    - name: "AI Testing Protocol Template"
+      practice: 4
+    - name: "AI Transparency Statement Template"
+      practice: 5
+    - name: "Human Oversight Procedures Template"
+      practice: 6
+  guidance:
+    - "Getting Started with AI6"
+    - "Implementation Guidance for Each Practice"
+    - "Industry-Specific Examples"
+    - "Small Business AI Adoption Guide"

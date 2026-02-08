@@ -7,7 +7,7 @@ A practical synthesis of the **Queensland Government FAIRA Framework (v1.0.0)** 
 Published by **[OAK AI](https://github.com/OAK-AI-Public)**  
 GitHub Repository: [OAK-AI-Public/ai-risk-assurance-faira-microsoft](https://github.com/OAK-AI-Public/ai-risk-assurance-faira-microsoft)
 
-**Latest Update**: Enhanced with NIST AI Security Competency Area (NF-COM-002) integration from NICE Framework Components v2.0.0 (March 2025), adding 46 AI-specific competencies (39 knowledge areas + 7 skills) with June 2025 proposed enhancements for comprehensive AI security capability assessment. Now includes the Australian Responsible AI Index 2025 (NAIC/Fifth Quadrant) for maturity benchmarking aligned with VAISS. Updated with National Framework for the Assurance of AI in Government (NFAAIG) 2025 technical standards.
+**Latest Update (v3.0.0)**: Major framework expansion including AI6 Framework 2025 (Australia's 6 Essential Practices), EU AI Act 2024, NIST AI RMF GenAI Profile, MAS AI Guidelines 2025, OECD AI Principles 2024, UK DSIT AI Framework, and VAISS v2 enhancements (content provenance, watermarking). New schemas, YAML mappings, and extended compliance tooling.
 
 ---
 
@@ -20,10 +20,17 @@ This guide combines:
 - ⚖️ Alignment with the [NFAAIG (2024-2025)](./frameworks/nfaaig-framework-2025.md) ([Department of Finance](https://www.finance.gov.au/government/public-data/data-and-digital-ministers-meeting/national-framework-assurance-artificial-intelligence-government)) and QLD legislation
 - ⚠️ Integration of **Workplace Health and Safety (WHS)** impacts under the _WHS Act 2011_
 - 🎯 Integration of [NIST AI Security Competency Area (NF-COM-002)](https://www.nist.gov/itl/applied-cybersecurity/nice/nice-framework-resource-center) – 46 AI-specific competencies for security teams (NICE Framework v2.0.0)
-- 🇦🇺 **NEW**: Australian AI frameworks integrated:
+- 🇦🇺 **Australian AI frameworks**:
+  - [AI6 Framework 2025](./frameworks/ai6-framework-2025.md) (NAIC) – 6 Essential Practices
+  - [Voluntary AI Safety Standard (VAISS v1/v2)](./frameworks/vaiss-framework-2024-2025.md) – 10 guardrails with v2 enhancements
   - [Australian Responsible AI Index 2025](./frameworks/naic-rai-index-2025.md) (NAIC/Fifth Quadrant) – maturity benchmarking
-  - [Voluntary AI Safety Standard (VAISS)](./frameworks/vaiss-framework-2024-2025.md) – 10 guardrails with v2 tracking
   - [NFAAIG 2024-2025](./frameworks/nfaaig-framework-2025.md) – National government AI assurance framework
+- 🌍 **International frameworks**:
+  - [EU AI Act 2024](./frameworks/eu-ai-act-2024.md) – Regulation 2024/1689, risk classification
+  - [UK DSIT AI Framework](./frameworks/uk-dsit-ai-framework.md) – 5 cross-sectoral principles
+  - NIST AI RMF GenAI Profile (NIST-AI-600-1) – Generative AI guidance
+  - MAS AI Guidelines 2025 – Singapore financial sector
+  - OECD AI Principles 2024 – 47 jurisdictions
 
 ---
 
@@ -44,22 +51,28 @@ This repository now includes comprehensive machine-readable schemas and mappings
 
 ### JSON Schemas (`/schemas/`)
 
-Six production-ready JSON Schema files enable programmatic validation and automation:
+Eight production-ready JSON Schema files enable programmatic validation and automation:
 
-- **`risk-register.schema.json`** - Complete AI risk assessment structure
+- **`risk-register.schema.json`** - Complete AI risk assessment structure (GenAI threats, AI6/EU AI Act support)
 - **`faira-assessment.schema.json`** - Queensland FAIRA framework (Parts A, B, C)
-- **`control-catalog.schema.json`** - Cross-framework control library
+- **`control-catalog.schema.json`** - Cross-framework control library (AI6, EU AI Act, NIST GenAI mappings)
 - **`nist-ai-competencies.schema.json`** - NIST AI Security (NF-COM-002)
-- **`vaiss-guardrails.schema.json`** - VAISS 10 guardrails assessment
-- **`compliance-mapping.schema.json`** - Cross-framework alignment
+- **`vaiss-guardrails.schema.json`** - VAISS 10 guardrails assessment (v2 enhancements)
+- **`compliance-mapping.schema.json`** - Cross-framework alignment (12 frameworks)
+- **`ai6-framework.schema.json`** - AI6 Framework 6 Essential Practices
+- **`eu-ai-act.schema.json`** - EU AI Act compliance assessment
 
 ### YAML Mappings (`/mappings/`)
 
 Cross-framework mappings for compliance and integration:
 
-- **`naic-rai-index-2025.yaml`** - Australian RAI Index dimensions and maturity levels
+- **`naic-rai-index-2025.yaml`** - Australian RAI Index dimensions, OECD 2024 alignment, GenAI additions
 - **`faira-microsoft-crosswalk.yaml`** - FAIRA ↔ Microsoft AI Security detailed mapping
-- **`risk-taxonomy.yaml`** - Standardized risk categories, severity scales, and threat types
+- **`risk-taxonomy.yaml`** - Risk categories, severity scales, GenAI-specific risks
+- **`ai6-naic-crosswalk.yaml`** - AI6 Framework to VAISS, FAIRA, NIST, ISO 42001
+- **`eu-ai-act-crosswalk.yaml`** - EU AI Act to Australian frameworks
+- **`nist-genai-profile-crosswalk.yaml`** - NIST GenAI Profile GOVERN/MAP/MEASURE/MANAGE actions
+- **`mas-ai-guidelines-crosswalk.yaml`** - MAS FEAT principles to Australian frameworks
 
 ### Developer Resources
 
@@ -128,19 +141,28 @@ The repository includes a complete **OpenAPI 3.0 specification** for building RE
 | `AI_Risk_Assurance_Checklists.md`        | Practical checklists for implementing the framework step-by-step |
 | `FAIRA_Framework.md`                     | Queensland Government FAIRA Framework (extracted from DOCX)      |
 | `AI_Security_Risk_Assessment.md`         | Microsoft AI Security Risk Assessment (extracted from PDF)       |
+| `frameworks/ai6-framework-2025.md`      | AI6 Framework 2025 - 6 Essential Practices (NAIC)                |
+| `frameworks/eu-ai-act-2024.md`          | EU AI Act 2024 - Regulation 2024/1689                            |
+| `frameworks/uk-dsit-ai-framework.md`    | UK DSIT AI Framework - 5 Cross-sectoral Principles               |
 | `frameworks/naic-rai-index-2025.md`     | Australian Responsible AI Index 2025 (NAIC/Fifth Quadrant)       |
 | `frameworks/nfaaig-framework-2025.md`   | National Framework for AI Assurance in Government (NFAAIG 2025)  |
-| `frameworks/vaiss-framework-2024-2025.md` | Voluntary AI Safety Standard v1 & v2 tracking (VAISS)         |
+| `frameworks/vaiss-framework-2024-2025.md` | Voluntary AI Safety Standard v1 & v2 (VAISS)                   |
 | **Machine-Readable Formats** | |
 | `schemas/risk-register.schema.json`     | JSON Schema for AI risk registers                                 |
 | `schemas/faira-assessment.schema.json`  | JSON Schema for FAIRA assessments                                 |
 | `schemas/control-catalog.schema.json`   | JSON Schema for control catalogs                                  |
 | `schemas/nist-ai-competencies.schema.json` | JSON Schema for NIST AI competencies                           |
-| `schemas/vaiss-guardrails.schema.json`  | JSON Schema for VAISS guardrail assessments                       |
+| `schemas/vaiss-guardrails.schema.json`  | JSON Schema for VAISS guardrail assessments (v2 support)          |
 | `schemas/compliance-mapping.schema.json` | JSON Schema for cross-framework mappings                         |
-| `mappings/naic-rai-index-2025.yaml`     | NAIC RAI Index taxonomy mappings                                  |
+| `schemas/ai6-framework.schema.json`     | JSON Schema for AI6 Framework assessments                         |
+| `schemas/eu-ai-act.schema.json`         | JSON Schema for EU AI Act assessments                             |
+| `mappings/naic-rai-index-2025.yaml`     | NAIC RAI Index taxonomy (OECD 2024, GenAI additions)              |
 | `mappings/faira-microsoft-crosswalk.yaml` | FAIRA-Microsoft detailed control mapping                        |
-| `mappings/risk-taxonomy.yaml`           | Standardized risk taxonomy and scales                             |
+| `mappings/risk-taxonomy.yaml`           | Risk taxonomy, scales, GenAI-specific risks                       |
+| `mappings/ai6-naic-crosswalk.yaml`      | AI6 Framework cross-framework mapping                             |
+| `mappings/eu-ai-act-crosswalk.yaml`     | EU AI Act to Australian frameworks mapping                        |
+| `mappings/nist-genai-profile-crosswalk.yaml` | NIST GenAI Profile actions mapping                           |
+| `mappings/mas-ai-guidelines-crosswalk.yaml` | MAS AI Guidelines FEAT principles mapping                      |
 | **API & Integration** | |
 | `api/USE_CASES.md`                      | Real-world API integration patterns with working code examples    |
 | `api/README.md`                         | Complete API reference documentation                              |

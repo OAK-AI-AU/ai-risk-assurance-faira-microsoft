@@ -2,7 +2,7 @@
 
 Comprehensive REST API for managing AI risk assessments using the Unified AI Risk Assurance Framework.
 
-**Version**: 2.0.0
+**Version**: 3.0.0
 **OpenAPI Specification**: [openapi.yaml](./openapi.yaml)
 
 ---
@@ -19,6 +19,8 @@ Comprehensive REST API for managing AI risk assessments using the Unified AI Ris
   - [Risk Registers](#risk-registers)
   - [FAIRA Assessments](#faira-assessments)
   - [VAISS Assessments](#vaiss-assessments)
+  - [AI6 Assessments](#ai6-assessments)
+  - [EU AI Act Assessments](#eu-ai-act-assessments)
   - [Compliance Checking](#compliance-checking)
   - [Validation Services](#validation-services)
   - [Framework Metadata](#framework-metadata)
@@ -52,8 +54,14 @@ The AI Risk Assurance API provides programmatic access to:
 - **FAIRA v1.0.0** - Queensland Government AI risk assessment
 - **Microsoft AI Security v4.1.4** - AI security controls and threat assessment
 - **NIST NF-COM-002** - AI Security Competency Area (46 competencies)
-- **VAISS v1.0** - Voluntary AI Safety Standard (10 guardrails)
+- **VAISS v1.0/v2.0** - Voluntary AI Safety Standard (10 guardrails, v2 enhancements)
 - **NFAAIG 2024-2025** - National government AI assurance framework
+- **AI6 Framework 2025** - Australia's 6 Essential AI Practices
+- **EU AI Act 2024** - Regulation 2024/1689, risk classification
+- **NIST AI RMF GenAI Profile** - NIST-AI-600-1, generative AI guidance
+- **MAS AI Guidelines 2025** - Singapore financial sector AI risk management
+- **OECD AI Principles 2024** - International AI principles (47 jurisdictions)
+- **UK DSIT AI Framework** - UK cross-sectoral AI principles
 
 ---
 

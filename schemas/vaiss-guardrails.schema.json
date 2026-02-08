@@ -13,7 +13,13 @@
         "version": {
           "type": "string",
           "description": "VAISS version",
-          "enum": ["1.0", "2.0"]
+          "enum": ["1.0", "2.0", "2.1"]
+        },
+        "schemaVersion": {
+          "type": "string",
+          "description": "Schema version for migration support",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "default": "1.0.0"
         },
         "assessmentDate": {
           "type": "string",
@@ -37,6 +43,71 @@
         "organisationType": {
           "type": "string",
           "enum": ["AI Deployer", "AI Developer", "Both"]
+        }
+      }
+    },
+    "v2Enhancements": {
+      "type": "object",
+      "description": "VAISS v2 enhanced capabilities (optional, for v2.0+ assessments)",
+      "properties": {
+        "contentProvenance": {
+          "type": "object",
+          "description": "C2PA content provenance compliance",
+          "properties": {
+            "implemented": {"type": "boolean"},
+            "c2paCompliant": {"type": "boolean", "description": "Coalition for Content Provenance and Authenticity compliance"},
+            "provenanceTracking": {"type": "boolean"},
+            "contentAuthentication": {"type": "boolean"},
+            "evidence": {"type": "string"}
+          }
+        },
+        "watermarking": {
+          "type": "object",
+          "description": "AI content watermarking capabilities",
+          "properties": {
+            "implemented": {"type": "boolean"},
+            "visibleWatermark": {"type": "boolean"},
+            "invisibleWatermark": {"type": "boolean"},
+            "robustToModification": {"type": "boolean"},
+            "detectionToolAvailable": {"type": "boolean"},
+            "evidence": {"type": "string"}
+          }
+        },
+        "developerGuardrails": {
+          "type": "object",
+          "description": "Enhanced developer-focused guardrails",
+          "properties": {
+            "secureByDesign": {"type": "boolean"},
+            "privacyByDesign": {"type": "boolean"},
+            "redTeamingConducted": {"type": "boolean"},
+            "modelCardProvided": {"type": "boolean"},
+            "dataSheetProvided": {"type": "boolean"},
+            "safetyEvaluation": {"type": "boolean"},
+            "harmMitigation": {"type": "boolean"}
+          }
+        },
+        "nationalAICapabilityPlanAlignment": {
+          "type": "object",
+          "description": "Alignment with National AI Capability Plan",
+          "properties": {
+            "aligned": {"type": "boolean"},
+            "capabilitiesSupported": {
+              "type": "array",
+              "items": {"type": "string"}
+            },
+            "sovereignAIConsiderations": {"type": "boolean"}
+          }
+        },
+        "generativeAISpecific": {
+          "type": "object",
+          "description": "GenAI-specific v2 requirements",
+          "properties": {
+            "outputDisclosure": {"type": "boolean", "description": "Clear disclosure that content is AI-generated"},
+            "hallucinationMitigation": {"type": "boolean"},
+            "copyrightCompliance": {"type": "boolean"},
+            "harmfulContentFiltering": {"type": "boolean"},
+            "promptInjectionProtection": {"type": "boolean"}
+          }
         }
       }
     },

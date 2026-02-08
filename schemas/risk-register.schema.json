@@ -62,12 +62,25 @@
               "Microsoft AI Security Risk Assessment v4.1.4",
               "NIST AI Security Competency (NF-COM-002)",
               "VAISS v1.0",
+              "VAISS v2.0",
               "NFAAIG 2024-2025",
               "NAIC RAI Index 2025",
               "ISO/IEC 42001:2023",
-              "NIST AI RMF 1.0"
+              "NIST AI RMF 1.0",
+              "AI6 Framework 2025",
+              "EU AI Act 2024",
+              "NIST AI RMF GenAI Profile",
+              "MAS AI Guidelines 2025",
+              "OECD AI Principles 2024",
+              "UK DSIT AI Framework"
             ]
           }
+        },
+        "schemaVersion": {
+          "type": "string",
+          "description": "Schema version for migration support",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "default": "3.0.0"
         }
       }
     },
@@ -128,8 +141,38 @@
               "Hallucination",
               "Misinformation Generation",
               "Prompt Injection",
+              "Confabulation",
+              "Harmful Content Generation",
+              "Copyright Infringement",
+              "Deepfake Generation",
+              "Training Data Leakage",
+              "Jailbreaking",
+              "Bias Amplification",
+              "Sycophancy",
               "Other"
             ]
+          },
+          "ai6Practices": {
+            "type": "array",
+            "description": "AI6 Framework practices relevant to this risk",
+            "items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 6
+            }
+          },
+          "euAIActCategory": {
+            "type": "string",
+            "description": "EU AI Act risk classification",
+            "enum": ["Unacceptable", "High-Risk", "Limited Risk", "Minimal Risk", "Not Applicable"]
+          },
+          "nistGenAIActions": {
+            "type": "array",
+            "description": "Relevant NIST GenAI Profile actions",
+            "items": {
+              "type": "string",
+              "pattern": "^(GOVERN|MAP|MEASURE|MANAGE)-\\d+(\\.\\d+)?$"
+            }
           },
           "nistCompetency": {
             "type": "array",

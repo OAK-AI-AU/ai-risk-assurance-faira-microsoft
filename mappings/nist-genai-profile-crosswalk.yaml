@@ -1,0 +1,426 @@
+# NIST AI RMF Generative AI Profile Cross-Framework Mapping
+# Maps NIST-AI-600-1 GenAI Profile to Australian and international frameworks
+
+metadata:
+  title: "NIST AI RMF GenAI Profile Cross-Framework Crosswalk"
+  version: "1.0.0"
+  lastUpdated: "2026-02-08"
+  description: "Maps NIST GenAI Profile actions to FAIRA, VAISS, AI6, EU AI Act, and Microsoft AI Security"
+  source: "https://www.nist.gov/itl/ai-risk-management-framework"
+
+framework:
+  name: "NIST AI RMF Generative AI Profile"
+  fullName: "Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile"
+  identifier: "NIST-AI-600-1"
+  publisher: "National Institute of Standards and Technology"
+  version: "1.0"
+  releaseDate: "2024-07"
+  status: "Current"
+  baseFramework: "NIST AI RMF 1.0"
+  scope: "Generative AI systems and foundation models"
+
+# GenAI-Specific Risks
+genAIRisks:
+  - riskId: "CBRN"
+    name: "CBRN Information or Capabilities"
+    description: "Easing access to chemical, biological, radiological, or nuclear information"
+    category: "Safety"
+    vaissGuardrails: [2, 4]
+    ai6Practices: [2, 4]
+
+  - riskId: "Confabulation"
+    name: "Confabulation"
+    description: "Generation of false content (hallucinations) presented as fact"
+    category: "Reliability"
+    vaissGuardrails: [4, 6]
+    ai6Practices: [4, 5]
+    microsoftThreat: "Hallucination"
+    nistCompetency: "AI-S-006"
+
+  - riskId: "DangerousCode"
+    name: "Dangerous or Violent Recommendations"
+    description: "Facilitating access to dangerous recommendations"
+    category: "Safety"
+    vaissGuardrails: [2, 5]
+    ai6Practices: [2, 6]
+
+  - riskId: "DataPrivacy"
+    name: "Data Privacy"
+    description: "Leakage or exposure of training data or user data"
+    category: "Privacy"
+    vaissGuardrails: [3]
+    ai6Practices: [3]
+    microsoftThreat: "Training Data Leakage"
+
+  - riskId: "EnvironmentalImpact"
+    name: "Environmental Impacts"
+    description: "High energy consumption and environmental footprint"
+    category: "Sustainability"
+    vaissGuardrails: [2]
+    ai6Practices: [2]
+
+  - riskId: "HarmfulBias"
+    name: "Harmful Bias and Homogenisation"
+    description: "Amplification of biases, reduction of diversity"
+    category: "Fairness"
+    vaissGuardrails: [4]
+    ai6Practices: [3, 4]
+    microsoftThreat: "Bias Amplification"
+    nistCompetency: "AI-K-003"
+
+  - riskId: "HumanAI"
+    name: "Human-AI Configuration"
+    description: "Inappropriate reliance on AI, over-trust, or under-trust"
+    category: "Human Factors"
+    vaissGuardrails: [5, 6]
+    ai6Practices: [5, 6]
+
+  - riskId: "InfoIntegrity"
+    name: "Information Integrity"
+    description: "Spread of misinformation, disinformation, or malinformation"
+    category: "Information"
+    vaissGuardrails: [4, 6]
+    ai6Practices: [4, 5]
+    microsoftThreat: "Misinformation Generation"
+    nistCompetency: "AI-K-023"
+
+  - riskId: "InfoSecurity"
+    name: "Information Security"
+    description: "Adversarial attacks, prompt injection, model extraction"
+    category: "Security"
+    vaissGuardrails: [2, 3, 4]
+    ai6Practices: [2, 3, 4]
+    microsoftThreat: "Prompt Injection"
+    nistCompetency: "AI-S-002"
+
+  - riskId: "IP"
+    name: "Intellectual Property"
+    description: "Copyright infringement, training data attribution"
+    category: "Legal"
+    vaissGuardrails: [9]
+    ai6Practices: [1]
+    microsoftThreat: "Copyright Infringement"
+
+  - riskId: "ObsceneContent"
+    name: "Obscene, Degrading, and/or Abusive Content"
+    description: "Generation of harmful, offensive content"
+    category: "Content Safety"
+    vaissGuardrails: [2, 4]
+    ai6Practices: [2, 4]
+    microsoftThreat: "Harmful Content Generation"
+
+  - riskId: "ValueChain"
+    name: "Value Chain and Component Integration"
+    description: "Third-party model and component risks"
+    category: "Supply Chain"
+    vaissGuardrails: [8]
+    ai6Practices: [1, 2]
+
+# Core Functions and Actions
+functions:
+  GOVERN:
+    description: "Establish and maintain organisational AI risk governance"
+    genAIActions:
+      - actionId: "GOVERN-1.1"
+        action: "Policies for GenAI development and deployment"
+        description: "Establish GenAI-specific policies addressing unique risks"
+        vaissMapping:
+          - guardrail: 1
+            requirement: "AI Governance Policy"
+        ai6Mapping:
+          - practice: 1
+            subPractice: "P1.4"
+        fairaMapping:
+          - component: "Part C"
+            section: "Policy Controls"
+        euAIActMapping:
+          - article: "Article 17"
+            requirement: "Quality management system"
+
+      - actionId: "GOVERN-1.2"
+        action: "GenAI transparency policies"
+        description: "Policies for disclosing AI-generated content and system capabilities"
+        vaissMapping:
+          - guardrail: 6
+            requirement: "Transparency"
+        ai6Mapping:
+          - practice: 5
+            subPractice: "P5.1"
+        fairaMapping:
+          - component: "Part B"
+            section: "Transparency Principle"
+        euAIActMapping:
+          - article: "Article 50"
+            requirement: "Transparency obligations"
+
+      - actionId: "GOVERN-1.3"
+        action: "Human-AI interaction governance"
+        description: "Policies for human oversight in GenAI contexts"
+        vaissMapping:
+          - guardrail: 5
+            requirement: "Human Oversight"
+        ai6Mapping:
+          - practice: 6
+            subPractice: "P6.1"
+        fairaMapping:
+          - component: "Part B"
+            section: "Human-Centred Values"
+        euAIActMapping:
+          - article: "Article 14"
+            requirement: "Human oversight"
+
+      - actionId: "GOVERN-1.4"
+        action: "Third-party GenAI governance"
+        description: "Policies for managing third-party GenAI components"
+        vaissMapping:
+          - guardrail: 8
+            requirement: "Supply Chain Transparency"
+        ai6Mapping:
+          - practice: 1
+            subPractice: "P1.3"
+
+      - actionId: "GOVERN-1.5"
+        action: "Incident response for GenAI"
+        description: "Procedures for GenAI-specific incidents"
+        vaissMapping:
+          - guardrail: 2
+            requirement: "Risk Management"
+        ai6Mapping:
+          - practice: 2
+            subPractice: "P2.4"
+
+      - actionId: "GOVERN-1.6"
+        action: "GenAI workforce competencies"
+        description: "Skills development for GenAI risks"
+        nistCompetencies:
+          - "AI-K-001"
+          - "AI-K-003"
+          - "AI-S-006"
+        vaissMapping:
+          - guardrail: 1
+            requirement: "Governance"
+
+      - actionId: "GOVERN-1.7"
+        action: "Stakeholder feedback for GenAI"
+        description: "Mechanisms for collecting GenAI feedback"
+        vaissMapping:
+          - guardrail: 10
+            requirement: "Stakeholder Engagement"
+        ai6Mapping:
+          - practice: 5
+            subPractice: "P5.3"
+
+  MAP:
+    description: "Identify and document AI system context and risks"
+    genAIActions:
+      - actionId: "MAP-1.1"
+        action: "GenAI use case inventory"
+        description: "Document all GenAI applications and their contexts"
+        vaissMapping:
+          - guardrail: 1
+            requirement: "Governance"
+        fairaMapping:
+          - component: "Part A"
+            section: "Table 1 - Solution Overview"
+
+      - actionId: "MAP-1.2"
+        action: "GenAI-specific risk identification"
+        description: "Identify risks unique to generative AI"
+        genAIRisksAddressed: ["Confabulation", "InfoIntegrity", "HarmfulBias", "IP"]
+        vaissMapping:
+          - guardrail: 2
+            requirement: "Risk Management"
+        ai6Mapping:
+          - practice: 2
+            subPractice: "P2.2"
+
+      - actionId: "MAP-1.3"
+        action: "Training data provenance"
+        description: "Document training data sources and potential issues"
+        genAIRisksAddressed: ["DataPrivacy", "IP", "HarmfulBias"]
+        vaissMapping:
+          - guardrail: 3
+            requirement: "Data Governance"
+        ai6Mapping:
+          - practice: 3
+            subPractice: "P3.2"
+        fairaMapping:
+          - component: "Part A"
+            section: "Table 5 - Data Sources"
+        euAIActMapping:
+          - article: "Article 10"
+            requirement: "Data governance"
+
+      - actionId: "MAP-1.4"
+        action: "Foundation model assessment"
+        description: "Evaluate risks of foundation models used"
+        genAIRisksAddressed: ["ValueChain", "InfoSecurity"]
+        vaissMapping:
+          - guardrail: 8
+            requirement: "Supply Chain"
+
+      - actionId: "MAP-1.5"
+        action: "GenAI impact assessment"
+        description: "Assess impacts on affected communities"
+        vaissMapping:
+          - guardrail: 10
+            requirement: "Stakeholder Engagement"
+        fairaMapping:
+          - component: "Part B"
+            section: "All 8 Principles"
+
+  MEASURE:
+    description: "Assess, analyse, and track AI risks"
+    genAIActions:
+      - actionId: "MEASURE-1.1"
+        action: "Hallucination rate measurement"
+        description: "Track and measure confabulation/hallucination rates"
+        genAIRisksAddressed: ["Confabulation"]
+        vaissMapping:
+          - guardrail: 4
+            requirement: "Testing and Monitoring"
+        ai6Mapping:
+          - practice: 4
+            subPractice: "P4.2"
+        nistCompetency: "AI-S-006"
+
+      - actionId: "MEASURE-1.2"
+        action: "Bias evaluation"
+        description: "Evaluate output bias across demographic groups"
+        genAIRisksAddressed: ["HarmfulBias"]
+        vaissMapping:
+          - guardrail: 4
+            requirement: "Testing and Monitoring"
+        ai6Mapping:
+          - practice: 4
+            subPractice: "P4.3"
+        nistCompetency: "AI-K-003"
+
+      - actionId: "MEASURE-1.3"
+        action: "Content safety evaluation"
+        description: "Test for harmful, offensive, or dangerous outputs"
+        genAIRisksAddressed: ["ObsceneContent", "DangerousCode"]
+        vaissMapping:
+          - guardrail: 4
+            requirement: "Testing and Monitoring"
+
+      - actionId: "MEASURE-1.4"
+        action: "Prompt injection testing"
+        description: "Test resilience to prompt injection and jailbreaking"
+        genAIRisksAddressed: ["InfoSecurity"]
+        vaissMapping:
+          - guardrail: 4
+            requirement: "Testing and Monitoring"
+        microsoftThreat: "Prompt Injection"
+        nistCompetency: "AI-S-002"
+
+      - actionId: "MEASURE-1.5"
+        action: "Red teaming"
+        description: "Conduct adversarial testing of GenAI systems"
+        genAIRisksAddressed: ["InfoSecurity", "ObsceneContent", "DangerousCode"]
+        vaissMapping:
+          - guardrail: 4
+            requirement: "Testing and Monitoring"
+        vaissV2Enhancement: "developerGuardrails.redTeamingConducted"
+        euAIActMapping:
+          - article: "Article 55"
+            requirement: "Adversarial testing"
+
+      - actionId: "MEASURE-1.6"
+        action: "Human evaluation"
+        description: "Human assessment of GenAI outputs"
+        vaissMapping:
+          - guardrail: 5
+            requirement: "Human Oversight"
+        ai6Mapping:
+          - practice: 6
+            subPractice: "P6.4"
+
+  MANAGE:
+    description: "Prioritise and act on AI risks"
+    genAIActions:
+      - actionId: "MANAGE-1.1"
+        action: "Content filtering implementation"
+        description: "Implement input/output content filters"
+        genAIRisksAddressed: ["ObsceneContent", "DangerousCode", "HarmfulBias"]
+        vaissMapping:
+          - guardrail: 4
+            requirement: "Testing and Monitoring"
+        vaissV2Enhancement: "generativeAISpecific.harmfulContentFiltering"
+
+      - actionId: "MANAGE-1.2"
+        action: "Hallucination mitigation"
+        description: "Implement controls to reduce confabulation"
+        genAIRisksAddressed: ["Confabulation"]
+        vaissMapping:
+          - guardrail: 4
+            requirement: "Testing and Monitoring"
+        vaissV2Enhancement: "generativeAISpecific.hallucinationMitigation"
+
+      - actionId: "MANAGE-1.3"
+        action: "AI-generated content disclosure"
+        description: "Implement disclosure mechanisms for AI-generated content"
+        genAIRisksAddressed: ["InfoIntegrity", "HumanAI"]
+        vaissMapping:
+          - guardrail: 6
+            requirement: "Transparency"
+        vaissV2Enhancement: "generativeAISpecific.outputDisclosure"
+        euAIActMapping:
+          - article: "Article 50"
+            requirement: "Transparency obligations"
+
+      - actionId: "MANAGE-1.4"
+        action: "Watermarking and provenance"
+        description: "Implement content watermarking and provenance tracking"
+        genAIRisksAddressed: ["InfoIntegrity"]
+        vaissV2Enhancement:
+          - "contentProvenance"
+          - "watermarking"
+        euAIActMapping:
+          - article: "Article 50"
+            requirement: "Machine-readable marking"
+
+      - actionId: "MANAGE-1.5"
+        action: "Human override mechanisms"
+        description: "Enable human intervention in GenAI outputs"
+        genAIRisksAddressed: ["HumanAI"]
+        vaissMapping:
+          - guardrail: 5
+            requirement: "Human Oversight"
+        ai6Mapping:
+          - practice: 6
+            subPractice: "P6.2"
+        euAIActMapping:
+          - article: "Article 14"
+            requirement: "Human oversight"
+
+      - actionId: "MANAGE-1.6"
+        action: "Prompt injection defence"
+        description: "Implement controls against prompt injection"
+        genAIRisksAddressed: ["InfoSecurity"]
+        vaissV2Enhancement: "generativeAISpecific.promptInjectionProtection"
+        microsoftThreat: "Prompt Injection"
+
+      - actionId: "MANAGE-1.7"
+        action: "Copyright compliance"
+        description: "Implement controls for copyright compliance"
+        genAIRisksAddressed: ["IP"]
+        vaissV2Enhancement: "generativeAISpecific.copyrightCompliance"
+
+# Cross-Framework Summary
+crossFrameworkSummary:
+  vaissAlignment:
+    strength: "High"
+    notes: "NIST GenAI Profile actions map well to VAISS guardrails, especially v2 enhancements"
+  ai6Alignment:
+    strength: "High"
+    notes: "AI6 practices cover similar ground with Australian-specific context"
+  fairaAlignment:
+    strength: "Medium"
+    notes: "FAIRA values assessment and Part A documentation align with GOVERN and MAP functions"
+  euAIActAlignment:
+    strength: "High"
+    notes: "GenAI Profile directly addresses EU AI Act transparency and GPAI requirements"
+  microsoftAISecurityAlignment:
+    strength: "High"
+    notes: "GenAI risks map directly to Microsoft threat taxonomy"

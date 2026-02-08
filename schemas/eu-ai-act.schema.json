@@ -1,0 +1,510 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/OAK-AI-Public/ai-risk-assurance-faira-microsoft/schemas/eu-ai-act.schema.json",
+  "title": "EU AI Act Assessment",
+  "description": "Schema for EU AI Act compliance assessment - risk classification and high-risk requirements",
+  "type": "object",
+  "required": ["metadata", "riskClassification"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["version", "assessmentDate", "organisation"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "EU AI Act version/reference",
+          "enum": ["2024/1689", "2024/1689-amended"]
+        },
+        "schemaVersion": {
+          "type": "string",
+          "description": "Schema version for migration support",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "default": "1.0.0"
+        },
+        "assessmentDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "organisation": {
+          "type": "string"
+        },
+        "organisationRole": {
+          "type": "string",
+          "enum": ["Provider", "Deployer", "Importer", "Distributor", "Authorised Representative"],
+          "description": "Role under EU AI Act"
+        },
+        "euEstablishment": {
+          "type": "boolean",
+          "description": "Whether organisation is established in the EU"
+        },
+        "euMarketPresence": {
+          "type": "boolean",
+          "description": "Whether AI system outputs are used in the EU"
+        },
+        "assessor": {
+          "type": "object",
+          "properties": {
+            "name": {"type": "string"},
+            "role": {"type": "string"},
+            "email": {"type": "string", "format": "email"},
+            "qualifications": {"type": "string"}
+          }
+        },
+        "aiSystemName": {
+          "type": "string",
+          "description": "Name of the AI system"
+        },
+        "aiSystemDescription": {
+          "type": "string",
+          "description": "Detailed description of the AI system"
+        },
+        "intendedPurpose": {
+          "type": "string",
+          "description": "Intended purpose as defined in technical documentation"
+        },
+        "aiSystemVersion": {
+          "type": "string",
+          "description": "Version of the AI system being assessed"
+        }
+      }
+    },
+    "riskClassification": {
+      "type": "object",
+      "required": ["category"],
+      "properties": {
+        "category": {
+          "type": "string",
+          "enum": ["Unacceptable", "High-Risk", "Limited Risk", "Minimal Risk"],
+          "description": "EU AI Act risk classification"
+        },
+        "classificationRationale": {
+          "type": "string",
+          "description": "Justification for risk classification"
+        },
+        "classificationDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "classificationReviewDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Date when classification should be reviewed"
+        },
+        "unacceptableRiskCheck": {
+          "type": "object",
+          "description": "Assessment against Article 5 prohibited practices",
+          "properties": {
+            "subliminalManipulation": {"type": "boolean", "description": "Subliminal techniques beyond consciousness"},
+            "exploitationOfVulnerabilities": {"type": "boolean", "description": "Exploitation of vulnerabilities"},
+            "socialScoring": {"type": "boolean", "description": "Social scoring by public authorities"},
+            "realTimeBiometricId": {"type": "boolean", "description": "Real-time remote biometric identification in public spaces"},
+            "emotionRecognitionWorkplace": {"type": "boolean", "description": "Emotion recognition in workplace/education"},
+            "biometricCategorisation": {"type": "boolean", "description": "Biometric categorisation inferring sensitive attributes"},
+            "facialRecognitionScraping": {"type": "boolean", "description": "Facial recognition from untargeted scraping"},
+            "predictivePolicing": {"type": "boolean", "description": "Predictive policing based solely on profiling"}
+          }
+        },
+        "annexIIICategory": {
+          "type": "string",
+          "description": "Annex III high-risk AI system category if applicable",
+          "enum": [
+            "Biometric identification and categorisation",
+            "Critical infrastructure management",
+            "Education and vocational training",
+            "Employment and worker management",
+            "Essential private and public services",
+            "Law enforcement",
+            "Migration, asylum and border control",
+            "Administration of justice and democratic processes",
+            "Not applicable"
+          ]
+        },
+        "annexIIISubCategory": {
+          "type": "string",
+          "description": "Specific sub-category within Annex III"
+        }
+      }
+    },
+    "highRiskRequirements": {
+      "type": "object",
+      "description": "Chapter 2 requirements for high-risk AI systems (Articles 8-15)",
+      "properties": {
+        "article8RiskManagement": {
+          "type": "object",
+          "description": "Article 8 - Risk management system",
+          "properties": {
+            "implemented": {"type": "boolean"},
+            "riskManagementSystemEstablished": {"type": "boolean"},
+            "iterativeProcess": {"type": "boolean"},
+            "riskIdentification": {"type": "boolean"},
+            "riskEstimation": {"type": "boolean"},
+            "riskMitigation": {"type": "boolean"},
+            "residualRiskAcceptable": {"type": "boolean"},
+            "testingProcedures": {"type": "boolean"},
+            "evidence": {"type": "string"},
+            "gaps": {"type": "string"}
+          }
+        },
+        "article9DataGovernance": {
+          "type": "object",
+          "description": "Article 9 - Data and data governance",
+          "properties": {
+            "implemented": {"type": "boolean"},
+            "trainingDataManagement": {"type": "boolean"},
+            "validationTestingData": {"type": "boolean"},
+            "dataQualityCriteria": {"type": "boolean"},
+            "biasExamination": {"type": "boolean"},
+            "dataGaps": {"type": "boolean"},
+            "evidence": {"type": "string"},
+            "gaps": {"type": "string"}
+          }
+        },
+        "article10TechnicalDocumentation": {
+          "type": "object",
+          "description": "Article 10 - Technical documentation",
+          "properties": {
+            "implemented": {"type": "boolean"},
+            "annexIVCompliant": {"type": "boolean"},
+            "upToDate": {"type": "boolean"},
+            "documentationLocation": {"type": "string"},
+            "evidence": {"type": "string"},
+            "gaps": {"type": "string"}
+          }
+        },
+        "article11RecordKeeping": {
+          "type": "object",
+          "description": "Article 11 - Record-keeping (logging)",
+          "properties": {
+            "implemented": {"type": "boolean"},
+            "automaticLogging": {"type": "boolean"},
+            "traceability": {"type": "boolean"},
+            "retentionPeriod": {"type": "string"},
+            "evidence": {"type": "string"},
+            "gaps": {"type": "string"}
+          }
+        },
+        "article12Transparency": {
+          "type": "object",
+          "description": "Article 12 - Transparency and provision of information",
+          "properties": {
+            "implemented": {"type": "boolean"},
+            "instructionsForUse": {"type": "boolean"},
+            "humanOversightInstructions": {"type": "boolean"},
+            "capabilitiesLimitations": {"type": "boolean"},
+            "evidence": {"type": "string"},
+            "gaps": {"type": "string"}
+          }
+        },
+        "article13HumanOversight": {
+          "type": "object",
+          "description": "Article 13 - Human oversight",
+          "properties": {
+            "implemented": {"type": "boolean"},
+            "humanOversightMeasures": {"type": "boolean"},
+            "understandingCapabilities": {"type": "boolean"},
+            "interpretOutputs": {"type": "boolean"},
+            "decideNotToUse": {"type": "boolean"},
+            "overrideOutputs": {"type": "boolean"},
+            "stopSystem": {"type": "boolean"},
+            "evidence": {"type": "string"},
+            "gaps": {"type": "string"}
+          }
+        },
+        "article14AccuracyRobustnessCybersecurity": {
+          "type": "object",
+          "description": "Article 14 - Accuracy, robustness and cybersecurity",
+          "properties": {
+            "implemented": {"type": "boolean"},
+            "accuracyLevels": {"type": "boolean"},
+            "robustnessAgainstErrors": {"type": "boolean"},
+            "cybersecurityMeasures": {"type": "boolean"},
+            "adversarialRobustness": {"type": "boolean"},
+            "evidence": {"type": "string"},
+            "gaps": {"type": "string"}
+          }
+        },
+        "article15QualityManagement": {
+          "type": "object",
+          "description": "Article 15 - Quality management system",
+          "properties": {
+            "implemented": {"type": "boolean"},
+            "qmsEstablished": {"type": "boolean"},
+            "documentedPolicies": {"type": "boolean"},
+            "designVerification": {"type": "boolean"},
+            "postMarketMonitoring": {"type": "boolean"},
+            "evidence": {"type": "string"},
+            "gaps": {"type": "string"}
+          }
+        }
+      }
+    },
+    "conformityAssessment": {
+      "type": "object",
+      "description": "Conformity assessment requirements",
+      "properties": {
+        "assessmentType": {
+          "type": "string",
+          "enum": ["Internal control", "Third-party assessment"],
+          "description": "Type of conformity assessment required"
+        },
+        "notifiedBodyRequired": {
+          "type": "boolean",
+          "description": "Whether a notified body assessment is required"
+        },
+        "notifiedBody": {
+          "type": "object",
+          "properties": {
+            "name": {"type": "string"},
+            "notifiedBodyNumber": {"type": "string"},
+            "memberState": {"type": "string"}
+          }
+        },
+        "ceMarkingStatus": {
+          "type": "string",
+          "enum": ["Not required", "Pending", "Applied", "N/A"]
+        },
+        "euDeclarationOfConformity": {
+          "type": "object",
+          "properties": {
+            "issued": {"type": "boolean"},
+            "issueDate": {"type": "string", "format": "date"},
+            "documentReference": {"type": "string"}
+          }
+        },
+        "euDatabaseRegistration": {
+          "type": "object",
+          "description": "Article 60 - EU database registration",
+          "properties": {
+            "registered": {"type": "boolean"},
+            "registrationNumber": {"type": "string"},
+            "registrationDate": {"type": "string", "format": "date"}
+          }
+        }
+      }
+    },
+    "transparencyObligations": {
+      "type": "object",
+      "description": "Article 50 - Transparency obligations for certain AI systems",
+      "properties": {
+        "aiInteractionDisclosure": {
+          "type": "object",
+          "description": "Users informed they are interacting with AI",
+          "properties": {
+            "applicable": {"type": "boolean"},
+            "implemented": {"type": "boolean"},
+            "method": {"type": "string"}
+          }
+        },
+        "emotionRecognitionDisclosure": {
+          "type": "object",
+          "description": "Disclosure of emotion recognition or biometric categorisation",
+          "properties": {
+            "applicable": {"type": "boolean"},
+            "implemented": {"type": "boolean"},
+            "method": {"type": "string"}
+          }
+        },
+        "deepfakeLabelling": {
+          "type": "object",
+          "description": "Labelling of AI-generated or manipulated content",
+          "properties": {
+            "applicable": {"type": "boolean"},
+            "implemented": {"type": "boolean"},
+            "method": {"type": "string"},
+            "machineReadable": {"type": "boolean"}
+          }
+        },
+        "syntheticContentMarking": {
+          "type": "object",
+          "description": "Marking of synthetic audio, image, video or text content",
+          "properties": {
+            "applicable": {"type": "boolean"},
+            "implemented": {"type": "boolean"},
+            "method": {"type": "string"}
+          }
+        }
+      }
+    },
+    "gpaiRequirements": {
+      "type": "object",
+      "description": "General-Purpose AI (GPAI) model requirements (if applicable)",
+      "properties": {
+        "isGPAIModel": {"type": "boolean"},
+        "isSystemicRisk": {
+          "type": "boolean",
+          "description": "GPAI model with systemic risk (>10^25 FLOPs threshold)"
+        },
+        "technicalDocumentation": {"type": "boolean"},
+        "copyrightPolicy": {"type": "boolean"},
+        "trainingSummary": {"type": "boolean"},
+        "euRepresentative": {
+          "type": "object",
+          "properties": {
+            "required": {"type": "boolean"},
+            "appointed": {"type": "boolean"},
+            "name": {"type": "string"},
+            "contact": {"type": "string"}
+          }
+        },
+        "systemicRiskMeasures": {
+          "type": "object",
+          "description": "Additional measures for systemic risk models",
+          "properties": {
+            "modelEvaluation": {"type": "boolean"},
+            "adversarialTesting": {"type": "boolean"},
+            "incidentReporting": {"type": "boolean"},
+            "cybersecurityProtection": {"type": "boolean"},
+            "energyConsumptionReporting": {"type": "boolean"}
+          }
+        }
+      }
+    },
+    "implementationTimeline": {
+      "type": "object",
+      "description": "Compliance with EU AI Act implementation timeline",
+      "properties": {
+        "prohibitionsCompliance": {
+          "type": "object",
+          "description": "Article 5 prohibitions - February 2025",
+          "properties": {
+            "deadline": {"type": "string", "format": "date", "default": "2025-02-02"},
+            "status": {"type": "string", "enum": ["Compliant", "In Progress", "Not Started", "N/A"]}
+          }
+        },
+        "gpaiCompliance": {
+          "type": "object",
+          "description": "GPAI provisions - August 2025",
+          "properties": {
+            "deadline": {"type": "string", "format": "date", "default": "2025-08-02"},
+            "status": {"type": "string", "enum": ["Compliant", "In Progress", "Not Started", "N/A"]}
+          }
+        },
+        "highRiskCompliance": {
+          "type": "object",
+          "description": "High-risk AI obligations - August 2026",
+          "properties": {
+            "deadline": {"type": "string", "format": "date", "default": "2026-08-02"},
+            "status": {"type": "string", "enum": ["Compliant", "In Progress", "Not Started", "N/A"]}
+          }
+        },
+        "annexIExtension": {
+          "type": "object",
+          "description": "Annex I extensions - August 2027",
+          "properties": {
+            "deadline": {"type": "string", "format": "date", "default": "2027-08-02"},
+            "status": {"type": "string", "enum": ["Compliant", "In Progress", "Not Started", "N/A"]}
+          }
+        }
+      }
+    },
+    "overallAssessment": {
+      "type": "object",
+      "properties": {
+        "complianceScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Overall EU AI Act compliance score"
+        },
+        "complianceStatus": {
+          "type": "string",
+          "enum": ["Fully Compliant", "Largely Compliant", "Partially Compliant", "Non-Compliant", "Assessment Pending"]
+        },
+        "criticalGaps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "requirement": {"type": "string"},
+              "gap": {"type": "string"},
+              "severity": {"type": "string", "enum": ["High", "Critical"]},
+              "remediationPlan": {"type": "string"},
+              "deadline": {"type": "string", "format": "date"}
+            }
+          }
+        },
+        "recommendations": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "nextReviewDate": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "actionPlan": {
+      "type": "array",
+      "description": "Remediation action plan",
+      "items": {
+        "type": "object",
+        "properties": {
+          "actionId": {"type": "string", "pattern": "^EU-ACT-\\d{4}$"},
+          "requirement": {"type": "string"},
+          "action": {"type": "string"},
+          "owner": {"type": "string"},
+          "dueDate": {"type": "string", "format": "date"},
+          "status": {"type": "string", "enum": ["Not Started", "In Progress", "Completed", "Blocked"]},
+          "priority": {"type": "string", "enum": ["Low", "Medium", "High", "Critical"]},
+          "resources": {"type": "string"}
+        }
+      }
+    },
+    "australianRelevance": {
+      "type": "object",
+      "description": "Relevance to Australian organisations",
+      "properties": {
+        "euMarketAccess": {
+          "type": "boolean",
+          "description": "Organisation provides AI to EU market"
+        },
+        "euDataSubjects": {
+          "type": "boolean",
+          "description": "AI processes data of EU residents"
+        },
+        "complianceApproach": {
+          "type": "string",
+          "enum": ["Full compliance", "Partial compliance", "Monitoring only", "Not applicable"]
+        },
+        "alignmentWithAustralianFrameworks": {
+          "type": "object",
+          "properties": {
+            "ai6Alignment": {"type": "string"},
+            "vaissAlignment": {"type": "string"},
+            "fairaAlignment": {"type": "string"}
+          }
+        }
+      }
+    },
+    "frameworkAlignment": {
+      "type": "object",
+      "description": "Cross-framework alignment mapping",
+      "properties": {
+        "vaissGuardrails": {
+          "type": "array",
+          "items": {"type": "integer", "minimum": 1, "maximum": 10}
+        },
+        "ai6Practices": {
+          "type": "array",
+          "items": {"type": "integer", "minimum": 1, "maximum": 6}
+        },
+        "iso42001Clauses": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "nistAIRMFCategories": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "fairaComponents": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    }
+  }
+}

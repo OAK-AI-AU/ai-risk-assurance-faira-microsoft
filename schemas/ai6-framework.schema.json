@@ -1,0 +1,334 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/OAK-AI-Public/ai-risk-assurance-faira-microsoft/schemas/ai6-framework.schema.json",
+  "title": "AI6 Framework Assessment",
+  "description": "Schema for Australia's AI6 Framework (NAIC October 2025) - 6 essential practices for responsible AI",
+  "type": "object",
+  "required": ["metadata", "practiceAssessments"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["version", "assessmentDate", "organisation"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "AI6 Framework version",
+          "enum": ["1.0", "1.1"]
+        },
+        "schemaVersion": {
+          "type": "string",
+          "description": "Schema version for migration support",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "default": "1.0.0"
+        },
+        "assessmentDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "organisation": {
+          "type": "string"
+        },
+        "assessor": {
+          "type": "object",
+          "properties": {
+            "name": {"type": "string"},
+            "role": {"type": "string"},
+            "email": {"type": "string", "format": "email"}
+          }
+        },
+        "aiSystemName": {
+          "type": "string",
+          "description": "AI system being assessed"
+        },
+        "aiSystemDescription": {
+          "type": "string",
+          "description": "Brief description of the AI system"
+        },
+        "aiSystemType": {
+          "type": "string",
+          "enum": ["Generative AI", "Predictive AI", "Classification", "Recommendation", "Autonomous", "Hybrid", "Other"],
+          "description": "Type of AI system"
+        },
+        "screeningToolResult": {
+          "type": "object",
+          "description": "Results from NAIC AI6 Screening Tool",
+          "properties": {
+            "completed": {"type": "boolean"},
+            "completionDate": {"type": "string", "format": "date"},
+            "riskLevel": {"type": "string", "enum": ["Low", "Medium", "High"]},
+            "recommendedPractices": {
+              "type": "array",
+              "items": {"type": "integer", "minimum": 1, "maximum": 6}
+            }
+          }
+        }
+      }
+    },
+    "practiceAssessments": {
+      "type": "array",
+      "description": "Assessment of all 6 essential AI practices",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "required": ["practiceNumber", "practiceName", "implementationStatus"],
+        "properties": {
+          "practiceNumber": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6
+          },
+          "practiceName": {
+            "type": "string",
+            "enum": [
+              "Governance and Accountability",
+              "Risk Management",
+              "Data Quality and Privacy",
+              "Testing and Validation",
+              "Transparency and Explainability",
+              "Human Oversight and Control"
+            ]
+          },
+          "practiceDescription": {
+            "type": "string",
+            "description": "Detailed description of practice requirements"
+          },
+          "implementationStatus": {
+            "type": "string",
+            "enum": ["Not Started", "Planning", "Partially Implemented", "Largely Implemented", "Fully Implemented"]
+          },
+          "maturityLevel": {
+            "type": "string",
+            "enum": ["Ad Hoc", "Defined", "Managed", "Measured", "Optimising"],
+            "description": "Capability maturity level for this practice"
+          },
+          "subPractices": {
+            "type": "array",
+            "description": "Specific sub-requirements within this practice",
+            "items": {
+              "type": "object",
+              "properties": {
+                "subPracticeId": {"type": "string", "pattern": "^P[1-6]\\.[1-9]$"},
+                "description": {"type": "string"},
+                "implemented": {"type": "boolean"},
+                "evidence": {"type": "string"},
+                "notes": {"type": "string"}
+              }
+            }
+          },
+          "evidence": {
+            "type": "array",
+            "description": "Evidence of implementation",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["Policy", "Procedure", "Documentation", "System", "Training", "Audit", "Testing", "Certification"]
+                },
+                "description": {"type": "string"},
+                "location": {"type": "string"},
+                "lastVerified": {"type": "string", "format": "date"}
+              }
+            }
+          },
+          "gaps": {
+            "type": "array",
+            "description": "Identified gaps in implementation",
+            "items": {
+              "type": "object",
+              "properties": {
+                "gapId": {"type": "string"},
+                "description": {"type": "string"},
+                "severity": {"type": "string", "enum": ["Low", "Medium", "High", "Critical"]},
+                "remediationPlan": {"type": "string"},
+                "owner": {"type": "string"},
+                "targetDate": {"type": "string", "format": "date"},
+                "status": {"type": "string", "enum": ["Open", "In Progress", "Resolved", "Accepted"]}
+              }
+            }
+          },
+          "controls": {
+            "type": "array",
+            "description": "Controls addressing this practice",
+            "items": {
+              "type": "string",
+              "pattern": "^CTRL-\\d{4}$"
+            }
+          },
+          "responsibleParty": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "role": {"type": "string"},
+              "department": {"type": "string"}
+            }
+          },
+          "frameworkAlignment": {
+            "type": "object",
+            "description": "Alignment with other frameworks",
+            "properties": {
+              "vaissGuardrails": {
+                "type": "array",
+                "items": {"type": "integer", "minimum": 1, "maximum": 10}
+              },
+              "iso42001Clauses": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "nistAIRMFCategories": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["GOVERN", "MAP", "MEASURE", "MANAGE"]
+                }
+              },
+              "fairaComponents": {
+                "type": "array",
+                "items": {"type": "string", "enum": ["Part A", "Part B", "Part C"]}
+              },
+              "euAIActArticles": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "nfaaigCornerstones": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["Governance", "Data Governance", "Risk-Based Approach", "Standards", "Procurement"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "overallAssessment": {
+      "type": "object",
+      "properties": {
+        "overallMaturityScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Overall AI6 maturity score (0-100)"
+        },
+        "implementationLevel": {
+          "type": "string",
+          "enum": ["Emerging", "Developing", "Implementing", "Leading"]
+        },
+        "practiceScores": {
+          "type": "object",
+          "description": "Individual practice scores",
+          "properties": {
+            "practice1": {"type": "number", "minimum": 0, "maximum": 100},
+            "practice2": {"type": "number", "minimum": 0, "maximum": 100},
+            "practice3": {"type": "number", "minimum": 0, "maximum": 100},
+            "practice4": {"type": "number", "minimum": 0, "maximum": 100},
+            "practice5": {"type": "number", "minimum": 0, "maximum": 100},
+            "practice6": {"type": "number", "minimum": 0, "maximum": 100}
+          }
+        },
+        "strengths": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "weaknesses": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "priorityAreas": {
+          "type": "array",
+          "description": "Priority areas for improvement",
+          "items": {
+            "type": "object",
+            "properties": {
+              "practice": {"type": "integer", "minimum": 1, "maximum": 6},
+              "priority": {"type": "string", "enum": ["Low", "Medium", "High", "Critical"]},
+              "action": {"type": "string"}
+            }
+          }
+        },
+        "overallRecommendations": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "nextReviewDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "certificationStatus": {
+          "type": "object",
+          "properties": {
+            "selfAssessmentComplete": {"type": "boolean"},
+            "externalAuditComplete": {"type": "boolean"},
+            "certificationBody": {"type": "string"},
+            "certificationDate": {"type": "string", "format": "date"},
+            "expiryDate": {"type": "string", "format": "date"}
+          }
+        }
+      }
+    },
+    "actionPlan": {
+      "type": "array",
+      "description": "Action plan for improvement",
+      "items": {
+        "type": "object",
+        "properties": {
+          "actionId": {"type": "string", "pattern": "^ACT-\\d{4}$"},
+          "practice": {"type": "integer", "minimum": 1, "maximum": 6},
+          "action": {"type": "string"},
+          "owner": {"type": "string"},
+          "dueDate": {"type": "string", "format": "date"},
+          "status": {"type": "string", "enum": ["Not Started", "In Progress", "Completed", "Deferred", "Cancelled"]},
+          "priority": {"type": "string", "enum": ["Low", "Medium", "High", "Critical"]},
+          "resources": {"type": "string"},
+          "dependencies": {
+            "type": "array",
+            "items": {"type": "string", "pattern": "^ACT-\\d{4}$"}
+          },
+          "completionNotes": {"type": "string"}
+        }
+      }
+    },
+    "naicResources": {
+      "type": "object",
+      "description": "NAIC practical tools and resources used",
+      "properties": {
+        "screeningToolUsed": {"type": "boolean"},
+        "policyTemplatesUsed": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "guidanceDocumentsReferenced": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "trainingCompleted": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "courseName": {"type": "string"},
+              "completionDate": {"type": "string", "format": "date"},
+              "participants": {"type": "integer"}
+            }
+          }
+        }
+      }
+    },
+    "relatedAssessments": {
+      "type": "object",
+      "description": "Links to related framework assessments",
+      "properties": {
+        "vaissAssessmentId": {"type": "string"},
+        "fairaAssessmentId": {"type": "string"},
+        "riskRegisterId": {"type": "string"},
+        "iso42001CertificationId": {"type": "string"}
+      }
+    }
+  }
+}

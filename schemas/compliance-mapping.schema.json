@@ -32,7 +32,7 @@
           },
           "primaryFramework": {
             "type": "string",
-            "enum": ["FAIRA", "Microsoft AI Security", "NIST", "VAISS", "NFAAIG", "ISO42001", "NAIC RAI Index"]
+            "enum": ["FAIRA", "Microsoft AI Security", "NIST", "VAISS", "NFAAIG", "ISO42001", "NAIC RAI Index", "AI6", "EU AI Act", "NIST GenAI Profile", "MAS AI", "OECD 2024", "UK DSIT"]
           },
           "requirementTitle": {
             "type": "string"
@@ -104,6 +104,57 @@
                     "Explainability & Contestability"
                   ]},
                   "practice": {"type": "string"}
+                }
+              },
+              "ai6": {
+                "type": "object",
+                "description": "AI6 Framework reference",
+                "properties": {
+                  "practice": {"type": "integer", "minimum": 1, "maximum": 6},
+                  "practiceName": {"type": "string"},
+                  "subPractice": {"type": "string"}
+                }
+              },
+              "euAIAct": {
+                "type": "object",
+                "description": "EU AI Act reference",
+                "properties": {
+                  "article": {"type": "string"},
+                  "riskCategory": {"type": "string", "enum": ["Unacceptable", "High-Risk", "Limited Risk", "Minimal Risk"]},
+                  "requirement": {"type": "string"}
+                }
+              },
+              "nistGenAI": {
+                "type": "object",
+                "description": "NIST AI RMF GenAI Profile reference",
+                "properties": {
+                  "function": {"type": "string", "enum": ["GOVERN", "MAP", "MEASURE", "MANAGE"]},
+                  "action": {"type": "string"},
+                  "genAIRisk": {"type": "string"}
+                }
+              },
+              "masAI": {
+                "type": "object",
+                "description": "MAS AI Guidelines reference",
+                "properties": {
+                  "principle": {"type": "string"},
+                  "requirement": {"type": "string"}
+                }
+              },
+              "oecd2024": {
+                "type": "object",
+                "description": "OECD AI Principles 2024 reference",
+                "properties": {
+                  "principle": {"type": "string"},
+                  "recommendation": {"type": "string"}
+                }
+              },
+              "ukDSIT": {
+                "type": "object",
+                "description": "UK DSIT AI Framework reference",
+                "properties": {
+                  "principle": {"type": "string", "enum": ["Safety, security and robustness", "Appropriate transparency and explainability", "Fairness", "Accountability and governance", "Contestability and redress"]},
+                  "requirement": {"type": "string"}
                 }
               },
               "aiEthicsPrinciples": {

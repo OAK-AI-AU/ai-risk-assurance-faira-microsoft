@@ -6,8 +6,11 @@ Check AI system compliance against:
 - FAIRA Framework v1.0.0
 - Microsoft AI Security Risk Assessment v4.1.4
 - NIST AI Security Competency Area (NF-COM-002)
-- VAISS (Voluntary AI Safety Standard) v1.0
+- VAISS (Voluntary AI Safety Standard) v1.0/v2.0
 - NFAAIG 2024-2025
+- AI6 Framework 2025
+- EU AI Act 2024
+- NIST AI RMF GenAI Profile
 
 Usage:
     faira-check.py <assessment-file> [--frameworks <framework-list>]
@@ -323,6 +326,297 @@ class MicrosoftChecker(FrameworkChecker):
 
         return checks
 
+
+class AI6Checker(FrameworkChecker):
+    """AI6 Framework (6 Essential Practices) compliance checker"""
+
+    PRACTICES = [
+        "Governance and Accountability",
+        "Risk Management",
+        "Data Quality and Privacy",
+        "Testing and Validation",
+        "Transparency and Explainability",
+        "Human Oversight and Control"
+    ]
+
+    def check_compliance(self) -> List[ComplianceCheck]:
+        checks = []
+
+        # Check for AI6 practice assessments
+        if 'practiceAssessments' in self.data:
+            assessments = self.data['practiceAssessments']
+            for i, name in enumerate(self.PRACTICES, 1):
+                assessment = next((a for a in assessments if a.get('practiceNumber') == i), None)
+                if assessment:
+                    status_map = {
+                        'Fully Implemented': 'met',
+                        'Largely Implemented': 'partial',
+                        'Partially Implemented': 'partial',
+                        'Planning': 'not_met',
+                        'Not Started': 'not_met'
+                    }
+                    impl_status = assessment.get('implementationStatus', 'Not Started')
+                    check_status = status_map.get(impl_status, 'not_met')
+
+                    checks.append(ComplianceCheck(
+                        requirement=f"AI6 Practice {i}: {name}",
+                        status=check_status,
+                        framework='AI6',
+                        category='Practices',
+                        evidence=f"Status: {impl_status}"
+                    ))
+                else:
+                    checks.append(ComplianceCheck(
+                        requirement=f"AI6 Practice {i}: {name}",
+                        status='not_met',
+                        framework='AI6',
+                        category='Practices',
+                        recommendation=f"Assess practice {i}: {name}",
+                        severity='medium'
+                    ))
+        else:
+            # Check for AI6 practice references in risks
+            if 'risks' in self.data:
+                risks = self.data['risks']
+                ai6_mapped = sum(1 for r in risks if 'ai6Practices' in r and r['ai6Practices'])
+
+                if ai6_mapped > 0:
+                    percentage = (ai6_mapped / len(risks)) * 100
+                    status = 'met' if percentage >= 80 else ('partial' if percentage >= 40 else 'not_met')
+
+                    checks.append(ComplianceCheck(
+                        requirement="AI6 Practice Mapping in Risks",
+                        status=status,
+                        framework='AI6',
+                        category='Practices',
+                        evidence=f"{ai6_mapped}/{len(risks)} risks mapped to AI6 practices ({percentage:.0f}%)"
+                    ))
+                else:
+                    checks.append(ComplianceCheck(
+                        requirement="AI6 Framework Assessment",
+                        status='not_met',
+                        framework='AI6',
+                        category='Practices',
+                        recommendation="Complete AI6 Framework assessment or map risks to AI6 practices",
+                        severity='medium'
+                    ))
+
+        return checks
+
+
+class EUAIActChecker(FrameworkChecker):
+    """EU AI Act compliance checker"""
+
+    def check_compliance(self) -> List[ComplianceCheck]:
+        checks = []
+
+        # Check for EU AI Act risk classification
+        if 'riskClassification' in self.data:
+            classification = self.data['riskClassification']
+            category = classification.get('category', 'Unknown')
+
+            if category == 'Unacceptable':
+                checks.append(ComplianceCheck(
+                    requirement="EU AI Act Risk Classification",
+                    status='not_met',
+                    framework='EU AI Act',
+                    category='Classification',
+                    evidence=f"Classification: {category}",
+                    recommendation="AI system classified as Unacceptable - prohibited under EU AI Act",
+                    severity='critical'
+                ))
+            elif category == 'High-Risk':
+                checks.append(ComplianceCheck(
+                    requirement="EU AI Act Risk Classification",
+                    status='partial',
+                    framework='EU AI Act',
+                    category='Classification',
+                    evidence=f"Classification: {category} - Chapter 2 requirements apply"
+                ))
+                # Check high-risk requirements
+                checks.extend(self._check_high_risk_requirements())
+            else:
+                checks.append(ComplianceCheck(
+                    requirement="EU AI Act Risk Classification",
+                    status='met',
+                    framework='EU AI Act',
+                    category='Classification',
+                    evidence=f"Classification: {category}"
+                ))
+
+            # Check transparency obligations
+            if 'transparencyObligations' in self.data:
+                checks.extend(self._check_transparency())
+
+        else:
+            # Check for EU AI Act category in risks
+            if 'risks' in self.data:
+                risks = self.data['risks']
+                eu_mapped = sum(1 for r in risks if 'euAIActCategory' in r and r['euAIActCategory'])
+
+                if eu_mapped > 0:
+                    checks.append(ComplianceCheck(
+                        requirement="EU AI Act Category Mapping",
+                        status='partial',
+                        framework='EU AI Act',
+                        category='Classification',
+                        evidence=f"{eu_mapped}/{len(risks)} risks mapped to EU AI Act categories",
+                        recommendation="Complete full EU AI Act assessment for EU market access"
+                    ))
+                else:
+                    checks.append(ComplianceCheck(
+                        requirement="EU AI Act Assessment",
+                        status='not_met',
+                        framework='EU AI Act',
+                        category='Classification',
+                        recommendation="Complete EU AI Act risk classification if EU market access required",
+                        severity='medium'
+                    ))
+
+        return checks
+
+    def _check_high_risk_requirements(self) -> List[ComplianceCheck]:
+        """Check Chapter 2 high-risk requirements"""
+        checks = []
+        hr = self.data.get('highRiskRequirements', {})
+
+        articles = [
+            ('article8RiskManagement', 'Article 8: Risk Management System'),
+            ('article9DataGovernance', 'Article 9: Data Governance'),
+            ('article10TechnicalDocumentation', 'Article 10: Technical Documentation'),
+            ('article11RecordKeeping', 'Article 11: Record-keeping'),
+            ('article12Transparency', 'Article 12: Transparency'),
+            ('article13HumanOversight', 'Article 13: Human Oversight'),
+            ('article14AccuracyRobustnessCybersecurity', 'Article 14: Accuracy & Robustness'),
+            ('article15QualityManagement', 'Article 15: Quality Management')
+        ]
+
+        for key, name in articles:
+            if key in hr:
+                article = hr[key]
+                implemented = article.get('implemented', False)
+                checks.append(ComplianceCheck(
+                    requirement=name,
+                    status='met' if implemented else 'not_met',
+                    framework='EU AI Act',
+                    category='High-Risk Requirements',
+                    evidence=article.get('evidence', ''),
+                    recommendation=article.get('gaps', '') if not implemented else None,
+                    severity='high' if not implemented else 'low'
+                ))
+
+        return checks
+
+    def _check_transparency(self) -> List[ComplianceCheck]:
+        """Check Article 50 transparency obligations"""
+        checks = []
+        trans = self.data.get('transparencyObligations', {})
+
+        for key, name in [
+            ('aiInteractionDisclosure', 'AI Interaction Disclosure'),
+            ('deepfakeLabelling', 'Deepfake/Synthetic Content Labelling'),
+            ('emotionRecognitionDisclosure', 'Emotion Recognition Disclosure')
+        ]:
+            if key in trans:
+                item = trans[key]
+                if item.get('applicable', False):
+                    implemented = item.get('implemented', False)
+                    checks.append(ComplianceCheck(
+                        requirement=f"Article 50: {name}",
+                        status='met' if implemented else 'not_met',
+                        framework='EU AI Act',
+                        category='Transparency',
+                        evidence=item.get('method', ''),
+                        severity='medium' if not implemented else 'low'
+                    ))
+
+        return checks
+
+
+class NISTGenAIChecker(FrameworkChecker):
+    """NIST AI RMF GenAI Profile compliance checker"""
+
+    def check_compliance(self) -> List[ComplianceCheck]:
+        checks = []
+
+        # Check for GenAI-specific risk mapping
+        if 'risks' in self.data:
+            risks = self.data['risks']
+
+            # Check for NIST GenAI actions
+            genai_mapped = sum(1 for r in risks if 'nistGenAIActions' in r and r['nistGenAIActions'])
+            if genai_mapped > 0:
+                percentage = (genai_mapped / len(risks)) * 100
+                status = 'met' if percentage >= 80 else ('partial' if percentage >= 40 else 'not_met')
+
+                checks.append(ComplianceCheck(
+                    requirement="NIST GenAI Profile Action Mapping",
+                    status=status,
+                    framework='NIST GenAI',
+                    category='Actions',
+                    evidence=f"{genai_mapped}/{len(risks)} risks mapped to GenAI actions ({percentage:.0f}%)"
+                ))
+
+            # Check for GenAI-specific threat types
+            genai_threats = ['Confabulation', 'Harmful Content Generation', 'Copyright Infringement',
+                            'Deepfake Generation', 'Training Data Leakage', 'Jailbreaking',
+                            'Bias Amplification', 'Sycophancy']
+
+            genai_threat_count = sum(1 for r in risks
+                                    if r.get('threatType') in genai_threats)
+            if genai_threat_count > 0:
+                checks.append(ComplianceCheck(
+                    requirement="GenAI-Specific Threat Identification",
+                    status='met',
+                    framework='NIST GenAI',
+                    category='Threats',
+                    evidence=f"{genai_threat_count} GenAI-specific threats identified"
+                ))
+            else:
+                # Check if this might be a GenAI system
+                has_genai = any('GenAI' in str(r.get('title', '')) or
+                               'generative' in str(r.get('description', '')).lower() or
+                               'LLM' in str(r.get('title', ''))
+                               for r in risks)
+                if has_genai:
+                    checks.append(ComplianceCheck(
+                        requirement="GenAI-Specific Threat Identification",
+                        status='not_met',
+                        framework='NIST GenAI',
+                        category='Threats',
+                        recommendation="Identify GenAI-specific threats (Confabulation, Jailbreaking, etc.)",
+                        severity='medium'
+                    ))
+
+        # Check for GOVERN/MAP/MEASURE/MANAGE function coverage
+        functions = ['GOVERN', 'MAP', 'MEASURE', 'MANAGE']
+        if 'risks' in self.data:
+            for func in functions:
+                func_present = any(
+                    any(action.startswith(func) for action in r.get('nistGenAIActions', []))
+                    for r in self.data['risks']
+                )
+                if func_present:
+                    checks.append(ComplianceCheck(
+                        requirement=f"NIST GenAI {func} Function",
+                        status='met',
+                        framework='NIST GenAI',
+                        category='Functions',
+                        evidence=f"{func} actions identified"
+                    ))
+
+        if not checks:
+            checks.append(ComplianceCheck(
+                requirement="NIST GenAI Profile Assessment",
+                status='not_met',
+                framework='NIST GenAI',
+                category='Assessment',
+                recommendation="Map risks to NIST GenAI Profile actions if using generative AI",
+                severity='low'
+            ))
+
+        return checks
+
 def load_assessment_file(file_path: str) -> Dict:
     """Load JSON or YAML assessment file"""
     path = Path(file_path)
@@ -345,6 +639,11 @@ def run_compliance_checks(data: Dict, frameworks: List[str]) -> List[ComplianceC
         'VAISS': VAISSChecker,
         'NIST': NISTChecker,
         'Microsoft': MicrosoftChecker,
+        'AI6': AI6Checker,
+        'EU AI Act': EUAIActChecker,
+        'EUAIAct': EUAIActChecker,
+        'NIST GenAI': NISTGenAIChecker,
+        'NISTGenAI': NISTGenAIChecker,
     }
 
     for framework in frameworks:
@@ -468,9 +767,12 @@ Examples:
 
 Supported Frameworks:
   - FAIRA      Queensland Government FAIRA Framework v1.0.0
-  - VAISS      Voluntary AI Safety Standard v1.0
+  - VAISS      Voluntary AI Safety Standard v1.0/v2.0
   - NIST       NIST AI Security Competency Area (NF-COM-002)
   - Microsoft  Microsoft AI Security Risk Assessment v4.1.4
+  - AI6        AI6 Framework 2025 (6 Essential Practices)
+  - EUAIAct    EU AI Act 2024/1689
+  - NISTGenAI  NIST AI RMF GenAI Profile (NIST-AI-600-1)
   - NFAAIG     National Framework for AI Assurance in Government (coming soon)
         """
     )
@@ -482,8 +784,8 @@ Supported Frameworks:
 
     parser.add_argument(
         "--frameworks",
-        default="FAIRA,VAISS,NIST,Microsoft",
-        help="Comma-separated list of frameworks to check (default: all)"
+        default="FAIRA,VAISS,NIST,Microsoft,AI6",
+        help="Comma-separated list of frameworks to check (default: FAIRA,VAISS,NIST,Microsoft,AI6)"
     )
 
     parser.add_argument(

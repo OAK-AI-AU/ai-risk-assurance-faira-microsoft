@@ -1,0 +1,337 @@
+# MAS AI Guidelines Cross-Framework Mapping
+# Maps Singapore MAS AI Guidelines to Australian and international frameworks
+
+metadata:
+  title: "MAS AI Guidelines Cross-Framework Crosswalk"
+  version: "1.0.0"
+  lastUpdated: "2026-02-08"
+  description: "Maps MAS AI Guidelines principles to FAIRA, VAISS, AI6, EU AI Act, and NIST AI RMF"
+  source: "https://www.mas.gov.sg/news/media-releases/2025/mas-guidelines-for-artificial-intelligence-risk-management"
+
+framework:
+  name: "MAS AI Guidelines"
+  fullName: "Monetary Authority of Singapore Guidelines on Artificial Intelligence Risk Management"
+  publisher: "Monetary Authority of Singapore"
+  version: "2025"
+  releaseDate: "2025"
+  status: "Current"
+  scope: "Financial sector AI applications in Singapore"
+  basedOn: "FEAT Principles (Fairness, Ethics, Accountability, Transparency)"
+
+# FEAT Principles
+featPrinciples:
+  - principle: "Fairness"
+    id: "FEAT-F"
+    description: "AI-driven decisions should be fair and unbiased"
+    requirements:
+      - "Avoid discrimination based on protected characteristics"
+      - "Regular bias testing and monitoring"
+      - "Fair treatment across customer segments"
+      - "Equitable access to AI-enabled services"
+    vaissAlignment:
+      - guardrail: 4
+        name: "Testing and Monitoring"
+        strength: "Full"
+      - guardrail: 3
+        name: "Data Governance and Protection"
+        strength: "Partial"
+    ai6Alignment:
+      - practice: 3
+        name: "Data Quality and Privacy"
+      - practice: 4
+        name: "Testing and Validation"
+    fairaAlignment:
+      - component: "Part B"
+        section: "Fairness Principle"
+    euAIActAlignment:
+      - article: "Article 10"
+        requirement: "Data governance - bias examination"
+    nistAIRMFAlignment:
+      - function: "MEASURE"
+        category: "Bias evaluation"
+    australianEthicsPrinciple: "Fairness"
+
+  - principle: "Ethics"
+    id: "FEAT-E"
+    description: "AI use should be aligned with ethical standards and values"
+    requirements:
+      - "Adherence to industry codes of conduct"
+      - "Consideration of societal impact"
+      - "Avoidance of harm to individuals and society"
+      - "Ethical review processes for AI systems"
+    vaissAlignment:
+      - guardrail: 1
+        name: "Accountability and Governance"
+        strength: "Full"
+      - guardrail: 10
+        name: "Stakeholder Engagement"
+        strength: "Partial"
+    ai6Alignment:
+      - practice: 1
+        name: "Governance and Accountability"
+    fairaAlignment:
+      - component: "Part B"
+        section: "All 8 AI Ethics Principles"
+    australianEthicsPrinciples:
+      - "Human, Social and Environmental Wellbeing"
+      - "Human-Centred Values"
+
+  - principle: "Accountability"
+    id: "FEAT-A"
+    description: "Clear accountability for AI-driven decisions"
+    requirements:
+      - "Board and senior management oversight"
+      - "Clear roles and responsibilities"
+      - "Audit trails and record-keeping"
+      - "Internal controls and governance"
+    vaissAlignment:
+      - guardrail: 1
+        name: "Accountability and Governance"
+        strength: "Full"
+      - guardrail: 9
+        name: "Compliance"
+        strength: "Full"
+    ai6Alignment:
+      - practice: 1
+        name: "Governance and Accountability"
+    fairaAlignment:
+      - component: "Part C"
+        section: "Control Plan"
+      - component: "Part B"
+        section: "Accountability Principle"
+    euAIActAlignment:
+      - article: "Article 12"
+        requirement: "Record-keeping"
+      - article: "Article 17"
+        requirement: "Quality management system"
+    nistAIRMFAlignment:
+      - function: "GOVERN"
+        category: "Governance structures"
+    australianEthicsPrinciple: "Accountability"
+
+  - principle: "Transparency"
+    id: "FEAT-T"
+    description: "Transparency in AI use and decision-making"
+    requirements:
+      - "Disclosure of AI use to customers"
+      - "Explainability of AI decisions"
+      - "Clear communication of AI limitations"
+      - "Access to human review"
+    vaissAlignment:
+      - guardrail: 6
+        name: "Transparency"
+        strength: "Full"
+      - guardrail: 7
+        name: "Contestability"
+        strength: "Full"
+    ai6Alignment:
+      - practice: 5
+        name: "Transparency and Explainability"
+      - practice: 6
+        name: "Human Oversight and Control"
+    fairaAlignment:
+      - component: "Part B"
+        section: "Transparency and Explainability Principle"
+      - component: "Part B"
+        section: "Contestability Principle"
+    euAIActAlignment:
+      - article: "Article 13"
+        requirement: "Transparency and information"
+      - article: "Article 14"
+        requirement: "Human oversight"
+    nistAIRMFAlignment:
+      - function: "MAP"
+        category: "Explainability"
+    australianEthicsPrinciples:
+      - "Transparency and Explainability"
+      - "Contestability"
+
+# AI Lifecycle Controls
+lifecycleControls:
+  - phase: "Design and Development"
+    requirements:
+      - "Model design with fairness considerations"
+      - "Appropriate data selection and quality"
+      - "Bias detection in development"
+      - "Documentation of design decisions"
+    vaissGuardrails: [2, 3, 4]
+    ai6Practices: [2, 3, 4]
+
+  - phase: "Testing and Validation"
+    requirements:
+      - "Rigorous testing before deployment"
+      - "Validation of model performance"
+      - "Bias and fairness testing"
+      - "Stress testing and scenario analysis"
+    vaissGuardrails: [4]
+    ai6Practices: [4]
+
+  - phase: "Deployment"
+    requirements:
+      - "Controlled rollout procedures"
+      - "Staff training on AI systems"
+      - "Customer communication"
+      - "Escalation procedures"
+    vaissGuardrails: [5, 6, 10]
+    ai6Practices: [5, 6]
+
+  - phase: "Monitoring and Review"
+    requirements:
+      - "Ongoing performance monitoring"
+      - "Drift detection"
+      - "Regular model reviews"
+      - "Incident response procedures"
+    vaissGuardrails: [2, 4]
+    ai6Practices: [2, 4]
+
+  - phase: "Retirement"
+    requirements:
+      - "Model deprecation procedures"
+      - "Data retention and deletion"
+      - "Transition planning"
+    vaissGuardrails: [1, 3]
+    ai6Practices: [1, 3]
+
+# Sector-Specific Requirements
+sectorRequirements:
+  creditScoring:
+    requirements:
+      - "Fair treatment in credit decisions"
+      - "Explainability of credit scores"
+      - "Appeals process for adverse decisions"
+      - "Regular bias audits"
+    vaissGuardrails: [4, 6, 7]
+    ai6Practices: [4, 5, 6]
+    euAIActCategory: "High-Risk"
+    euAIActAnnexIII: "Essential private and public services"
+
+  fraudDetection:
+    requirements:
+      - "Balance between security and customer experience"
+      - "Minimise false positives"
+      - "Human review for significant decisions"
+      - "Transparency about fraud controls"
+    vaissGuardrails: [4, 5, 6]
+    ai6Practices: [4, 5, 6]
+
+  customerService:
+    requirements:
+      - "Disclosure of AI/chatbot use"
+      - "Option for human assistance"
+      - "Appropriate handling of sensitive matters"
+    vaissGuardrails: [5, 6]
+    ai6Practices: [5, 6]
+    euAIActCategory: "Limited Risk"
+
+  insuranceUnderwriting:
+    requirements:
+      - "Fair risk assessment"
+      - "Non-discrimination in pricing"
+      - "Explainability of decisions"
+      - "Human review for adverse decisions"
+    vaissGuardrails: [4, 6, 7]
+    ai6Practices: [4, 5, 6]
+    euAIActCategory: "High-Risk"
+    euAIActAnnexIII: "Essential private and public services"
+
+# Cross-Framework Alignment
+crossFrameworkAlignment:
+  vaiss:
+    alignmentStrength: "High"
+    notes: "MAS FEAT principles align closely with VAISS guardrails"
+    mappingSummary:
+      - feat: "Fairness"
+        vaiss: [3, 4]
+      - feat: "Ethics"
+        vaiss: [1, 10]
+      - feat: "Accountability"
+        vaiss: [1, 9]
+      - feat: "Transparency"
+        vaiss: [6, 7]
+
+  ai6:
+    alignmentStrength: "High"
+    notes: "AI6 practices cover MAS requirements well"
+    mappingSummary:
+      - feat: "Fairness"
+        ai6: [3, 4]
+      - feat: "Ethics"
+        ai6: [1]
+      - feat: "Accountability"
+        ai6: [1]
+      - feat: "Transparency"
+        ai6: [5, 6]
+
+  faira:
+    alignmentStrength: "High"
+    notes: "FAIRA Part B values assessment aligns with FEAT principles"
+    mappingSummary:
+      - feat: "Fairness"
+        faira: "Part B - Fairness Principle"
+      - feat: "Ethics"
+        faira: "Part B - All 8 Principles"
+      - feat: "Accountability"
+        faira: "Part B - Accountability, Part C - Controls"
+      - feat: "Transparency"
+        faira: "Part B - Transparency, Contestability"
+
+  euAIAct:
+    alignmentStrength: "Medium"
+    notes: "EU AI Act is more prescriptive, but principles align"
+    gaps:
+      - "MAS is sector-specific (financial), EU AI Act is horizontal"
+      - "EU AI Act has explicit risk classification"
+      - "EU AI Act has conformity assessment requirements"
+
+  nistAIRMF:
+    alignmentStrength: "High"
+    notes: "FEAT maps to NIST functions"
+    mappingSummary:
+      - feat: "Fairness"
+        nist: "MEASURE"
+      - feat: "Ethics"
+        nist: "GOVERN, MAP"
+      - feat: "Accountability"
+        nist: "GOVERN"
+      - feat: "Transparency"
+        nist: "MAP"
+
+# Australian Relevance
+australianRelevance:
+  applicability:
+    - "Australian financial institutions with Singapore operations"
+    - "Singapore financial institutions with Australian operations"
+    - "Cross-border financial services involving both jurisdictions"
+  alignmentWithAustralianFrameworks:
+    apra:
+      description: "APRA CPS 234 and prudential standards"
+      alignment: "Complementary"
+    asic:
+      description: "ASIC regulatory guidance on AI in financial services"
+      alignment: "Consistent"
+    privacyAct:
+      description: "Privacy Act 1988 requirements"
+      alignment: "FEAT privacy requirements consistent with Australian Privacy Principles"
+  recommendation: "Organisations operating in both jurisdictions can use VAISS/AI6 as a common baseline with jurisdiction-specific additions"
+
+# Implementation Guidance
+implementationGuidance:
+  steps:
+    - step: 1
+      action: "Conduct AI inventory for financial services applications"
+      vaissGuardrail: 1
+    - step: 2
+      action: "Assess each application against FEAT principles"
+      vaissGuardrails: [1, 2, 3, 4, 5, 6, 7]
+    - step: 3
+      action: "Identify gaps and prioritise remediation"
+      vaissGuardrail: 2
+    - step: 4
+      action: "Implement controls and governance"
+      vaissGuardrails: [1, 9]
+    - step: 5
+      action: "Establish ongoing monitoring"
+      vaissGuardrail: 4
+    - step: 6
+      action: "Regular reporting to board and MAS"
+      vaissGuardrails: [1, 9]

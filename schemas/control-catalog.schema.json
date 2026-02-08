@@ -116,6 +116,58 @@
                     "type": "string"
                   }
                 }
+              },
+              "ai6": {
+                "type": "object",
+                "description": "AI6 Framework mapping",
+                "properties": {
+                  "practices": {
+                    "type": "array",
+                    "description": "AI6 practices this control addresses (1-6)",
+                    "items": {"type": "integer", "minimum": 1, "maximum": 6}
+                  },
+                  "subPractice": {"type": "string"}
+                }
+              },
+              "euAIAct": {
+                "type": "object",
+                "description": "EU AI Act mapping",
+                "properties": {
+                  "articles": {
+                    "type": "array",
+                    "items": {"type": "string"}
+                  },
+                  "highRiskRequirement": {"type": "string"},
+                  "annexReference": {"type": "string"}
+                }
+              },
+              "nistGenAI": {
+                "type": "object",
+                "description": "NIST AI RMF GenAI Profile mapping",
+                "properties": {
+                  "functions": {
+                    "type": "array",
+                    "items": {"type": "string", "enum": ["GOVERN", "MAP", "MEASURE", "MANAGE"]}
+                  },
+                  "actions": {
+                    "type": "array",
+                    "items": {"type": "string"}
+                  },
+                  "genAIRisksAddressed": {
+                    "type": "array",
+                    "items": {"type": "string"}
+                  }
+                }
+              },
+              "masAI": {
+                "type": "object",
+                "description": "MAS AI Guidelines mapping",
+                "properties": {
+                  "principles": {
+                    "type": "array",
+                    "items": {"type": "string"}
+                  }
+                }
               }
             }
           },

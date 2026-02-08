@@ -1,0 +1,335 @@
+# EU AI Act Cross-Framework Mapping
+# Maps EU AI Act requirements to Australian and international frameworks
+
+metadata:
+  title: "EU AI Act Cross-Framework Crosswalk"
+  version: "1.0.0"
+  lastUpdated: "2026-02-08"
+  description: "Maps EU AI Act articles to FAIRA, VAISS, AI6, ISO 42001, and NIST AI RMF"
+  regulation: "Regulation (EU) 2024/1689"
+  entryIntoForce: "2024-08-01"
+
+framework:
+  name: "EU AI Act"
+  fullName: "Regulation (EU) 2024/1689 laying down harmonised rules on artificial intelligence"
+  publisher: "European Parliament and Council"
+  version: "2024/1689"
+  status: "In force"
+  scope: "AI systems placed on EU market or used in EU"
+
+# Implementation Timeline
+implementationTimeline:
+  - milestone: "Entry into force"
+    date: "2024-08-01"
+    status: "Complete"
+  - milestone: "Prohibited AI practices (Article 5)"
+    date: "2025-02-02"
+    status: "In effect"
+  - milestone: "GPAI model obligations"
+    date: "2025-08-02"
+    status: "In effect"
+  - milestone: "High-risk AI obligations"
+    date: "2026-08-02"
+    status: "Upcoming"
+  - milestone: "Annex I extensions"
+    date: "2027-08-02"
+    status: "Future"
+
+# Risk Classification Mapping
+riskCategories:
+  unacceptable:
+    description: "Prohibited AI practices under Article 5"
+    practices:
+      - "Subliminal manipulation techniques"
+      - "Exploitation of vulnerabilities"
+      - "Social scoring by public authorities"
+      - "Real-time remote biometric identification (with exceptions)"
+      - "Emotion recognition in workplace/education"
+      - "Biometric categorisation inferring sensitive attributes"
+      - "Untargeted facial recognition scraping"
+      - "Predictive policing based solely on profiling"
+    australianRelevance: "May apply to AU organisations with EU market presence"
+
+  highRisk:
+    description: "AI systems in Annex III categories"
+    annexIIICategories:
+      - category: "Biometric identification"
+        description: "Remote biometric identification (not real-time), emotion recognition, biometric categorisation"
+      - category: "Critical infrastructure"
+        description: "Safety components in management of critical digital infrastructure, road traffic, water/gas/electricity supply"
+      - category: "Education"
+        description: "Access to education, assessing learning outcomes, monitoring cheating"
+      - category: "Employment"
+        description: "Recruitment, hiring decisions, work allocation, evaluation, promotion/termination"
+      - category: "Essential services"
+        description: "Creditworthiness, credit scoring, life/health insurance risk, emergency services dispatch"
+      - category: "Law enforcement"
+        description: "Risk assessment, polygraphs, evidence reliability, profiling, crime analytics"
+      - category: "Migration"
+        description: "Visa applications, asylum, border control, irregular migration risk"
+      - category: "Justice"
+        description: "Legal research, applying law to facts, alternative dispute resolution, judicial sentencing"
+
+  limitedRisk:
+    description: "Specific transparency obligations"
+    requirements:
+      - "Chatbots: Disclose AI interaction"
+      - "Emotion recognition: Inform affected persons"
+      - "Deepfakes: Label AI-generated content"
+    australianRelevance: "Applies to AU GenAI providers with EU users"
+
+  minimalRisk:
+    description: "Most AI systems - no specific obligations"
+    examples:
+      - "AI-enabled video games"
+      - "Spam filters"
+      - "Inventory management"
+
+# High-Risk Requirements Mapping
+highRiskRequirements:
+  - article: "Article 8"
+    title: "Compliance with requirements"
+    description: "High-risk AI systems shall comply with Chapter 2 requirements"
+    vaissMapping:
+      - guardrail: 9
+        name: "Compliance"
+        strength: "Full"
+    ai6Mapping:
+      - practice: 1
+        name: "Governance and Accountability"
+    fairaMapping:
+      - component: "Part C"
+        section: "Control Plan"
+
+  - article: "Article 9"
+    title: "Risk management system"
+    description: "Establish, implement, document and maintain a risk management system"
+    vaissMapping:
+      - guardrail: 2
+        name: "Risk Management"
+        strength: "Full"
+    ai6Mapping:
+      - practice: 2
+        name: "Risk Management"
+    fairaMapping:
+      - component: "Part C"
+        section: "Controls for AI Risks"
+    nistAIRMFMapping:
+      - function: "MAP"
+      - function: "MANAGE"
+    iso42001Mapping:
+      - clause: "8.4"
+        description: "AI risk management"
+
+  - article: "Article 10"
+    title: "Data and data governance"
+    description: "Training, validation and testing data sets shall be subject to data governance"
+    vaissMapping:
+      - guardrail: 3
+        name: "Data Governance and Protection"
+        strength: "Full"
+    ai6Mapping:
+      - practice: 3
+        name: "Data Quality and Privacy"
+    fairaMapping:
+      - component: "Part A"
+        section: "Table 5 - Data Sources"
+      - component: "Part B"
+        section: "Privacy Protection Principle"
+    nistAIRMFMapping:
+      - function: "MAP"
+        category: "MAP-1.5"
+    iso42001Mapping:
+      - clause: "A.6"
+        description: "Data for AI systems"
+
+  - article: "Article 11"
+    title: "Technical documentation"
+    description: "Technical documentation shall be drawn up before system placed on market"
+    vaissMapping:
+      - guardrail: 6
+        name: "Transparency"
+        strength: "Partial"
+    ai6Mapping:
+      - practice: 5
+        name: "Transparency and Explainability"
+    fairaMapping:
+      - component: "Part A"
+        section: "All tables"
+
+  - article: "Article 12"
+    title: "Record-keeping"
+    description: "High-risk AI systems shall technically allow for automatic logging"
+    vaissMapping:
+      - guardrail: 1
+        name: "Accountability and Governance"
+        strength: "Partial"
+      - guardrail: 4
+        name: "Testing and Monitoring"
+        strength: "Partial"
+    ai6Mapping:
+      - practice: 1
+        name: "Governance and Accountability"
+    nistAIRMFMapping:
+      - function: "MEASURE"
+
+  - article: "Article 13"
+    title: "Transparency and provision of information"
+    description: "High-risk AI systems shall be accompanied by instructions for use"
+    vaissMapping:
+      - guardrail: 6
+        name: "Transparency"
+        strength: "Full"
+      - guardrail: 10
+        name: "Stakeholder Engagement"
+        strength: "Partial"
+    ai6Mapping:
+      - practice: 5
+        name: "Transparency and Explainability"
+    fairaMapping:
+      - component: "Part B"
+        section: "Transparency and Explainability Principle"
+    iso42001Mapping:
+      - clause: "A.5"
+        description: "Transparency"
+
+  - article: "Article 14"
+    title: "Human oversight"
+    description: "High-risk AI systems shall be designed to allow for effective oversight by natural persons"
+    vaissMapping:
+      - guardrail: 5
+        name: "Human Oversight"
+        strength: "Full"
+      - guardrail: 7
+        name: "Contestability"
+        strength: "Partial"
+    ai6Mapping:
+      - practice: 6
+        name: "Human Oversight and Control"
+    fairaMapping:
+      - component: "Part B"
+        section: "Human-Centred Values Principle"
+      - component: "Part B"
+        section: "Contestability Principle"
+    nistAIRMFMapping:
+      - function: "GOVERN"
+        category: "GOVERN-1.3"
+    iso42001Mapping:
+      - clause: "A.9"
+        description: "Human oversight"
+
+  - article: "Article 15"
+    title: "Accuracy, robustness and cybersecurity"
+    description: "High-risk AI systems shall achieve appropriate levels of accuracy, robustness and cybersecurity"
+    vaissMapping:
+      - guardrail: 4
+        name: "Testing and Monitoring"
+        strength: "Full"
+      - guardrail: 2
+        name: "Risk Management"
+        strength: "Partial"
+    ai6Mapping:
+      - practice: 4
+        name: "Testing and Validation"
+    fairaMapping:
+      - component: "Part B"
+        section: "Reliability and Safety Principle"
+    nistAIRMFMapping:
+      - function: "MEASURE"
+
+# GPAI Model Requirements (Article 51-55)
+gpaiRequirements:
+  allGPAIModels:
+    - requirement: "Technical documentation (Article 53(1)(a))"
+      description: "Maintain up-to-date technical documentation"
+    - requirement: "Information for downstream providers (Article 53(1)(b))"
+      description: "Provide necessary information to downstream AI system providers"
+    - requirement: "Copyright policy (Article 53(1)(c))"
+      description: "Policy to respect Union copyright law"
+    - requirement: "Training data summary (Article 53(1)(d))"
+      description: "Sufficiently detailed summary about training content"
+  systemicRiskModels:
+    - requirement: "Model evaluation (Article 55(1)(a))"
+      description: "Perform model evaluation with standardised protocols"
+    - requirement: "Adversarial testing (Article 55(1)(b))"
+      description: "Assess and mitigate systemic risks through adversarial testing"
+    - requirement: "Incident reporting (Article 55(1)(c))"
+      description: "Report serious incidents to AI Office"
+    - requirement: "Cybersecurity protection (Article 55(1)(d))"
+      description: "Ensure adequate cybersecurity protection"
+    - requirement: "Energy consumption (Article 55(1)(e))"
+      description: "Document and report energy consumption"
+  vaissV2Alignment:
+    - feature: "Content provenance"
+      gpaiRequirement: "Deepfake labelling and machine-readable marking"
+    - feature: "Watermarking"
+      gpaiRequirement: "Detection of AI-generated content"
+
+# Australian Framework Alignment Summary
+australianAlignment:
+  vaiss:
+    alignmentStrength: "High"
+    notes: "EU AI Act high-risk requirements closely align with VAISS 10 guardrails"
+    gaps:
+      - "EU Act has more prescriptive technical documentation requirements"
+      - "EU Act includes specific conformity assessment procedures"
+  ai6:
+    alignmentStrength: "High"
+    notes: "AI6 practices map well to EU AI Act high-risk requirements"
+    gaps:
+      - "EU Act has risk classification system not present in AI6"
+      - "EU Act has enforcement and penalties not in AI6"
+  faira:
+    alignmentStrength: "Medium"
+    notes: "FAIRA Part B values assessment aligns with EU fundamental rights focus"
+    gaps:
+      - "FAIRA is assessment-focused, EU Act is compliance-focused"
+      - "FAIRA lacks specific technical documentation requirements"
+  nfaaig:
+    alignmentStrength: "Medium"
+    notes: "NFAAIG cornerstones align with EU Act governance approach"
+    gaps:
+      - "NFAAIG is government-specific"
+
+# Relevance for Australian Organisations
+australianRelevance:
+  whenApplicable:
+    - "AI systems placed on EU market"
+    - "AI systems used within EU (outputs affect EU persons)"
+    - "Provider or deployer established in EU"
+    - "AI system output used in EU"
+  recommendedActions:
+    - "Conduct risk classification for all AI systems"
+    - "Map existing VAISS/AI6 compliance to EU AI Act requirements"
+    - "Identify gaps in technical documentation"
+    - "Establish conformity assessment procedures for high-risk systems"
+    - "Implement transparency measures for GenAI systems"
+  timeline:
+    - action: "Review prohibited practices"
+      deadline: "Immediate (already in effect)"
+    - action: "GPAI model compliance"
+      deadline: "Already in effect"
+    - action: "High-risk system compliance"
+      deadline: "2026-08-02"
+
+# Cross-Framework Gap Analysis
+gapAnalysis:
+  uniqueToEUAct:
+    - "Risk classification system (Unacceptable/High/Limited/Minimal)"
+    - "Conformity assessment and CE marking"
+    - "EU database registration"
+    - "Notified body involvement"
+    - "Market surveillance authorities"
+    - "Fines up to EUR 35M or 7% global turnover"
+  uniqueToAustralianFrameworks:
+    - "WHS integration (FAIRA)"
+    - "8 AI Ethics Principles focus"
+    - "Voluntary/self-assessment approach"
+    - "National AI Capability Plan alignment (VAISS v2)"
+  sharedRequirements:
+    - "Risk management"
+    - "Data governance"
+    - "Transparency"
+    - "Human oversight"
+    - "Testing and monitoring"
+    - "Accountability and governance"
