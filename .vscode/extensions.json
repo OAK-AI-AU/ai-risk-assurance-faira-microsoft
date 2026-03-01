@@ -1,0 +1,21 @@
+{
+  "recommendations": [
+    // Git & GitHub
+    "eamodio.gitlens",
+    "github.vscode-pull-request-github",
+    "github.copilot",
+    "github.copilot-chat",
+    "GitHub.vscode-github-actions",
+
+    // Azure & Microsoft
+    "ms-azuretools.vscode-azure-github-copilot",
+    "ms-azuretools.vscode-azure-mcp-server",
+
+    // Code Quality
+    "streetsidesoftware.code-spell-checker",
+    "DavidAnson.vscode-markdownlint"
+  ],
+  "unwantedRecommendations": [
+    "ms-vscode.azure-account"
+  ]
+}
