@@ -1,7 +1,22 @@
 name: Check Documentation
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "**/*.md"
+      - "docs/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "**/*.md"
+      - "docs/**"
+  schedule:
+    - cron: "0 6 * * 1"
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   markdown-lint:

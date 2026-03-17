@@ -1,7 +1,24 @@
 name: Lint YAML Files
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "mappings/**"
+      - "api/**"
+      - ".github/workflows/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "mappings/**"
+      - "api/**"
+      - ".github/workflows/**"
+  schedule:
+    - cron: "0 6 * * 1"
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   yamllint:
