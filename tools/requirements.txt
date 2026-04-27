@@ -6,7 +6,7 @@
 jsonschema>=4.20.0
 
 # YAML processing (for framework mappings)
-PyYAML>=6.0.1
+PyYAML>=6.0.3
 
 # Command-line interface
 click>=8.1.7
