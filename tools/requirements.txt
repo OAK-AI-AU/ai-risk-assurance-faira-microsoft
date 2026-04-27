@@ -12,4 +12,4 @@ PyYAML>=6.0.1
 click>=8.1.7
 
 # Rich terminal output (optional, for enhanced CLI)
-rich>=13.7.0
+rich>=15.0.0
