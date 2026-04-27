@@ -3,7 +3,7 @@
 # Install with: pip install -r requirements.txt
 
 # JSON Schema validation
-jsonschema>=4.20.0
+jsonschema>=4.26.0
 
 # YAML processing (for framework mappings)
 PyYAML>=6.0.1
